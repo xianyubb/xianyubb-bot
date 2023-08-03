@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.notice = void 0;
 const message = (data, callback) => {
     switch (data.message_type) {
         case "group":
@@ -32,12 +33,28 @@ const message = (data, callback) => {
             break;
     }
 };
+const notice = (data, callback) => {
+    switch (data.notice_type) {
+        case "group_increase":
+            const GroupMenberAdd = {
+                sub_type: data.sub_type,
+                group_id: data.group_id,
+                user_id: data.user_id,
+                operator_id: data.operator_id
+            };
+            return callback("onGroupMenberAdd", GroupMenberAdd);
+    }
+};
+exports.notice = notice;
+// request消息
 exports.default = (msg, callback) => {
     switch (msg.post_type) {
         case "message":
             message(msg, callback);
             break;
         case "notice":
+            (0, exports.notice)(msg, callback);
+            break;
     }
 };
 //# sourceMappingURL=data.js.map

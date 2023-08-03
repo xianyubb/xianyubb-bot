@@ -21,18 +21,23 @@ export interface WebSocketEvent extends EventEmitter {
 export interface BotEvent extends EventEmitter {
     emit(Event: "onReceiveGroupMessage", msg: data.GroupMessage): any
     emit(Event: "onReceivePrivateMessage", msg: data.PrivateMessage): any
+    emit(Event:"onGroupMenberAdd",msg:data.GroupMenberAdd):any
 
     on(Event: "onReceiveGroupMessage", listener: (msg: data.GroupMessage) => void): any
-    on(Event: "onReceivePrivateMessage", listener: (msg: data.PrivateMessage) => void): any
+  on(Event: "onReceivePrivateMessage", listener: (msg: data.PrivateMessage) => void): any
+  on(Event: "onGroupMenberAdd", listener:(msg: data.GroupMenberAdd)=>void): any
 
     addListener(Event: "onReceiveGroupMessage", listener: (msg: data.GroupMessage) => void): this;
-    addListener(Event: "onReceivePrivateMessage", listener: (msg: data.PrivateMessage) => void): this
+  addListener(Event: "onReceivePrivateMessage", listener: (msg: data.PrivateMessage) => void): this
+  addListener(Event: "onGroupMenberAdd", listener:(msg: data.GroupMenberAdd)=>void): this
 
     removeAllListeners(Event: "onReceiveGroupMessage"): any
-    removeAllListeners(Event: "onReceivePrivateMessage"): any
+  removeAllListeners(Event: "onReceivePrivateMessage"): any
+  emit(Event: "onGroupMenberAdd"): any
 
     once(Event: "onReceiveGroupMessage", listener: (msg: data.GroupMessage) => void): any
-    once(Event: "onReceivPrivateMessage", listener: (msg: data.PrivateMessage) => void): any
+  once(Event: "onReceivPrivateMessage", listener: (msg: data.PrivateMessage) => void): any
+  once(Event: "onGroupMenberAdd", listener:(msg: data.GroupMenberAdd)=>void): any
 }
 
 export const bot: BotEvent = new EventEmitter()

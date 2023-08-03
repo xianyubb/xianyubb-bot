@@ -1,5 +1,4 @@
 
-
 export interface Data {
     time: number,
     self_id: number,
@@ -12,6 +11,7 @@ export interface Anonymous {
     flag: string
 }
 
+// message消息
 export interface MessageType {
     type: string,
     data: {
@@ -48,7 +48,6 @@ export interface Sender {
 
 export interface Message extends Data {
     group_id: number
-
     message_type: "private" | "group"
     sub_type: string,
     message_id: number,
@@ -118,12 +117,38 @@ const message = (data: Message, callback: (Event: string, data: any) => void) =>
     }
 }
 
+// notice消息
+export interface Notice extends Data {
+  notice_type: string,
+}
+export interface GroupMenberAdd{
+  sub_type,
+  user_id,
+  group_id: number,
+  operator_id: number,
+}
+export const notice = (data:any, callback:(Events:string,msg:any)=>void) => {
+  switch (data.notice_type) {
+    case "group_increase":
+      const GroupMenberAdd: GroupMenberAdd = {
+        sub_type: data.sub_type,
+        group_id: data.group_id,
+        user_id: data.user_id,
+        operator_id: data.operator_id
+      }
+      return callback("onGroupMenberAdd",GroupMenberAdd)
+  }
+}
+// request消息
+
+
 export default (msg: any, callback: (Events: string, data: any) => void) => {
     switch (msg.post_type) {
         case "message":
             message(msg, callback)
             break;
-        case "notice":
-
+      case "notice":
+          notice(msg,callback)
+          break
     }
 }

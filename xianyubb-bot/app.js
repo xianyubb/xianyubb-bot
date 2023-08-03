@@ -1,9 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Bot = void 0;
+exports.bot = void 0;
 const ws_1 = require("ws");
 const events = require("./src/Events");
 const data_1 = require("./src/data");
+const fs = require("fs");
+const path = require("path");
+const pluginsDir = './plugins'; // plugins文件夹路径
+// 扫描plugins文件夹下的所有js文件
+fs.readdirSync(pluginsDir).forEach(file => {
+    var _a;
+    const pluginPath = path.join(pluginsDir, file);
+    // 检查文件扩展名是否为.js
+    if (path.extname(pluginPath) === '.js') {
+        // 导入并打印变量
+        (_a = path.resolve(pluginPath), Promise.resolve().then(() => require(_a))).then(plugin => {
+            console.log(plugin);
+        });
+    }
+});
+const Path = "./config/config.json";
 class Bot {
     constructor(ws) {
         this.bot = new ws_1.WebSocket(ws);
@@ -62,12 +78,25 @@ class Bot {
         }));
     }
 }
-exports.Bot = Bot;
 let log = (...param) => {
     console.log(param);
 };
-let bot = new Bot("ws://127.0.0.1:9321");
-bot.BotEvents.on("onReceiveGroupMessage", (msg) => {
-    log(msg);
-});
+const data_ = JSON.parse(fs.readFileSync(Path).toString());
+exports.bot = new Bot(`ws://${data_.address}:${data_.port}`);
+function mkdir() {
+    if (!fs.existsSync(Path)) {
+        fs.mkdir("./config", (a) => {
+        });
+        fs.writeFile(Path, JSON.stringify({
+            address: "127.0.0.1",
+            port: 8080
+        }), () => {
+            log(`已在${Path}生成配置文件，请修改配置文件后开启`);
+        });
+    }
+    if (!fs.existsSync("./plugins")) {
+        fs.mkdir("./plugins", () => {
+        });
+    }
+}
 //# sourceMappingURL=app.js.map
