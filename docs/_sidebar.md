@@ -1,0 +1,8 @@
+- [先行条件](/first.md)
+  * [了解目录](/mulu.md)
+  * [ 安装 **nodejs** 环境 ](first.md#安装-nodejs-环境)
+  * [下载并配置 **go-cqhttp** ](first.md#下载并配置-go-cqhttp)
+  * [下载 **xianyubb-bot**](first.md#下载-xianyubb-bot)
+  * [运行 **xianyubb-bot**](first.md#运行-xianyubb-bot)
+- [编写插件](/function.md)
+  * [插件目录]()
