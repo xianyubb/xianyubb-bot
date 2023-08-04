@@ -141,14 +141,27 @@ export const notice = (data:any, callback:(Events:string,msg:any)=>void) => {
 }
 // request消息
 
-
+// echo 
+export interface Returnecho {
+  status: string,
+  retcode: number,
+  data: any,
+  uuid: string
+}
 export default (msg: any, callback: (Events: string, data: any) => void) => {
+  if (msg.post_type) {
     switch (msg.post_type) {
-        case "message":
-            message(msg, callback)
-            break;
+      case "message":
+        message(msg, callback)
+        break;
       case "notice":
-          notice(msg,callback)
-          break
+        notice(msg, callback)
+        break
     }
+  } else if (msg.echo) {
+    callback('echo', {
+      uuid: msg.echo,
+      data: msg.data
+    });
+  }
 }

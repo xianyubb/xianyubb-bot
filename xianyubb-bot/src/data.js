@@ -46,15 +46,22 @@ const notice = (data, callback) => {
     }
 };
 exports.notice = notice;
-// request消息
 exports.default = (msg, callback) => {
-    switch (msg.post_type) {
-        case "message":
-            message(msg, callback);
-            break;
-        case "notice":
-            (0, exports.notice)(msg, callback);
-            break;
+    if (msg.post_type) {
+        switch (msg.post_type) {
+            case "message":
+                message(msg, callback);
+                break;
+            case "notice":
+                (0, exports.notice)(msg, callback);
+                break;
+        }
+    }
+    else if (msg.echo) {
+        callback('echo', {
+            uuid: msg.echo,
+            data: msg.data
+        });
     }
 };
 //# sourceMappingURL=data.js.map

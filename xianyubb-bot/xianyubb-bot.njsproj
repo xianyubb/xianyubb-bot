@@ -39,6 +39,7 @@
     <Folder Include="src\" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="src\api.ts" />
     <TypeScriptCompile Include="src\data.ts" />
     <TypeScriptCompile Include="src\Events.ts" />
   </ItemGroup>
