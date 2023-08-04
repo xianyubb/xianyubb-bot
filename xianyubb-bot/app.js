@@ -7,22 +7,14 @@ const api_1 = require("./src/api");
 const ws_1 = require("ws");
 const keypress = require("keypress");
 const Path = "./config/config.json";
-function log(...param) {
-    console.log(param);
-}
-exports.log = log;
-const data_ = JSON.parse(fs.readFileSync(Path).toString());
-exports.bot = new api_1.Bot(`ws://${data_.address}:${data_.port}`);
 function mkdir() {
     if (!fs.existsSync(Path)) {
         fs.mkdir("./config", (a) => {
         });
-        fs.writeFile(Path, JSON.stringify({
+        fs.writeFileSync(Path, JSON.stringify({
             address: "127.0.0.1",
             port: 8080
-        }), () => {
-            log(`已在${Path}生成配置文件，请修改配置文件后开启`);
-        });
+        }));
     }
     if (!fs.existsSync("./plugins")) {
         fs.mkdir("./plugins", () => {
@@ -30,6 +22,12 @@ function mkdir() {
     }
 }
 mkdir();
+function log(...param) {
+    console.log(param);
+}
+exports.log = log;
+const data_ = JSON.parse(fs.readFileSync(Path).toString());
+exports.bot = new api_1.Bot(`ws://${data_.address}:${data_.port}`);
 console.log("正在启动xianyubb-bot");
 console.log("正在连接go-cqhttp...");
 exports.bot.bot.onopen = () => {

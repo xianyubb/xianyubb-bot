@@ -1,10 +1,10 @@
 {
   "name": "xianyubb-bot",
-  "version": "0.0.0",
+  "version": "0.1.2",
   "description": "xianyubb-bot",
   "main": "app.js",
   "author": {
-    "name": ""
+    "name": "xianyubb"
   },
   "scripts": {
     "build": "tsc --build",

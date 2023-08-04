@@ -5,6 +5,21 @@ import { WebSocket } from "ws";
 import *as keypress from "keypress"
 
 const Path = "./config/config.json"
+function mkdir() {
+  if (!fs.existsSync(Path)) {
+    fs.mkdir("./config", (a) => {
+    })
+    fs.writeFileSync(Path, JSON.stringify({
+      address: "127.0.0.1",
+      port: 8080
+    }))
+    }
+  if (!fs.existsSync("./plugins")) {
+    fs.mkdir("./plugins", () => {
+    })
+  }
+}
+mkdir()
 
 export function log(...param: any[]) {
   console.log(param)
@@ -15,24 +30,7 @@ export let bot = new Bot(`ws://${data_.address}:${data_.port}`)
 
 
 
-function mkdir() {
-  if (!fs.existsSync(Path)) {
-    fs.mkdir("./config", (a) => {
-    })
-    fs.writeFile(Path, JSON.stringify({
-      address: "127.0.0.1",
-      port: 8080
-    }), () => {
-      log(`已在${Path}生成配置文件，请修改配置文件后开启`)
-    })
-  } if (!fs.existsSync("./plugins")) {
-    fs.mkdir("./plugins", () => {
-    })
-  }
-}
 
-
-mkdir()
 
 
 console.log("正在启动xianyubb-bot")
