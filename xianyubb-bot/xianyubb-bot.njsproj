@@ -38,6 +38,7 @@
     <Content Include="tsconfig.json" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="plugins\" />
     <Folder Include="src\" />
   </ItemGroup>
   <ItemGroup>
