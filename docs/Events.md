@@ -35,6 +35,24 @@ callback : Function
 
 ### 通知上报
 
+#### `onPrivateDeleteMsg`-私聊消息撤回
+
+#### `onGroupDeteleMsg`-群消息撤回
+
 #### `onGroupMenberAdd`-群成员增加
+
+#### `onGroupMenberDecrease`-群成员减少
+
+#### `onGroupAdminChange`-群管理员变动
+
+#### `onGroupFileUpload`-群文件上传
+
+#### `onGroupBan`-群禁言
+
+#### `onFriendAdd`-好友添加
+
+#### `onNotify`-戳一戳
+
+> 此事件无法在手表协议上触发
 
 
