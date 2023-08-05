@@ -3,7 +3,6 @@ import { Bot } from "./src/api";
 import *as keypress from "keypress"
 import WebSocket = require("ws");
 import path = require("path");
-import { CONNREFUSED } from "dns";
 
 
 const Path = "./config/config.json"
