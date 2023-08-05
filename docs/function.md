@@ -3,6 +3,17 @@
 1. 目前仅支持单个加载js插件
 2. 必须放置在 **plugins** 文件夹下
 
+### 注册插件
+
+
+```js 
+let Plugin = require("../src/plugins").Plugins
+
+
+const plugins = new Plugin("test", "test", [0, 1, 0], { author:"hhh" })
+
+
+```
 
 ### 插件示例
 

@@ -32,6 +32,8 @@
     <None Include="app.ts" />
     <Content Include=".editorconfig" />
     <Content Include="package.json" />
+    <Content Include="plugins\2.js" />
+    <Content Include="plugins\test.js" />
     <Content Include="README.md" />
     <Content Include="tsconfig.json" />
   </ItemGroup>
@@ -42,6 +44,7 @@
     <TypeScriptCompile Include="src\api.ts" />
     <TypeScriptCompile Include="src\data.ts" />
     <TypeScriptCompile Include="src\Events.ts" />
+    <TypeScriptCompile Include="src\plugins.ts" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
   <ProjectExtensions>

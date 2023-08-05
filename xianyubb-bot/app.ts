@@ -1,22 +1,22 @@
 import * as fs from "fs"
-import * as path from 'path';
 import { Bot } from "./src/api";
-import { WebSocket } from "ws";
 import *as keypress from "keypress"
+import WebSocket = require("ws");
+import path = require("path");
+import { CONNREFUSED } from "dns";
+
 
 const Path = "./config/config.json"
 function mkdir() {
   if (!fs.existsSync(Path)) {
-    fs.mkdir("./config", (a) => {
-    })
+    fs.mkdirSync("./config")
     fs.writeFileSync(Path, JSON.stringify({
       address: "127.0.0.1",
       port: 8080
     }))
     }
   if (!fs.existsSync("./plugins")) {
-    fs.mkdir("./plugins", () => {
-    })
+    fs.mkdirSync("./plugins")
   }
 }
 mkdir()
@@ -29,26 +29,16 @@ const data_ = JSON.parse(fs.readFileSync(Path).toString())
 export let bot = new Bot(`ws://${data_.address}:${data_.port}`)
 
 
-
+bot.bot.onopen = () => {
+  console.log("连接成功")
+}
 
 
 
 console.log("正在启动xianyubb-bot")
 console.log("正在连接go-cqhttp...")
 
-bot.bot.onopen = () => {
-  console.log("连接成功")
-  const pluginsDir = './plugins'; // plugins文件夹路径
-  fs.readdirSync(pluginsDir).forEach(file => {
-    const pluginPath = path.join(pluginsDir, file);
-    if (path.extname(pluginPath) === '.js') {
-      if (bot.bot.readyState === WebSocket.OPEN) {
-        import(path.resolve(pluginPath)).then(plugin => {
-        });
-      }
-    }
-  });
-}
+
 
 bot.bot.on("error", (error) => {
   console.error("WebSocket连接错误:", error);
@@ -82,4 +72,22 @@ function exit() {
   // 开启标准输入流的输入
   process.stdin.setRawMode(true);
   process.stdin.resume();
+}
+
+
+
+bot.bot.onopen = () => {
+  console.log("连接成功");
+  console.log("正在加载插件");
+  const pluginsDir = './plugins'; // plugins文件夹路径
+  let pluginarr = []
+  fs.readdirSync(pluginsDir).forEach(file => {
+    const pluginPath = path.join(pluginsDir, file);
+    if (path.extname(pluginPath) === '.js') {
+      import(path.resolve(pluginPath)).then(() => {
+       let a=  pluginarr.push(file)
+        console.log("已加载插件: " +a + "个")
+      })
+    }
+  })
 }

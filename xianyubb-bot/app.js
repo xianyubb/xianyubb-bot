@@ -2,23 +2,20 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.bot = exports.log = void 0;
 const fs = require("fs");
-const path = require("path");
 const api_1 = require("./src/api");
-const ws_1 = require("ws");
 const keypress = require("keypress");
+const path = require("path");
 const Path = "./config/config.json";
 function mkdir() {
     if (!fs.existsSync(Path)) {
-        fs.mkdir("./config", (a) => {
-        });
+        fs.mkdirSync("./config");
         fs.writeFileSync(Path, JSON.stringify({
             address: "127.0.0.1",
             port: 8080
         }));
     }
     if (!fs.existsSync("./plugins")) {
-        fs.mkdir("./plugins", () => {
-        });
+        fs.mkdirSync("./plugins");
     }
 }
 mkdir();
@@ -28,22 +25,11 @@ function log(...param) {
 exports.log = log;
 const data_ = JSON.parse(fs.readFileSync(Path).toString());
 exports.bot = new api_1.Bot(`ws://${data_.address}:${data_.port}`);
-console.log("正在启动xianyubb-bot");
-console.log("正在连接go-cqhttp...");
 exports.bot.bot.onopen = () => {
     console.log("连接成功");
-    const pluginsDir = './plugins'; // plugins文件夹路径
-    fs.readdirSync(pluginsDir).forEach(file => {
-        var _a;
-        const pluginPath = path.join(pluginsDir, file);
-        if (path.extname(pluginPath) === '.js') {
-            if (exports.bot.bot.readyState === ws_1.WebSocket.OPEN) {
-                (_a = path.resolve(pluginPath), Promise.resolve().then(() => require(_a))).then(plugin => {
-                });
-            }
-        }
-    });
 };
+console.log("正在启动xianyubb-bot");
+console.log("正在连接go-cqhttp...");
 exports.bot.bot.on("error", (error) => {
     console.error("WebSocket连接错误:", error);
     console.log("正在尝试重连...");
@@ -72,4 +58,20 @@ function exit() {
     process.stdin.setRawMode(true);
     process.stdin.resume();
 }
+exports.bot.bot.onopen = () => {
+    console.log("连接成功");
+    console.log("正在加载插件");
+    const pluginsDir = './plugins'; // plugins文件夹路径
+    let pluginarr = [];
+    fs.readdirSync(pluginsDir).forEach(file => {
+        var _a;
+        const pluginPath = path.join(pluginsDir, file);
+        if (path.extname(pluginPath) === '.js') {
+            (_a = path.resolve(pluginPath), Promise.resolve().then(() => require(_a))).then(() => {
+                let a = pluginarr.push(file);
+                console.log("已加载插件: " + a + "个");
+            });
+        }
+    });
+};
 //# sourceMappingURL=app.js.map
