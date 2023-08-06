@@ -31,6 +31,17 @@ export interface BotEvent extends EventEmitter {
   emit(Event: "onGroupBan", msg: data.GroupBan): any
   emit(Event: "onFriendAdd", msg: data.FrienAdd): any
   emit(Event: "onNotify", msg: data.Notify): any
+  emit(Event: "onGroupRedbagLuckyKing", msg: data.GroupRedbagLuckyKing): any
+  emit(Event: "onGroupMenberHonorChange", msg: data.GroupMenberHonorChange): any
+  emit(Event: "onGroupMenberTitleChange", msg: data.GroupMenberTitleChange): any
+  emit(Event: "onGroupCardChange", msg: data.GroupCardChange): any
+  emit(Event: "onReceiveOfflineFile", msg: data.ReceiveOfflineFile): any
+  emit(Event: "onClientStatusChange", msg: data.ClientStatusChange): any
+  emit(Event: "onEssenceMessageChange", msg: data.EssenceMessageChange): any
+  emit(Event: "onAddFriendRequest", msg: data.AddFriendRequest): any
+  emit(Event: "onAddGroupRequest", msg: data.AddGroupRequest): any
+  emit(Event: "onHeartBeat", msg: data.HeartBeat): any
+  emit(Event: "onLifeCycle", msg: data.LifeCycle):any
   emit(Event: "echo", msg: data.Returnecho): any
 
 
@@ -45,6 +56,17 @@ export interface BotEvent extends EventEmitter {
   on(Event: "onGroupBan", listener: (msg: data.GroupBan) => void): any
   on(Event: "onFriendAdd", listener:(msg: data.FrienAdd)=>void): any
   on(Event: "onNotify", listener: (msg: data.Notify) => void): any
+  on(Event: "onGroupRedbagLuckyKing", listener:(msg: data.GroupRedbagLuckyKing)=>void): any
+  on(Event: "onGroupMenberHonorChange", listener:(msg: data.GroupMenberHonorChange)=>void): any
+  on(Event: "onGroupMenberTitleChange", listener:(msg: data.GroupMenberTitleChange)=>void): any
+  on(Event: "onGroupCardChange", listener:(msg: data.GroupCardChange)=>void): any
+  on(Event: "onReceiveOfflineFile", listener:(msg: data.ReceiveOfflineFile)=>void): any
+  on(Event: "onClientStatusChange", listener:(msg: data.ClientStatusChange)=>void): any
+  on(Event: "onEssenceMessageChange", listener:(msg: data.EssenceMessageChange)=>void): any
+  on(Event: "onAddFriendRequest", listener:(msg: data.AddFriendRequest)=>void): any
+  on(Event: "onAddGroupRequest", listener:(msg: data.AddGroupRequest)=>void): any
+  on(Event: "onHeartBeat", listener:(msg: data.HeartBeat)=>void): any
+  on(Event: "onLifeCycle", listener: (msg: data.LifeCycle)=>void): any
   on(Event: "echo", listener: (msg: data.Returnecho) => void): any
 
 
@@ -59,6 +81,17 @@ export interface BotEvent extends EventEmitter {
   addListener(Event: "onGroupBan", listener: (msg: data.GroupBan) => void): this
   addListener(Event: "onFriendAdd", listener: (msg: data.FrienAdd) => void): this
   addListener(Event: "onNotify", listener: (msg: data.Notify) => void): this
+  addListener(Event: "onGroupRedbagLuckyKing", listener: (msg: data.GroupRedbagLuckyKing) => void):this
+  addListener(Event: "onGroupMenberHonorChange", listener: (msg: data.GroupMenberHonorChange) => void): this
+  addListener(Event: "onGroupMenberTitleChange", listener: (msg: data.GroupMenberTitleChange) => void): this
+  addListener(Event: "onGroupCardChange", listener: (msg: data.GroupCardChange) => void): this
+  addListener(Event: "onReceiveOfflineFile", listener: (msg: data.ReceiveOfflineFile) => void): this
+  addListener(Event: "onClientStatusChange", listener: (msg: data.ClientStatusChange) => void): this
+  addListener(Event: "onEssenceMessageChange", listener: (msg: data.EssenceMessageChange) => void): this
+  addListener(Event: "onAddFriendRequest", listener: (msg: data.AddFriendRequest) => void): this
+  addListener(Event: "onAddGroupRequest", listener: (msg: data.AddGroupRequest) => void): this
+  addListener(Event: "onHeartBeat", listener: (msg: data.HeartBeat) => void): this
+  addListener(Event: "onLifeCycle", listener: (msg: data.LifeCycle) => void): this
   addListener(Event: "echo", listener: (msg: data.Returnecho) => void): this
 
   removeAllListeners(Event: "onReceiveGroupMessage"): any;
@@ -72,6 +105,17 @@ export interface BotEvent extends EventEmitter {
   removeAllListeners(Event: "onGroupBan"): any
   removeAllListeners(Event: "onFriendAdd"): any
   removeAllListeners(Event: "onNotify"): any
+  removeAllListeners(Event: "onGroupRedbagLuckyKing"): any
+  removeAllListeners(Event: "onGroupMenberHonorChange"): any
+  removeAllListeners(Event: "onGroupMenberTitleChange"): any
+  removeAllListeners(Event: "onGroupCardChange"): any
+  removeAllListeners(Event: "onReceiveOfflineFile"): any
+  removeAllListeners(Event: "onClientStatusChange"): any
+  removeAllListeners(Event: "onEssenceMessageChange"): any
+  removeAllListeners(Event: "onAddFriendRequest"): any
+  removeAllListeners(Event: "onAddGroupRequest"): any
+  removeAllListeners(Event: "onHeartBeat"): any
+  removeAllListeners(Event: "onLifeCycle"): any
   removeAllListeners(Event: "echo"): any;
 
 
@@ -86,6 +130,17 @@ export interface BotEvent extends EventEmitter {
   once(Event: "onGroupBan", listener: (msg: data.GroupBan) => void): any
   once(Event: "onFriendAdd", listener: (msg: data.FrienAdd) => void):any
   once(Event: "onNotify", listener: (msg: data.Notify) => void): any
+  once(Event: "onGroupRedbagLuckyKing", listener: (msg: data.GroupRedbagLuckyKing) => void): any
+  once(Event: "onGroupMenberHonorChange", listener: (msg: data.GroupMenberHonorChange) => void): any
+  once(Event: "onGroupMenberTitleChange", listener: (msg: data.GroupMenberTitleChange) => void): any
+  once(Event: "onGroupCardChange", listener: (msg: data.GroupCardChange) => void): any
+  once(Event: "onReceiveOfflineFile", listener: (msg: data.ReceiveOfflineFile) => void): any
+  once(Event: "onClientStatusChange", listener: (msg: data.ClientStatusChange) => void): any
+  once(Event: "onEssenceMessageChange", listener: (msg: data.EssenceMessageChange) => void): any
+  once(Event: "onAddFriendRequest", listener: (msg: data.AddFriendRequest) => void): any
+  once(Event: "onAddGroupRequest", listener: (msg: data.AddGroupRequest) => void): any
+  once(Event: "onHeartBeat", listener: (msg: data.HeartBeat) => void): any
+  once(Event: "onLifeCycle", listener: (msg: data.LifeCycle) => void): any
   once(Event: "echo", listener: (msg: data.Returnecho) => void): any;
 }
 

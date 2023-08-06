@@ -55,4 +55,36 @@ callback : Function
 
 > 此事件无法在手表协议上触发
 
+#### `onGroupRedbagLuckyKing`-群红包运气王提示
+
+> 此事件无法在手表协议上触发
+
+#### `onGroupMenberHonorChange`-群成员荣誉变更提示
+
+> 此事件无法在手表协议上触发
+
+#### `onGroupMenberTitleChange`-群成员头衔变更
+
+#### `onGroupCardChange`-群成员名片更新
+
+> 此事件不保证时效性, 仅在收到消息时校验卡片
+
+#### `onReceiveOfflineFile`-接收到离线文件
+
+#### `onClientStatusChange`-其他客户端在线状态变更
+
+#### `onEssenceMessageChange`-精华消息变更
+
+### 请求上报
+
+#### `onAddFriendRequest`-加好友请求
+
+#### `onAddGroupRequest`-加群请求/邀请
+
+### 元事件上报
+
+#### `onHeartBeat`-心跳包
+
+#### `onLifeCycle`-生命周期
+
 

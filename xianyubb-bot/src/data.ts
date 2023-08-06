@@ -1,4 +1,3 @@
-
 export interface Data {
   time: number,
   self_id: number,
@@ -135,73 +134,116 @@ export interface Notice extends Data {
   card_new: string,
   card_old: string,
   client: any,
-  online:boolean
+  online: boolean
 }
 
-export interface File{
-  id:string,
+export interface File {
+  id: string,
   name: string,
   size: number,
   url: string,
-  busi:number
+  busi: number
 }
 
-export interface PrivateDeleteMsg{
-  user_id:number
-  message_id:number
+export interface PrivateDeleteMsg {
+  user_id: number
+  message_id: number
 }
 
 export interface GroupDeleteMsg {
   group_id: number,
-  operator_id:number
+  operator_id: number
   user_id: number
   message_id: number
 }
 
 export interface GroupMenberAdd {
-  sub_type:string
-  user_id:number
+  sub_type: string
+  user_id: number
   group_id: number,
   operator_id: number,
 }
 
 export interface GroupMenberDecrease {
-  sub_type:string
+  sub_type: string
   group_id: number,
   operator_id: number,
-  user_id:number
+  user_id: number
 }
 
-export interface GroupAdminChange{
+export interface GroupAdminChange {
   sub_type: string,
   group_id: number,
-  user_id:number
+  user_id: number
 }
 
-export interface GroupFileUpload{
+export interface GroupFileUpload {
   group_id: number,
   user_id: number,
-  file:File
+  file: File
 }
-export interface GroupBan{
+export interface GroupBan {
   sub_type: string,
   group_id: number,
   operator_id: number,
   user_id: number,
-  duration:number
+  duration: number
 }
 
-export interface FrienAdd{
-  user_id:number
+export interface FrienAdd {
+  user_id: number
 }
 
-export interface Notify{
-  sub_type: string,
+export interface Notify {
   sender_id: number,
   user_id: number,
   target_id: number
-  group_id:number
+  group_id: number
 }
+
+export interface GroupRedbagLuckyKing {
+  group_id: number,
+  user_id: number,
+  target_id: number
+}
+
+export interface GroupMenberHonorChange {
+  group_id: number,
+  user_id: number,
+  honor_type: string
+}
+
+export interface GroupMenberTitleChange {
+  group_id: number,
+  user_id: number,
+  title: string
+}
+
+export interface GroupCardChange {
+  group_id: number,
+  user_id: number,
+  card_new: string,
+  card_old: string,
+}
+
+export interface ReceiveOfflineFile {
+  user_id: number,
+  file: File
+}
+
+export interface ClientStatusChange {
+  client: any,
+  online: boolean
+}
+
+export interface EssenceMessageChange {
+  sub_type: string,
+  group_id: number,
+  sender_id: number,
+  operator_id: number,
+  message_id: number
+}
+
 
 export const notice = (data: Notice, callback: (Events: string, msg: any) => void) => {
   switch (data.notice_type) {
@@ -217,13 +259,13 @@ export const notice = (data: Notice, callback: (Events: string, msg: any) => voi
         group_id: data.group_id,
         operator_id: data.operator_id,
         user_id: data.user_id,
-        message_id:data.message_id,
+        message_id: data.message_id,
       }
       callback("onGroupDeleteMsg", GroupDeleteMsg)
       break
     case "group_increase":
       const GroupMenberAdd: GroupMenberAdd = {
-        sub_type:data.sub_type,
+        sub_type: data.sub_type,
         group_id: data.group_id,
         user_id: data.user_id,
         operator_id: data.operator_id
@@ -272,18 +314,167 @@ export const notice = (data: Notice, callback: (Events: string, msg: any) => voi
       callback("onFriendAdd", FriendAdd)
       break
     case "notify":
-      const Notify: Notify = {
-        sub_type: data.sub_type,
-        group_id: data.group_id,
-        target_id: data.target_id,
-        user_id: data.user_id,
-        sender_id: data.sender_id
+      switch (data.sub_type) {
+        case "poke":
+          const Notify: Notify = {
+            group_id: data.group_id,
+            target_id: data.target_id,
+            user_id: data.user_id,
+            sender_id: data.sender_id
+          }
+          callback("onNotify", Notify)
+          break;
+        case "lucky_king":
+          const GroupRedbagLuckyKing: GroupRedbagLuckyKing = {
+            group_id: data.group_id,
+            user_id: data.user_id,
+            target_id: data.target_id
+          }
+          callback("onGroupRedbagLuckyKing", GroupRedbagLuckyKing)
+          break
+        case "honor":
+          const GroupMenberHonorChange: GroupMenberHonorChange = {
+            group_id: data.group_id,
+            user_id: data.user_id,
+            honor_type: data.honor_type
+          }
+          callback("onGroupMenberHonorChange", GroupMenberHonorChange)
+          break;
+        case "title":
+          const GroupMenberTitleChange: GroupMenberTitleChange = {
+            group_id: data.group_id,
+            user_id: data.user_id,
+            title: data.title
+          }
+          callback("onGroupMenberTitleChange", GroupMenberTitleChange)
+          break
       }
-      callback("onNotify", Notify)
+      break
+    case "group_card":
+      const GroupCardChange: GroupCardChange = {
+        group_id: data.group_id,
+        user_id: data.user_id,
+        card_new: data.card_new,
+        card_old: data.card_old
+      }
+      callback("onGroupCardChange", GroupCardChange)
       break;
+    case "offline_file":
+      const ReceiveOfflineFile: ReceiveOfflineFile = {
+        user_id: data.user_id,
+        file: data.file
+      }
+      callback("onReceiveOfflineFile", ReceiveOfflineFile)
+      break;
+    case "client_status":
+      const ClientStatusChange: ClientStatusChange = {
+        client: data.client,
+        online: data.online,
+      }
+      callback("onClientStatusChange", ClientStatusChange)
+      break;
+    case "essencs":
+      const EssenceMessageChange: EssenceMessageChange = {
+        sender_id: data.sender_id,
+        group_id: data.group_id,
+        sub_type: data.sub_type,
+        operator_id: data.operator_id,
+        message_id: data.message_id,
+      }
+      callback("onEssenceMessageChange", EssenceMessageChange)
+      break
   }
 }
 // request消息
+export interface Request extends Data {
+  request_type: string,
+  user_id: number,
+  comment: string,
+  flag: string,
+  sub_type: string,
+  group_id: number,
+}
+
+export interface AddFriendRequest {
+  user_id: number,
+  comment: string,
+  flag: string
+}
+
+export interface AddGroupRequest {
+  user_id: number,
+  group_id: number,
+  comment: string,
+  sub_type: string,
+  flag: string
+}
+
+const request = (data: Request, callback: (Events: string, msg: any) => void) => {
+  switch (data.request_type) {
+    case "friend":
+      const AddFriendRequest: AddFriendRequest = {
+        user_id: data.user_id,
+        comment: data.comment,
+        flag: data.flag
+      }
+      callback("onAddFriendRequest", AddFriendRequest)
+      break;
+    case "group":
+      const AddGroupRequest: AddGroupRequest = {
+        group_id: data.group_id,
+        user_id: data.user_id,
+        comment: data.comment,
+        flag: data.flag,
+        sub_type: data.sub_type
+      }
+      callback("onAddGroupRequest", AddGroupRequest)
+      break
+  }
+}
+
+// meta_event
+export interface MetaEvent extends Data {
+  meta_event_type: string,
+  status: Status,
+  interval: number,
+  sub_type: string
+}
+
+export interface Status {
+  app_initialized: boolean,
+  app_enabled: boolean,
+  plugins_good: boolean,
+  app_good: boolean,
+  online: boolean,
+  stat: boolean
+}
+
+export interface HeartBeat {
+  status: Status,
+  interval: number
+}
+
+export interface LifeCycle {
+  sub_type: string
+}
+
+const metaevent = (data: MetaEvent, callback: (Events: string, msg: any) => void) => {
+  switch (data.meta_event_type) {
+    case "heartbeat":
+      const HeartBeat: HeartBeat = {
+        status: data.status,
+        interval:data.interval
+      }
+      callback("onHeartBeat", HeartBeat)
+      break
+    case "lifecycle":
+      const LifeCycle: LifeCycle = {
+        sub_type:data.sub_type
+      }
+      callback("onLifeCycle", LifeCycle)
+      break
+  }
+}
 
 // echo 
 export interface Returnecho {
@@ -300,6 +491,12 @@ export default (msg: any, callback: (Events: string, data: any) => void) => {
         break;
       case "notice":
         notice(msg, callback)
+        break
+      case "request":
+        request(msg, callback)
+        break;
+      case "meta_event":
+        metaevent(msg, callback)
         break
     }
   } else if (msg.echo) {
