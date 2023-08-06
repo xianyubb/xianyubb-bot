@@ -4,7 +4,6 @@ import *as keypress from "keypress"
 import WebSocket = require("ws");
 import path = require("path");
 
-
 const Path = "./config/config.json"
 function mkdir() {
   if (!fs.existsSync(Path)) {
