@@ -9,18 +9,18 @@ export class Bds {
     this.bds = new WebSocketServer({
       port:port
     })
-    this.bds.on("connection", (ws) => {
-      this.ws = ws;
-    })
   }
-  send(msg:string) {
-    this.ws.send(msg)
+  send(ws:WebSocket,msg:string) {
+    ws.send(msg)
   }
-  receive() {
+  receive(ws: WebSocket) {
     return new Promise((resolve) => {
-      this.ws.on("message", (msg) => {
+      ws.on("message", (msg) => {
         resolve(msg)
       })
     })
+  }
+  close() {
+    this.bds.close()
   }
 }
