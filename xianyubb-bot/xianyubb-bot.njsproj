@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="src\api.ts" />
+    <TypeScriptCompile Include="src\BDS.ts" />
     <TypeScriptCompile Include="src\data.ts" />
     <TypeScriptCompile Include="src\Events.ts" />
     <TypeScriptCompile Include="src\plugins.ts" />

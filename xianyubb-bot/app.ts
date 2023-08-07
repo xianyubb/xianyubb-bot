@@ -10,7 +10,7 @@ function mkdir() {
     fs.mkdirSync("./config")
     fs.writeFileSync(Path, JSON.stringify({
       address: "127.0.0.1",
-      port: 8080
+      port: 8080,
     }))
     }
   if (!fs.existsSync("./plugins")) {
