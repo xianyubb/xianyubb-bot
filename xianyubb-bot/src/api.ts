@@ -21,7 +21,7 @@ export class Bot {
       this.connect()
     }
     this.bot.onmessage = (events) => {
-      this.Afterconnect(JSON.parse(events.data.toString()))
+      this.Afterconnect(events)
     }
   }
 
