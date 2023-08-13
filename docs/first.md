@@ -2,7 +2,9 @@
 
 > [nodejs官网](https://nodejs.org)
 
-前往官网下载最新版的 **nodejs** (进不去请自备魔法)
+前往官网下载LTS版本的 **nodejs** (进不去请自备魔法)
+
+![nodejs](./image//nodejs.PNG)
 
 然后根据安装向导安装 **nodejs**
 

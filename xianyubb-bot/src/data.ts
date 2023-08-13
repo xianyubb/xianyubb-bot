@@ -20,7 +20,7 @@ export interface MessageType {
     at?: number,
     url?: string,
     title?: string,
-    content?: string | MessageType,
+    content?: string,
     image?: string,
     type?: "qq" | "group",
     lat?: string | number,

@@ -1,40 +1,39 @@
-import { WebSocket } from "ws";
-import * as events from "./Events"
-import data, { MessageType, Returnecho } from "./data";
+import { WebSocket } from 'ws';
+import * as events from './Events';
+import data, { Anonymous, MessageType, Returnecho } from './data';
 import { EventEmitter } from 'events';
-import * as uuid from "uuid";
-
-
+import * as uuid from 'uuid';
+import { group } from 'console';
 
 export class Bot {
   public BotEvents!: events.BotEvent;
   public WebSocketEvents!: events.WebSocketEvent;
-  public echoEvent!: EventEmitter
+  public echoEvent!: EventEmitter;
   bot: WebSocket;
 
   constructor(ws: string) {
-    this.bot = new WebSocket(ws)
-    this.BotEvents = events.bot
-    this.WebSocketEvents = events.wsevent
-    this.echoEvent = events.echo
+    this.bot = new WebSocket(ws);
+    this.BotEvents = events.bot;
+    this.WebSocketEvents = events.wsevent;
+    this.echoEvent = events.echo;
     this.bot.onopen = (events) => {
-      this.connect()
-    }
+      this.connect();
+    };
     this.bot.onmessage = (events) => {
-      this.Afterconnect(JSON.parse(events.data.toString()))
-    }
+      this.Afterconnect(JSON.parse(events.data.toString()));
+    };
   }
 
   private connect() {
-    this.WebSocketEvents.emit("connect")
+    this.WebSocketEvents.emit('connect');
   }
 
   private Afterconnect(msg: any) {
-    this.WebSocketEvents.emit("message", msg)
+    this.WebSocketEvents.emit('message', msg);
     data(msg, (type: any, data) => {
       if (type === 'echo') events.echo.emit(data.uuid, data);
-      this.BotEvents.emit(type, data)
-    })
+      this.BotEvents.emit(type, data);
+    });
   }
 
   /**
@@ -42,17 +41,19 @@ export class Bot {
    */
   public get_login_info() {
     return new Promise((reslove) => {
-      const echo = uuid.v4()
+      const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        reslove(data)
-      })
+        reslove(data);
+      });
 
-      this.bot.send(JSON.stringify({
-        action: "get_login_info",
-        echo: echo
-      }))
-    })
+      this.bot.send(
+        JSON.stringify({
+          action: 'get_login_info',
+          echo: echo,
+        })
+      );
+    });
   }
   /**
    * 设置登录号资料 (该api没有响应数据)
@@ -62,26 +63,34 @@ export class Bot {
    * @param college 学校
    * @param personal_note 个人说明
    */
-  public set_qq_profile(nickname: string, company: string, email: string, college: string, personal_note: string) {
+  public set_qq_profile(
+    nickname: string,
+    company: string,
+    email: string,
+    college: string,
+    personal_note: string
+  ) {
     return new Promise((reslove) => {
-      const echo = uuid.v4()
+      const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        reslove(data)
-      })
+        reslove(data);
+      });
 
-      this.bot.send(JSON.stringify({
-        action: "set_qq_profile",
-        params: {
-          nickname: nickname,
-          company: company,
-          email: email,
-          college: college,
-          personal_note: personal_note
-        },
-        echo: echo
-      }))
-    })
+      this.bot.send(
+        JSON.stringify({
+          action: 'set_qq_profile',
+          params: {
+            nickname: nickname,
+            company: company,
+            email: email,
+            college: college,
+            personal_note: personal_note,
+          },
+          echo: echo,
+        })
+      );
+    });
   }
 
   /**
@@ -89,17 +98,19 @@ export class Bot {
    */
   public qidian_get_account_info() {
     return new Promise((reslove) => {
-      const echo = uuid.v4()
+      const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        reslove(data)
-      })
+        reslove(data);
+      });
 
-      this.bot.send(JSON.stringify({
-        action: "qidian_get_account_info",
-        echo: echo
-      }))
-    })
+      this.bot.send(
+        JSON.stringify({
+          action: 'qidian_get_account_info',
+          echo: echo,
+        })
+      );
+    });
   }
 
   /**
@@ -108,20 +119,22 @@ export class Bot {
    */
   public _get_model_show(model: string) {
     return new Promise((reslove) => {
-      const echo = uuid.v4()
+      const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        reslove(data)
-      })
+        reslove(data);
+      });
 
-      this.bot.send(JSON.stringify({
-        action: "_get_model_show",
-        params: {
-          model: model
-        },
-        echo: echo
-      }))
-    })
+      this.bot.send(
+        JSON.stringify({
+          action: '_get_model_show',
+          params: {
+            model: model,
+          },
+          echo: echo,
+        })
+      );
+    });
   }
 
   /**
@@ -132,21 +145,23 @@ export class Bot {
    */
   public _set_model_show(model: string, model_show: string) {
     return new Promise((reslove) => {
-      const echo = uuid.v4()
+      const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        reslove(data)
-      })
+        reslove(data);
+      });
 
-      this.bot.send(JSON.stringify({
-        action: "_set_model_show",
-        params: {
-          model: model,
-          model_show: model_show
-        },
-        echo: echo
-      }))
-    })
+      this.bot.send(
+        JSON.stringify({
+          action: '_set_model_show',
+          params: {
+            model: model,
+            model_show: model_show,
+          },
+          echo: echo,
+        })
+      );
+    });
   }
 
   /**
@@ -155,20 +170,22 @@ export class Bot {
    */
   public get_online_clients(no_cache: boolean) {
     return new Promise((reslove) => {
-      const echo = uuid.v4()
+      const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        reslove(data)
-      })
+        reslove(data);
+      });
 
-      this.bot.send(JSON.stringify({
-        action: "get_online_clients",
-        params: {
-          no_cache: no_cache
-        },
-        echo: echo
-      }))
-    })
+      this.bot.send(
+        JSON.stringify({
+          action: 'get_online_clients',
+          params: {
+            no_cache: no_cache,
+          },
+          echo: echo,
+        })
+      );
+    });
   }
 
   /**
@@ -178,21 +195,23 @@ export class Bot {
    */
   public get_stranger_info(user_id: number, no_cache: boolean = false) {
     return new Promise((reslove) => {
-      const echo = uuid.v4()
+      const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        reslove(data)
-      })
+        reslove(data);
+      });
 
-      this.bot.send(JSON.stringify({
-        action: " get_stranger_info",
-        params: {
-          user_id: user_id,
-          no_cache: no_cache
-        },
-        echo: echo
-      }))
-    })
+      this.bot.send(
+        JSON.stringify({
+          action: ' get_stranger_info',
+          params: {
+            user_id: user_id,
+            no_cache: no_cache,
+          },
+          echo: echo,
+        })
+      );
+    });
   }
 
   /**
@@ -201,17 +220,19 @@ export class Bot {
    */
   public get_friend_list() {
     return new Promise((reslove) => {
-      const echo = uuid.v4()
+      const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        reslove(data)
-      })
+        reslove(data);
+      });
 
-      this.bot.send(JSON.stringify({
-        action: "get_friend_list",
-        echo: echo
-      }))
-    })
+      this.bot.send(
+        JSON.stringify({
+          action: 'get_friend_list',
+          echo: echo,
+        })
+      );
+    });
   }
 
   /**
@@ -220,17 +241,19 @@ export class Bot {
    */
   public get_unidirectional_friend_list() {
     return new Promise((reslove) => {
-      const echo = uuid.v4()
+      const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        reslove(data)
-      })
+        reslove(data);
+      });
 
-      this.bot.send(JSON.stringify({
-        action: "get_unidirectional_friend_list",
-        echo: echo
-      }))
-    })
+      this.bot.send(
+        JSON.stringify({
+          action: 'get_unidirectional_friend_list',
+          echo: echo,
+        })
+      );
+    });
   }
 
   /**
@@ -240,20 +263,22 @@ export class Bot {
    */
   public delete_friend(user_id: number) {
     return new Promise((reslove) => {
-      const echo = uuid.v4()
+      const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        reslove(data)
-      })
+        reslove(data);
+      });
 
-      this.bot.send(JSON.stringify({
-        action: "delete_friend",
-        params: {
-          user_id: user_id
-        },
-        echo: echo
-      }))
-    })
+      this.bot.send(
+        JSON.stringify({
+          action: 'delete_friend',
+          params: {
+            user_id: user_id,
+          },
+          echo: echo,
+        })
+      );
+    });
   }
 
   /**
@@ -263,20 +288,22 @@ export class Bot {
    */
   public delete_unidirectional_friend(user_id: number) {
     return new Promise((reslove) => {
-      const echo = uuid.v4()
+      const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        reslove(data)
-      })
+        reslove(data);
+      });
 
-      this.bot.send(JSON.stringify({
-        action: "delete_unidirectional_friend",
-        params: {
-          user_id: user_id
-        },
-        echo: echo
-      }))
-    })
+      this.bot.send(
+        JSON.stringify({
+          action: 'delete_unidirectional_friend',
+          params: {
+            user_id: user_id,
+          },
+          echo: echo,
+        })
+      );
+    });
   }
 
   /**
@@ -285,21 +312,17 @@ export class Bot {
    * @param msg 发送的信息
    * @param auto_escape 消息内容是否作为纯文本发送 ( 即不解析 CQ 码 ) , 只在 message 字段是字符串时有效
    */
-  public send_group_msg(
-    group_id: number,
-    msg: string,
-    auto_escape: boolean,
-  ) {
+  public send_group_msg(group_id: number, msg: string, auto_escape: boolean) {
     return new Promise((reslove) => {
-      const echo = uuid.v4()
+      const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        reslove(data)
-      })
+        reslove(data);
+      });
 
       this.bot.send(
         JSON.stringify({
-          action: "send_group_msg",
+          action: 'send_group_msg',
           params: {
             group_id: group_id,
             message: msg,
@@ -312,27 +335,22 @@ export class Bot {
   }
 
   /**
-  * 发送私聊消息
-  * @param user_id QQ号
-  * @param msg 发送的信息
-  * @param auto_escape 消息内容是否作为纯文本发送 ( 即不解析 CQ 码 ) , 只在 message 字段是字符串时有效
-  */
-  public send_private_msg(
-    user_id: number,
-    msg: string,
-    auto_escape: boolean,
-
-  ) {
+   * 发送私聊消息
+   * @param user_id QQ号
+   * @param msg 发送的信息
+   * @param auto_escape 消息内容是否作为纯文本发送 ( 即不解析 CQ 码 ) , 只在 message 字段是字符串时有效
+   */
+  public send_private_msg(user_id: number, msg: string, auto_escape: boolean) {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        resolve(data)
+        resolve(data);
       });
 
       this.bot.send(
         JSON.stringify({
-          action: "send_private_msg",
+          action: 'send_private_msg',
           params: {
             user_id: user_id,
             message: msg,
@@ -341,7 +359,7 @@ export class Bot {
           echo: echo,
         })
       );
-    })
+    });
   }
 
   /**
@@ -352,17 +370,23 @@ export class Bot {
    * @param group_id 群号 ( 消息类型为 group 时需要 )
    * @param auto_escape 消息内容是否作为纯文本发送 ( 即不解析 CQ 码 ) , 只在 message 字段是字符串时有效
    */
-  public send_msg(message: string, message_type?: string, user_id?: number, group_id?: number, auto_escape: boolean = false) {
+  public send_msg(
+    message: string,
+    message_type?: string,
+    user_id?: number,
+    group_id?: number,
+    auto_escape: boolean = false
+  ) {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        resolve(data)
+        resolve(data);
       });
 
       this.bot.send(
         JSON.stringify({
-          action: "send_msg",
+          action: 'send_msg',
           params: {
             message_type: message_type,
             group_id: group_id,
@@ -373,7 +397,7 @@ export class Bot {
           echo: echo,
         })
       );
-    })
+    });
   }
 
   /**
@@ -385,47 +409,47 @@ export class Bot {
       const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        resolve(data)
+        resolve(data);
       });
 
       this.bot.send(
         JSON.stringify({
-          action: "get_msg",
+          action: 'get_msg',
           params: {
             message_id: message_id,
           },
           echo: echo,
         })
       );
-    })
+    });
   }
 
   /**
-    * 撤回消息
-    * 该 API 无响应数据
-    * @param message_id 消息id
-    */
+   * 撤回消息
+   * 该 API 无响应数据
+   * @param message_id 消息id
+   */
   public delete_msg(message_id: number) {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        resolve(data)
+        resolve(data);
       });
 
       this.bot.send(
         JSON.stringify({
-          action: "delete_msg",
+          action: 'delete_msg',
           params: {
             message_id: message_id,
           },
           echo: echo,
         })
       );
-    })
+    });
   }
 
-  /** 
+  /**
    * 标记消息已读
    * 该 API 无响应数据
    * @param message_id 消息id
@@ -435,19 +459,19 @@ export class Bot {
       const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        resolve(data)
+        resolve(data);
       });
 
       this.bot.send(
         JSON.stringify({
-          action: "mark_msg_as_read",
+          action: 'mark_msg_as_read',
           params: {
             message_id: message_id,
           },
           echo: echo,
         })
       );
-    })
+    });
   }
 
   /**
@@ -460,19 +484,19 @@ export class Bot {
       const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        resolve(data)
+        resolve(data);
       });
 
       this.bot.send(
         JSON.stringify({
-          action: "get_forward_msg",
+          action: 'get_forward_msg',
           params: {
             message_id: message_id,
           },
           echo: echo,
         })
       );
-    })
+    });
   }
 
   /**
@@ -485,12 +509,12 @@ export class Bot {
       const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        resolve(data)
+        resolve(data);
       });
 
       this.bot.send(
         JSON.stringify({
-          action: "send_group_forward_msg",
+          action: 'send_group_forward_msg',
           params: {
             group_id: group_id,
             message: message,
@@ -498,25 +522,25 @@ export class Bot {
           echo: echo,
         })
       );
-    })
+    });
   }
 
   /**
-  * 发送合并转发 ( 好友 )
-  * @param user_id 好友QQ号
-  * @param message 自定义转发消息, 具体看 https://docs.go-cqhttp.org/cqcode
-  */
+   * 发送合并转发 ( 好友 )
+   * @param user_id 好友QQ号
+   * @param message 自定义转发消息, 具体看 https://docs.go-cqhttp.org/cqcode
+   */
   public send_private_forward_msg(user_id: number, message: MessageType) {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        resolve(data)
+        resolve(data);
       });
 
       this.bot.send(
         JSON.stringify({
-          action: "send_private_forward_msg",
+          action: 'send_private_forward_msg',
           params: {
             user_id: user_id,
             message: message,
@@ -524,26 +548,26 @@ export class Bot {
           echo: echo,
         })
       );
-    })
+    });
   }
 
   /**
-  * 获取群消息历史记录
-  * 不提供起始序号将默认获取最新的消息
-  * @param group_id 群号
-  * @param message_seq 起始消息序号, 可通过 get_msg 获得
-  */
+   * 获取群消息历史记录
+   * 不提供起始序号将默认获取最新的消息
+   * @param group_id 群号
+   * @param message_seq 起始消息序号, 可通过 get_msg 获得
+   */
   public get_group_msg_history(group_id: number, message_seq?: number) {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        resolve(data)
+        resolve(data);
       });
 
       this.bot.send(
         JSON.stringify({
-          action: "get_group_msg_history",
+          action: 'get_group_msg_history',
           params: {
             group_id: group_id,
             message: message_seq,
@@ -551,7 +575,7 @@ export class Bot {
           echo: echo,
         })
       );
-    })
+    });
   }
 
   /**
@@ -563,19 +587,19 @@ export class Bot {
       const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        resolve(data)
+        resolve(data);
       });
 
       this.bot.send(
         JSON.stringify({
-          action: "get_image",
+          action: 'get_image',
           params: {
-            file: file
+            file: file,
           },
           echo: echo,
         })
       );
-    })
+    });
   }
 
   /**
@@ -587,16 +611,16 @@ export class Bot {
       const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        resolve(data)
+        resolve(data);
       });
 
       this.bot.send(
         JSON.stringify({
-          action: "can_send_image",
+          action: 'can_send_image',
           echo: echo,
         })
       );
-    })
+    });
   }
 
   /**
@@ -610,19 +634,19 @@ export class Bot {
       const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        resolve(data)
+        resolve(data);
       });
 
       this.bot.send(
         JSON.stringify({
-          action: "ocr_image",
+          action: 'ocr_image',
           params: {
-            image: image
+            image: image,
           },
           echo: echo,
         })
       );
-    })
+    });
   }
 
   /**
@@ -636,38 +660,40 @@ export class Bot {
       const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        resolve(data)
+        resolve(data);
       });
-      this.bot.send(JSON.stringify({
-        action: "get_record",
-        params: {
-          file: file,
-          out_format: out_format
-        },
-        echo: echo
-      }))
-    })
+      this.bot.send(
+        JSON.stringify({
+          action: 'get_record',
+          params: {
+            file: file,
+            out_format: out_format,
+          },
+          echo: echo,
+        })
+      );
+    });
   }
 
   /**
- * 检查是否可以发送语音
- * 该 API 无需参数
- */
+   * 检查是否可以发送语音
+   * 该 API 无需参数
+   */
   public can_send_record() {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        resolve(data)
+        resolve(data);
       });
 
       this.bot.send(
         JSON.stringify({
-          action: "can_send_record",
+          action: 'can_send_record',
           echo: echo,
         })
       );
-    })
+    });
   }
 
   /**
@@ -676,52 +702,65 @@ export class Bot {
    * @param approve 是否同意请求 (默认:true)
    * @param remark 添加后的好友备注（仅在同意时有效,默认空）
    */
-  public set_friend_add_request(flag: string, approve: boolean = true, remark: string = "") {
+  public set_friend_add_request(
+    flag: string,
+    approve: boolean = true,
+    remark: string = ''
+  ) {
     return new Promise((resolve) => {
-      const echo = uuid.v4()
+      const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        resolve(data)
-      })
+        resolve(data);
+      });
 
-      this.bot.send(JSON.stringify({
-        action: "set_friend_add_request",
-        params: {
-          flag: flag,
-          approve: approve,
-          remark: remark
-        },
-        echo: echo
-      }))
-    })
+      this.bot.send(
+        JSON.stringify({
+          action: 'set_friend_add_request',
+          params: {
+            flag: flag,
+            approve: approve,
+            remark: remark,
+          },
+          echo: echo,
+        })
+      );
+    });
   }
 
   /**
    * 处理加群请求／邀请
-   * @param flag 加好友请求的 
-   * @param sub_type 
+   * @param flag 加好友请求的
+   * @param sub_type
    * @param approve 是否同意请求 (默认:true)
    * @param reason 拒绝理由（仅在拒绝时有效,默认空)
    */
-  public set_group_add_request(flag: string, sub_type: "add" | "invite", approve: boolean = true, reason: string = "") {
+  public set_group_add_request(
+    flag: string,
+    sub_type: 'add' | 'invite',
+    approve: boolean = true,
+    reason: string = ''
+  ) {
     return new Promise((resolve) => {
-      const echo = uuid.v4()
+      const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        resolve(data)
-      })
+        resolve(data);
+      });
 
-      this.bot.send(JSON.stringify({
-        action: "set_group_add_request",
-        params: {
-          flag: flag,
-          sub_type: sub_type,
-          approve: approve,
-          reason: reason
-        },
-        echo: echo
-      }))
-    })
+      this.bot.send(
+        JSON.stringify({
+          action: 'set_group_add_request',
+          params: {
+            flag: flag,
+            sub_type: sub_type,
+            approve: approve,
+            reason: reason,
+          },
+          echo: echo,
+        })
+      );
+    });
   }
 
   /**
@@ -731,21 +770,23 @@ export class Bot {
    */
   public get_group_info(group_id: number, no_cache: boolean = false) {
     return new Promise((resolve) => {
-      const echo = uuid.v4()
+      const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        resolve(data)
-      })
+        resolve(data);
+      });
 
-      this.bot.send(JSON.stringify({
-        action: "get_group_info",
-        params: {
-          group_id: group_id,
-          no_cache: no_cache
-        },
-        echo: echo
-      }))
-    })
+      this.bot.send(
+        JSON.stringify({
+          action: 'get_group_info',
+          params: {
+            group_id: group_id,
+            no_cache: no_cache,
+          },
+          echo: echo,
+        })
+      );
+    });
   }
 
   /**
@@ -754,20 +795,22 @@ export class Bot {
    */
   public get_group_list(no_cache: boolean = false) {
     return new Promise((resolve) => {
-      const echo = uuid.v4()
+      const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        resolve(data)
-      })
+        resolve(data);
+      });
 
-      this.bot.send(JSON.stringify({
-        action: "get_group_list",
-        params: {
-          no_cache: no_cache
-        },
-        echo: echo
-      }))
-    })
+      this.bot.send(
+        JSON.stringify({
+          action: 'get_group_list',
+          params: {
+            no_cache: no_cache,
+          },
+          echo: echo,
+        })
+      );
+    });
   }
 
   /**
@@ -776,24 +819,30 @@ export class Bot {
    * @param user_id QQ号
    * @param no_cache 是否不使用缓存（使用缓存可能更新不及时, 但响应更快,默认:false)
    */
-  public get_group_menber_info(group_id: number, user_id: number, no_cache: boolean = false) {
+  public get_group_menber_info(
+    group_id: number,
+    user_id: number,
+    no_cache: boolean = false
+  ) {
     return new Promise((resolve) => {
-      const echo = uuid.v4()
+      const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        resolve(data)
-      })
+        resolve(data);
+      });
 
-      this.bot.send(JSON.stringify({
-        action: "get_group_menber_info",
-        params: {
-          group_id: group_id,
-          user_id: user_id,
-          no_cache: no_cache
-        },
-        echo: echo
-      }))
-    })
+      this.bot.send(
+        JSON.stringify({
+          action: 'get_group_menber_info',
+          params: {
+            group_id: group_id,
+            user_id: user_id,
+            no_cache: no_cache,
+          },
+          echo: echo,
+        })
+      );
+    });
   }
 
   /**
@@ -803,21 +852,23 @@ export class Bot {
    */
   public get_group_menber_list(group_id: number, no_cache: boolean = false) {
     return new Promise((resolve) => {
-      const echo = uuid.v4()
+      const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        resolve(data)
-      })
+        resolve(data);
+      });
 
-      this.bot.send(JSON.stringify({
-        action: "get_group_menber_list",
-        params: {
-          group_id: group_id,
-          no_cache: no_cache
-        },
-        echo: echo
-      }))
-    })
+      this.bot.send(
+        JSON.stringify({
+          action: 'get_group_menber_list',
+          params: {
+            group_id: group_id,
+            no_cache: no_cache,
+          },
+          echo: echo,
+        })
+      );
+    });
   }
 
   /**
@@ -825,23 +876,34 @@ export class Bot {
    * @param group_id 群号
    * @param type 	要获取的群荣誉类型, 可传入 talkative performer legend strong_newbie emotion 以分别获取单个类型的群荣誉数据, 或传入 all 获取所有数据
    */
-  public get_group_honor_info(group_id: number, type: "talkactive" | "performer" | "legend" | "strong_newbie" | "emotion" | "all") {
+  public get_group_honor_info(
+    group_id: number,
+    type:
+      | 'talkactive'
+      | 'performer'
+      | 'legend'
+      | 'strong_newbie'
+      | 'emotion'
+      | 'all'
+  ) {
     return new Promise((resolve) => {
-      const echo = uuid.v4()
+      const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        resolve(data)
-      })
+        resolve(data);
+      });
 
-      this.bot.send(JSON.stringify({
-        action: "get_group_honor_info",
-        params: {
-          group_id: group_id,
-          type: type
-        },
-        echo: echo
-      }))
-    })
+      this.bot.send(
+        JSON.stringify({
+          action: 'get_group_honor_info',
+          params: {
+            group_id: group_id,
+            type: type,
+          },
+          echo: echo,
+        })
+      );
+    });
   }
 
   /**
@@ -850,17 +912,19 @@ export class Bot {
    */
   public get_group_system_msg() {
     return new Promise((resolve) => {
-      const echo = uuid.v4()
+      const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        resolve(data)
-      })
+        resolve(data);
+      });
 
-      this.bot.send(JSON.stringify({
-        action: "get_group_system_msg",
-        echo: echo
-      }))
-    })
+      this.bot.send(
+        JSON.stringify({
+          action: 'get_group_system_msg',
+          echo: echo,
+        })
+      );
+    });
   }
 
   /**
@@ -869,20 +933,22 @@ export class Bot {
    */
   public get_essence_msg_list(group_id: number) {
     return new Promise((resolve) => {
-      const echo = uuid.v4()
+      const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        resolve(data)
-      })
+        resolve(data);
+      });
 
-      this.bot.send(JSON.stringify({
-        action: "get_essence_msg_list",
-        params: {
-          group_id: group_id
-        },
-        echo: echo
-      }))
-    })
+      this.bot.send(
+        JSON.stringify({
+          action: 'get_essence_msg_list',
+          params: {
+            group_id: group_id,
+          },
+          echo: echo,
+        })
+      );
+    });
   }
 
   /**
@@ -891,20 +957,22 @@ export class Bot {
    */
   public get_group_at_all_remain(group_id: number) {
     return new Promise((resolve) => {
-      const echo = uuid.v4()
+      const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        resolve(data)
-      })
+        resolve(data);
+      });
 
-      this.bot.send(JSON.stringify({
-        action: "get_group_at_all_remain",
-        params: {
-          group_id: group_id
-        },
-        echo: echo
-      }))
-    })
+      this.bot.send(
+        JSON.stringify({
+          action: 'get_group_at_all_remain',
+          params: {
+            group_id: group_id,
+          },
+          echo: echo,
+        })
+      );
+    });
   }
 
   /**
@@ -915,21 +983,23 @@ export class Bot {
    */
   public set_group_name(group_id: number, group_name: string) {
     return new Promise((resolve) => {
-      const echo = uuid.v4()
+      const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        resolve(data)
-      })
+        resolve(data);
+      });
 
-      this.bot.send(JSON.stringify({
-        action: "set_group_name",
-        params: {
-          group_id: group_id,
-          group_name: group_name
-        },
-        echo: echo
-      }))
-    })
+      this.bot.send(
+        JSON.stringify({
+          action: 'set_group_name',
+          params: {
+            group_id: group_id,
+            group_name: group_name,
+          },
+          echo: echo,
+        })
+      );
+    });
   }
 
   /**
@@ -940,22 +1010,24 @@ export class Bot {
    */
   public set_group_portrait(group_id: number, file: string, cache: number = 1) {
     return new Promise((resolve) => {
-      const echo = uuid.v4()
+      const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        resolve(data)
-      })
+        resolve(data);
+      });
 
-      this.bot.send(JSON.stringify({
-        action: "set_group_portrait",
-        params: {
-          group_id: group_id,
-          file: file,
-          cache: cache
-        },
-        echo: echo
-      }))
-    })
+      this.bot.send(
+        JSON.stringify({
+          action: 'set_group_portrait',
+          params: {
+            group_id: group_id,
+            file: file,
+            cache: cache,
+          },
+          echo: echo,
+        })
+      );
+    });
   }
 
   /**
@@ -965,79 +1037,403 @@ export class Bot {
    * @param user_id 要设置管理员的 QQ 号
    * @param enable true 为设置, false 为取消
    */
-  public set_group_admin(group_id: number, user_id: number, enable: boolean = true) {
+  public set_group_admin(
+    group_id: number,
+    user_id: number,
+    enable: boolean = true
+  ) {
     return new Promise((resolve) => {
-      const echo = uuid.v4()
+      const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        resolve(data)
-      })
+        resolve(data);
+      });
 
-      this.bot.send(JSON.stringify({
-        action: "set_group_admin",
-        params: {
-          group_id: group_id,
-          user_id: user_id,
-          enable: enable
-        },
-        echo: echo
-      }))
-    })
+      this.bot.send(
+        JSON.stringify({
+          action: 'set_group_admin',
+          params: {
+            group_id: group_id,
+            user_id: user_id,
+            enable: enable,
+          },
+          echo: echo,
+        })
+      );
+    });
   }
 
   /**
-  * 设置群名片 ( 群备注 )
-  * 该 API 无响应数据
-  * @param group_id 群号
-  * @param user_id 要设置的 QQ 号
-  * @param card 群名片内容, 不填或空字符串表示删除群名片
-  */
-  public set_group_card(group_id: number, user_id: number, card: string = "") {
+   * 设置群名片 ( 群备注 )
+   * 该 API 无响应数据
+   * @param group_id 群号
+   * @param user_id 要设置的 QQ 号
+   * @param card 群名片内容, 不填或空字符串表示删除群名片
+   */
+  public set_group_card(group_id: number, user_id: number, card: string = '') {
     return new Promise((resolve) => {
-      const echo = uuid.v4()
+      const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        resolve(data)
-      })
+        resolve(data);
+      });
 
-      this.bot.send(JSON.stringify({
-        action: "set_group_card",
-        params: {
-          group_id: group_id,
-          user_id: user_id,
-          card: card
-        },
-        echo: echo
-      }))
-    })
+      this.bot.send(
+        JSON.stringify({
+          action: 'set_group_card',
+          params: {
+            group_id: group_id,
+            user_id: user_id,
+            card: card,
+          },
+          echo: echo,
+        })
+      );
+    });
   }
 
   /**
-    * 设置群组专属头衔
-    * 该 API 无响应数据
-    * @param group_id 群号
-    * @param user_id 要设置的 QQ 号
-    * @param special_title 专属头衔, 不填或空字符串表示删除专属头衔
-    * @param duration 专属头衔有效期, 单位秒, -1 表示永久, 不过此项似乎没有效果, 可能是只有某些特殊的时间长度有效, 有待测试
-    */
-  public set_group_special_title(group_id: number, user_id: number, special_title: string = "", duration: number = -1) {
+   * 设置群组专属头衔
+   * 该 API 无响应数据
+   * @param group_id 群号
+   * @param user_id 要设置的 QQ 号
+   * @param special_title 专属头衔, 不填或空字符串表示删除专属头衔
+   * @param duration 专属头衔有效期, 单位秒, -1 表示永久, 不过此项似乎没有效果, 可能是只有某些特殊的时间长度有效, 有待测试
+   */
+  public set_group_special_title(
+    group_id: number,
+    user_id: number,
+    special_title: string = '',
+    duration: number = -1
+  ) {
     return new Promise((resolve) => {
-      const echo = uuid.v4()
+      const echo = uuid.v4();
 
       this.echoEvent.once(echo, (data) => {
-        resolve(data)
-      })
+        resolve(data);
+      });
 
-      this.bot.send(JSON.stringify({
-        action: "set_group_special_title",
-        params: {
-          group_id: group_id,
-          user_id: user_id,
-          special_title: special_title,
-          duration: duration
-        },
-        echo: echo
-      }))
-    })
+      this.bot.send(
+        JSON.stringify({
+          action: 'set_group_special_title',
+          params: {
+            group_id: group_id,
+            user_id: user_id,
+            special_title: special_title,
+            duration: duration,
+          },
+          echo: echo,
+        })
+      );
+    });
   }
-}  
+
+  /**
+   * 群单人禁言
+   * 该 API 无响应数据
+   * @param group_id 群号
+   * @param user_id 要禁言的 QQ 号
+   * @param duration 禁言时长, 单位秒, 0 表示取消禁言
+   */
+  public set_group_ban(
+    group_id: number,
+    user_id: number,
+    duration: number = 30 * 60
+  ) {
+    return new Promise((resolve) => {
+      const echo = uuid.v4();
+
+      this.echoEvent.once(echo, (data) => {
+        resolve(data);
+      });
+
+      this.bot.send(
+        JSON.stringify({
+          action: 'set_group_ban',
+          params: {
+            group_id: group_id,
+            user_id: user_id,
+            duration: duration,
+          },
+          echo: echo,
+        })
+      );
+    });
+  }
+
+  /**
+   * 群全员禁言
+   * 该 API 无响应数据
+   * @param group_id 群号
+   * @param enable 是否禁言
+   */
+  public set_group_whole_ban(group_id: number, enable: boolean = true) {
+    return new Promise((resolve) => {
+      const echo = uuid.v4();
+
+      this.echoEvent.once(echo, (data) => {
+        resolve(data);
+      });
+
+      this.bot.send(
+        JSON.stringify({
+          action: 'set_group_whole_ban',
+          params: {
+            group_id: group_id,
+            enable: enable,
+          },
+          echo: echo,
+        })
+      );
+    });
+  }
+
+  /**
+   * 群匿名用户禁言
+   * 该 API 从 go-cqhttp-v0.9.36 开始支持
+   * 该 API 无响应数据
+   * 上面的 anonymous 和 anonymous_flag 两者任选其一传入即可, 若都传入, 则使用 anonymous。
+   * @param group_id 群号
+   * @param duration 禁言时长, 单位秒, 无法取消匿名用户禁言
+   * @param anonymous 可选, 要禁言的匿名用户的 flag（需从群消息上报的数据中获得
+   * @param flag 可选, 要禁言的匿名用户对象（群消息上报的 anonymous 字段）
+   */
+  public set_group_anonymous_ban(
+    group_id: number,
+    duration: number,
+    anonymous?: Anonymous,
+    flag?: string
+  ) {
+    return new Promise((resolve) => {
+      const echo = uuid.v4();
+
+      this.echoEvent.once(echo, (data) => {
+        resolve(data);
+      });
+
+      this.bot.send(
+        JSON.stringify({
+          action: 'set_group_anonymous_ban',
+          params: {
+            group_id: group_id,
+            anonymous: anonymous,
+            flag: flag,
+            duration: duration,
+          },
+          echo: echo,
+        })
+      );
+    });
+  }
+
+  /**
+   * 设置精华消息
+   * 该 API 没有响应数据
+   * @param message_id 消息ID
+   */
+  public set_essence_msg(message_id: number) {
+    return new Promise((resolve) => {
+      const echo = uuid.v4();
+
+      this.echoEvent.once(echo, (data) => {
+        resolve(data);
+      });
+
+      this.bot.send(
+        JSON.stringify({
+          action: 'set_essence_msg',
+          params: {
+            message_id: message_id,
+          },
+          echo: echo,
+        })
+      );
+    });
+  }
+
+  /**
+   * 移出精华消息
+   * 该 API 没有响应数据
+   * @param message_id 消息ID
+   */
+  public delete_essence_msg(message_id: number) {
+    return new Promise((resolve) => {
+      const echo = uuid.v4();
+
+      this.echoEvent.once(echo, (data) => {
+        resolve(data);
+      });
+
+      this.bot.send(
+        JSON.stringify({
+          action: 'delete_essence_msg',
+          params: {
+            message_id: message_id,
+          },
+          echo: echo,
+        })
+      );
+    });
+  }
+
+  /**
+   * 移出精华消息
+   * 该 API 没有响应数据
+   * @param group_id 群号
+   */
+  public send_group_sign(group_id: number) {
+    return new Promise((resolve) => {
+      const echo = uuid.v4();
+
+      this.echoEvent.once(echo, (data) => {
+        resolve(data);
+      });
+
+      this.bot.send(
+        JSON.stringify({
+          action: 'send_group_sign',
+          params: {
+            message_id: group_id,
+          },
+          echo: echo,
+        })
+      );
+    });
+  }
+
+  /**
+   * 群设置匿名
+   * 该 API 无响应数据
+   * @param group_id 群号
+   * @param enable 是否禁言
+   */
+  public set_group_anonymous(group_id: number, enable: boolean = true) {
+    return new Promise((resolve) => {
+      const echo = uuid.v4();
+
+      this.echoEvent.once(echo, (data) => {
+        resolve(data);
+      });
+
+      this.bot.send(
+        JSON.stringify({
+          action: 'set_group_anonymous',
+          params: {
+            group_id: group_id,
+            enable: enable,
+          },
+          echo: echo,
+        })
+      );
+    });
+  }
+
+  /**
+   * 发送群公告
+   * 该 API 没有响应数据
+   * @param group_id 群号
+   * @param content 公告内容
+   * @param image 图片路径(可选)
+   */
+  public _send_group_notice(group_id: number, content: string, image?: string) {
+    return new Promise((resolve) => {
+      const echo = uuid.v4();
+
+      this.echoEvent.once(echo, (data) => {
+        resolve(data);
+      });
+
+      this.bot.send(
+        JSON.stringify({
+          action: '_send_group_notice',
+          params: {
+            group_id: group_id,
+            content: content,
+            image: image
+          },
+          echo: echo,
+        })
+      );
+    });
+  }
+
+  /**
+   * 获取群公告
+   * @param group_id 群号
+   */
+  public _get_group_notice(group_id: number) {
+    return new Promise((resolve) => {
+      const echo = uuid.v4();
+
+      this.echoEvent.once(echo, (data) => {
+        resolve(data);
+      });
+
+      this.bot.send(
+        JSON.stringify({
+          action: '_get_group_notice',
+          params: {
+            group_id: group_id,
+          },
+          echo: echo,
+        })
+      );
+    });
+  }
+
+  /**
+   * 群组踢人
+   * 该 API 无响应数据
+   * @param group_id 群号
+   * @param user_id 要踢的 QQ 号
+   * @param reject_add_request 拒绝此人的加群请求
+   */
+  public set_group_kick(group_id: number, user_id: number, reject_add_request: boolean) {
+    return new Promise((resolve) => {
+      const echo = uuid.v4();
+
+      this.echoEvent.once(echo, (data) => {
+        resolve(data);
+      });
+
+      this.bot.send(
+        JSON.stringify({
+          action: 'set_group_kick',
+          params: {
+            group_id: group_id,
+            user_id: user_id,
+            reject_add_request: reject_add_request
+          },
+          echo: echo,
+        })
+      );
+    });
+  }
+
+  /**
+   * 退出群组
+   * 该 API 无响应数据
+   * @param group_id 群号
+   * @param is_dismiss 是否解散, 如果登录号是群主, 则仅在此项为 true 时能够解散
+   */
+  public set_group_leave(group_id: number, is_dismiss: boolean = false) {
+    return new Promise((resolve) => {
+      const echo = uuid.v4();
+
+      this.echoEvent.once(echo, (data) => {
+        resolve(data);
+      });
+
+      this.bot.send(
+        JSON.stringify({
+          action: 'set_group_kick',
+          params: {
+            group_id: group_id,
+            is_dismiss: is_dismiss
+          },
+          echo: echo,
+        })
+      );
+    });
+  }
+}
