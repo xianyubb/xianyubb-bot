@@ -157,14 +157,14 @@ export interface GroupDeleteMsg {
   message_id: number
 }
 
-export interface GroupMenberAdd {
+export interface GroupMemberAdd {
   sub_type: string
   user_id: number
   group_id: number,
   operator_id: number,
 }
 
-export interface GroupMenberDecrease {
+export interface GroupMemberDecrease {
   sub_type: string
   group_id: number,
   operator_id: number,
@@ -207,13 +207,13 @@ export interface GroupRedbagLuckyKing {
   target_id: number
 }
 
-export interface GroupMenberHonorChange {
+export interface GroupMemberHonorChange {
   group_id: number,
   user_id: number,
   honor_type: string
 }
 
-export interface GroupMenberTitleChange {
+export interface GroupMemberTitleChange {
   group_id: number,
   user_id: number,
   title: string
@@ -264,22 +264,22 @@ export const notice = (data: Notice, callback: (Events: string, msg: any) => voi
       callback("onGroupDeleteMsg", GroupDeleteMsg)
       break
     case "group_increase":
-      const GroupMenberAdd: GroupMenberAdd = {
+      const GroupMemberAdd: GroupMemberAdd = {
         sub_type: data.sub_type,
         group_id: data.group_id,
         user_id: data.user_id,
         operator_id: data.operator_id
       }
-      callback("onGroupMenberAdd", GroupMenberAdd)
+      callback("onGroupMemberAdd", GroupMemberAdd)
       break
     case "group_decrease":
-      const GroupMenberDecrease: GroupMenberDecrease = {
+      const GroupMemberDecrease: GroupMemberDecrease = {
         sub_type: data.sub_type,
         group_id: data.group_id,
         operator_id: data.operator_id,
         user_id: data.user_id
       }
-      callback("onGroupMenberDecrease", GroupMenberDecrease)
+      callback("onGroupMemberDecrease", GroupMemberDecrease)
       break;
     case "group_admin":
       const GroupAdminChange: GroupAdminChange = {
@@ -333,20 +333,20 @@ export const notice = (data: Notice, callback: (Events: string, msg: any) => voi
           callback("onGroupRedbagLuckyKing", GroupRedbagLuckyKing)
           break
         case "honor":
-          const GroupMenberHonorChange: GroupMenberHonorChange = {
+          const GroupMemberHonorChange: GroupMemberHonorChange = {
             group_id: data.group_id,
             user_id: data.user_id,
             honor_type: data.honor_type
           }
-          callback("onGroupMenberHonorChange", GroupMenberHonorChange)
+          callback("onGroupMemberHonorChange", GroupMemberHonorChange)
           break;
         case "title":
-          const GroupMenberTitleChange: GroupMenberTitleChange = {
+          const GroupMemberTitleChange: GroupMemberTitleChange = {
             group_id: data.group_id,
             user_id: data.user_id,
             title: data.title
           }
-          callback("onGroupMenberTitleChange", GroupMenberTitleChange)
+          callback("onGroupMemberTitleChange", GroupMemberTitleChange)
           break
       }
       break
@@ -463,13 +463,13 @@ const metaevent = (data: MetaEvent, callback: (Events: string, msg: any) => void
     case "heartbeat":
       const HeartBeat: HeartBeat = {
         status: data.status,
-        interval:data.interval
+        interval: data.interval
       }
       callback("onHeartBeat", HeartBeat)
       break
     case "lifecycle":
       const LifeCycle: LifeCycle = {
-        sub_type:data.sub_type
+        sub_type: data.sub_type
       }
       callback("onLifeCycle", LifeCycle)
       break

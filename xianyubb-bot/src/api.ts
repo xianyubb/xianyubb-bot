@@ -819,7 +819,7 @@ export class Bot {
    * @param user_id QQ号
    * @param no_cache 是否不使用缓存（使用缓存可能更新不及时, 但响应更快,默认:false)
    */
-  public get_group_menber_info(
+  public get_group_member_info(
     group_id: number,
     user_id: number,
     no_cache: boolean = false
@@ -833,7 +833,7 @@ export class Bot {
 
       this.bot.send(
         JSON.stringify({
-          action: 'get_group_menber_info',
+          action: 'get_group_member_info',
           params: {
             group_id: group_id,
             user_id: user_id,
@@ -850,7 +850,7 @@ export class Bot {
    * @param group_id 群号
    * @param no_cache 是否不使用缓存（使用缓存可能更新不及时, 但响应更快,默认:false)
    */
-  public get_group_menber_list(group_id: number, no_cache: boolean = false) {
+  public get_group_member_list(group_id: number, no_cache: boolean = false) {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -860,7 +860,7 @@ export class Bot {
 
       this.bot.send(
         JSON.stringify({
-          action: 'get_group_menber_list',
+          action: 'get_group_member_list',
           params: {
             group_id: group_id,
             no_cache: no_cache,
