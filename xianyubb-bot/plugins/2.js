@@ -1,4 +1,7 @@
-const bot = require("../app").bot
+
+///// <reference path="C:/Users/Administrator/Desktop/xianyubb-bot/completion/index.d.ts" />
+
+let bot = require("../app.js").bot
 
 console.log("hello world!")
 
@@ -8,3 +11,7 @@ async function a() {
 }
 
 a()
+bot.BotEvents.on()
+
+
+

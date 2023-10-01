@@ -39,9 +39,9 @@ callback : Function
 
 #### `onGroupDeteleMsg`-群消息撤回
 
-#### `onGroupMenberAdd`-群成员增加
+#### `onGroupMemberAdd`-群成员增加
 
-#### `onGroupMenberDecrease`-群成员减少
+#### `onGroupMemberDecrease`-群成员减少
 
 #### `onGroupAdminChange`-群管理员变动
 
@@ -59,11 +59,11 @@ callback : Function
 
 > 此事件无法在手表协议上触发
 
-#### `onGroupMenberHonorChange`-群成员荣誉变更提示
+#### `onGroupMemberHonorChange`-群成员荣誉变更提示
 
 > 此事件无法在手表协议上触发
 
-#### `onGroupMenberTitleChange`-群成员头衔变更
+#### `onGroupMemberTitleChange`-群成员头衔变更
 
 #### `onGroupCardChange`-群成员名片更新
 

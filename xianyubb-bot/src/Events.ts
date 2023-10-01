@@ -16,7 +16,7 @@ export interface WebSocketEvent extends EventEmitter {
   removeAllListeners(event: "connect"): any
 
   once(event: "message", listener: (msg: data.Data) => void): any
-  once(event: "message", listener: () => void): any
+  once(event: "connect", listener: () => void): any
 }
 
 export interface BotEvent extends EventEmitter {
@@ -144,6 +144,6 @@ export interface BotEvent extends EventEmitter {
   once(Event: "echo", listener: (msg: data.Returnecho) => void): any;
 }
 
-export const bot: BotEvent = new EventEmitter()
+export const BotEvents: BotEvent= new EventEmitter()
 export const wsevent: WebSocketEvent = new EventEmitter()
 export const echo: EventEmitter = new EventEmitter()

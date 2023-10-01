@@ -31,9 +31,7 @@
   <ItemGroup>
     <None Include="app.ts" />
     <Content Include=".editorconfig" />
-    <Content Include="package.json" />
     <Content Include="plugins\2.js" />
-    <Content Include="plugins\test.js" />
     <Content Include="README.md" />
     <Content Include="tsconfig.json" />
   </ItemGroup>

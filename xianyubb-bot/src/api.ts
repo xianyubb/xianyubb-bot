@@ -1,9 +1,8 @@
 import { WebSocket } from 'ws';
 import * as events from './Events';
-import data, { Anonymous, MessageType, Returnecho } from './data';
+import data, { Anonymous, MessageType } from './data';
 import { EventEmitter } from 'events';
 import * as uuid from 'uuid';
-import { group } from 'console';
 
 export class Bot {
   public BotEvents!: events.BotEvent;
@@ -13,7 +12,7 @@ export class Bot {
 
   constructor(ws: string) {
     this.bot = new WebSocket(ws);
-    this.BotEvents = events.bot;
+    this.BotEvents = events.BotEvents;
     this.WebSocketEvents = events.wsevent;
     this.echoEvent = events.echo;
     this.bot.onopen = (events) => {
