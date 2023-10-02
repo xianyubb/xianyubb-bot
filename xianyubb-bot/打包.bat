@@ -6,3 +6,4 @@ del /f/s/q dist\src\plugins.js.map
 del /f/s/q dist\src\data.js.map
 copy package.json dist
 bz a "xianyubb-bot.zip" "dist"
+rmdir /s/q dist

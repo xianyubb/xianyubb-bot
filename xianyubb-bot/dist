@@ -1,0 +1,37 @@
+{
+  "name": "xianyubb-bot",
+  "version": "0.1.2",
+  "description": "xianyubb-bot",
+  "main": "app.js",
+  "author": {
+    "name": "xianyubb"
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "打包.bat"
+  },  "devDependencies": {
+    "@types/node": "^14.14.7",
+    "@types/uuid": "^9.0.2",
+    "@types/ws": "^8.5.5",
+    "@typescript-eslint/eslint-plugin": "^5.33.0",
+    "@typescript-eslint/parser": "^5.33.0",
+    "eslint": "^8.21.0",
+    "graphql-ws": "^5.14.0",
+    "typescript": "^4.5.2",
+    "ws": "^8.13.0"
+  },
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaVersion": "latest",
+      "sourceType": "module"
+    },
+    "plugins": [
+      "@typescript-eslint"
+    ]
+  },
+  "dependencies": {
+    "keypress": "^0.2.1",
+    "uuid": "^9.0.0"
+  }
+}
