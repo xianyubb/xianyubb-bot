@@ -1,7 +1,20 @@
 ### 编写须知
 
-1. 目前仅支持单个加载js插件
+1. 目前仅支持加载单个js文件
 2. 必须放置在 **plugins** 文件夹下
+
+### 插件补全
+
+```js
+/// <reference path="index.d.ts" />
+// const bot = require("../app").bot 
+
+bot.BotEvents.on()
+
+```
+**特殊原因,无法直接将补全和导入同时使用**
+
+**如果要使用补全,请按以上方法.插件写完后,请取消第二行的注释**
 
 ### 注册插件
 
@@ -18,7 +31,7 @@ const plugins = new Plugin("test", "test", [0, 1, 0], { author:"hhh" })
 ### 插件示例
 
 ```js
-let bot = require("../app").bot
+const bot = require("../app").bot
 
 bot.BotEvents.on("onReceiveGroupMessage", (msg) => {
    console.log(msg)

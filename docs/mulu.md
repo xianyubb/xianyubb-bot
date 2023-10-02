@@ -1,5 +1,6 @@
 ```filetree
 xianyubb-bot/
+|-app.js 
 |-plugins/ // 插件文件夹
 |         example.js // 示例插件
 |-config/ // 配置文件夹
@@ -10,8 +11,9 @@ xianyubb-bot/
 |-src/ // 项目源码
 |     Events.js
 |     data.js
-|     main.js
-|
+|     api.js
+|     BDS.js
+|     plugins.js
 |-package.json // 项目文件
 |
 |
