@@ -1,7 +1,6 @@
 import * as fs from "fs"
 import { Bot } from "./src/api";
-import *as keypress from "keypress"
-import WebSocket = require("ws");
+import * as keypress from "keypress"
 import { spawn } from 'child_process'
 import * as path from 'path';
 

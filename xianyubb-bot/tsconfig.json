@@ -1,11 +1,15 @@
 {
   "compilerOptions": {
     "module": "CommonJS",
+    "outDir": "./dist",
+    "rootDir": ".",
     "target": "es6",
-    "lib": ["es6"],
-    "sourceMap": true
+    "lib": [ "es6" ],
+    "sourceMap": true,
+     "resolveJsonModule": true
   },
   "exclude": [
     "node_modules"
-  ]
+  ],
+ 
 }
