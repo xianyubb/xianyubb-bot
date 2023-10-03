@@ -1,6 +1,6 @@
 import { WebSocket } from 'ws';
 import * as events from './Events';
-import data, { Anonymous, MessageType } from './data';
+import data, { Anonymous, MessageType, Returnecho } from './data';
 import { EventEmitter } from 'events';
 import * as uuid from 'uuid';
 
@@ -38,7 +38,7 @@ export class Bot {
   /**
    * 获取登录号信息
    */
-  public get_login_info() {
+  public get_login_info(): Promise<Returnecho> {
     return new Promise((reslove) => {
       const echo = uuid.v4();
 
@@ -68,7 +68,7 @@ export class Bot {
     email: string,
     college: string,
     personal_note: string
-  ) {
+  ): Promise<Returnecho> {
     return new Promise((reslove) => {
       const echo = uuid.v4();
 
@@ -95,7 +95,7 @@ export class Bot {
   /**
    * 获取企点账号信息 (该API只有企点协议可用)
    */
-  public qidian_get_account_info() {
+  public qidian_get_account_info(): Promise<Returnecho> {
     return new Promise((reslove) => {
       const echo = uuid.v4();
 
@@ -116,7 +116,7 @@ export class Bot {
    * 获取在线机型 (有关例子可从 https://github.com/Mrs4s/go-cqhttp/pull/872#issuecomment-831180149 找到)
    * @param model
    */
-  public _get_model_show(model: string) {
+  public _get_model_show(model: string): Promise<Returnecho> {
     return new Promise((reslove) => {
       const echo = uuid.v4();
 
@@ -142,7 +142,7 @@ export class Bot {
    * @param model
    * @param model_show
    */
-  public _set_model_show(model: string, model_show: string) {
+  public _set_model_show(model: string, model_show: string): Promise<Returnecho> {
     return new Promise((reslove) => {
       const echo = uuid.v4();
 
@@ -167,7 +167,7 @@ export class Bot {
    * 获取当前账号在线客户端列表
    * @param no_cache 是否无视缓存
    */
-  public get_online_clients(no_cache: boolean) {
+  public get_online_clients(no_cache: boolean): Promise<Returnecho> {
     return new Promise((reslove) => {
       const echo = uuid.v4();
 
@@ -192,7 +192,7 @@ export class Bot {
    * @param user_id QQ 号
    * @param no_cache 默认值:false 是否不使用缓存（使用缓存可能更新不及时, 但响应更快）
    */
-  public get_stranger_info(user_id: number, no_cache: boolean = false) {
+  public get_stranger_info(user_id: number, no_cache: boolean = false): Promise<Returnecho> {
     return new Promise((reslove) => {
       const echo = uuid.v4();
 
@@ -217,7 +217,7 @@ export class Bot {
    * 获取好友列表
    * 该 API 无需参数
    */
-  public get_friend_list() {
+  public get_friend_list(): Promise<Returnecho> {
     return new Promise((reslove) => {
       const echo = uuid.v4();
 
@@ -238,7 +238,7 @@ export class Bot {
    * 获取单向好友列表
    * 该 API 无需参数
    */
-  public get_unidirectional_friend_list() {
+  public get_unidirectional_friend_list(): Promise<Returnecho> {
     return new Promise((reslove) => {
       const echo = uuid.v4();
 
@@ -260,7 +260,7 @@ export class Bot {
    * 该 API 无响应数据
    * @param user_id 好友 QQ 号
    */
-  public delete_friend(user_id: number) {
+  public delete_friend(user_id: number): Promise<Returnecho> {
     return new Promise((reslove) => {
       const echo = uuid.v4();
 
@@ -285,7 +285,7 @@ export class Bot {
    * 该 API 无响应数据
    * @param user_id 好友 QQ 号
    */
-  public delete_unidirectional_friend(user_id: number) {
+  public delete_unidirectional_friend(user_id: number): Promise<Returnecho> {
     return new Promise((reslove) => {
       const echo = uuid.v4();
 
@@ -311,7 +311,7 @@ export class Bot {
    * @param msg 发送的信息
    * @param auto_escape 消息内容是否作为纯文本发送 ( 即不解析 CQ 码 ) , 只在 message 字段是字符串时有效
    */
-  public send_group_msg(group_id: number, msg: string, auto_escape: boolean) {
+  public send_group_msg(group_id: number, msg: string, auto_escape: boolean): Promise<Returnecho> {
     return new Promise((reslove) => {
       const echo = uuid.v4();
 
@@ -339,7 +339,7 @@ export class Bot {
    * @param msg 发送的信息
    * @param auto_escape 消息内容是否作为纯文本发送 ( 即不解析 CQ 码 ) , 只在 message 字段是字符串时有效
    */
-  public send_private_msg(user_id: number, msg: string, auto_escape: boolean) {
+  public send_private_msg(user_id: number, msg: string, auto_escape: boolean): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -371,11 +371,11 @@ export class Bot {
    */
   public send_msg(
     message: string,
+    auto_escape: boolean = false,
     message_type?: string,
     user_id?: number,
     group_id?: number,
-    auto_escape: boolean = false
-  ) {
+  ): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -403,7 +403,7 @@ export class Bot {
    * 获取消息
    * @param message_id 消息id
    */
-  public get_msg(message_id: number) {
+  public get_msg(message_id: number): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -428,7 +428,7 @@ export class Bot {
    * 该 API 无响应数据
    * @param message_id 消息id
    */
-  public delete_msg(message_id: number) {
+  public delete_msg(message_id: number): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -453,7 +453,7 @@ export class Bot {
    * 该 API 无响应数据
    * @param message_id 消息id
    */
-  public nark_msg_as_resd(message_id: number) {
+  public nark_msg_as_resd(message_id: number): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -478,7 +478,7 @@ export class Bot {
    * 字段 message_id 对应合并转发中的 id 字段
    * @param message_id 消息id
    */
-  public get_forward_msg(message_id: number) {
+  public get_forward_msg(message_id: number): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -503,7 +503,7 @@ export class Bot {
    * @param group_id 群号
    * @param message 自定义转发消息, 具体看 https://docs.go-cqhttp.org/cqcode
    */
-  public send_group_forward_msg(group_id: number, message: MessageType) {
+  public send_group_forward_msg(group_id: number, message: MessageType): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -529,7 +529,7 @@ export class Bot {
    * @param user_id 好友QQ号
    * @param message 自定义转发消息, 具体看 https://docs.go-cqhttp.org/cqcode
    */
-  public send_private_forward_msg(user_id: number, message: MessageType) {
+  public send_private_forward_msg(user_id: number, message: MessageType): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -556,7 +556,7 @@ export class Bot {
    * @param group_id 群号
    * @param message_seq 起始消息序号, 可通过 get_msg 获得
    */
-  public get_group_msg_history(group_id: number, message_seq?: number) {
+  public get_group_msg_history(group_id: number, message_seq?: number): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -581,7 +581,7 @@ export class Bot {
    * 获取图片信息
    * @param file 图片缓存文件名
    */
-  public get_image(file: string) {
+  public get_image(file: string): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -605,7 +605,7 @@ export class Bot {
    * 检查是否可以发送图片
    * 该 API 无需参数
    */
-  public can_send_image() {
+  public can_send_image(): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -628,7 +628,7 @@ export class Bot {
    * ocr_image API移除了实验模式, 目前版本 .ocr_image 和 ocr_image 均能访问, 后期将只保留后者.
    * @param image 图片id
    */
-  public ocr_image(image: string) {
+  public ocr_image(image: string): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -654,7 +654,7 @@ export class Bot {
    * @param file 收到的语音文件名（消息段的 file 参数）, 如 0B38145AA44505000B38145AA4450500.silk
    * @param out_format 要转换到的格式, 目前支持 mp3、amr、wma、m4a、spx、ogg、wav、flac
    */
-  public get_record(file: string, out_format: string) {
+  public get_record(file: string, out_format: string): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -678,7 +678,7 @@ export class Bot {
    * 检查是否可以发送语音
    * 该 API 无需参数
    */
-  public can_send_record() {
+  public can_send_record(): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -705,7 +705,7 @@ export class Bot {
     flag: string,
     approve: boolean = true,
     remark: string = ''
-  ) {
+  ): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -739,7 +739,7 @@ export class Bot {
     sub_type: 'add' | 'invite',
     approve: boolean = true,
     reason: string = ''
-  ) {
+  ): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -767,7 +767,7 @@ export class Bot {
    * @param group_id 群号
    * @param no_cache 是否不使用缓存（使用缓存可能更新不及时, 但响应更快,默认:false)
    */
-  public get_group_info(group_id: number, no_cache: boolean = false) {
+  public get_group_info(group_id: number, no_cache: boolean = false): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -792,7 +792,7 @@ export class Bot {
    * 获取群列表
    * @param no_cache 是否不使用缓存（使用缓存可能更新不及时, 但响应更快,默认:false)
    */
-  public get_group_list(no_cache: boolean = false) {
+  public get_group_list(no_cache: boolean = false): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -822,7 +822,7 @@ export class Bot {
     group_id: number,
     user_id: number,
     no_cache: boolean = false
-  ) {
+  ): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -849,7 +849,7 @@ export class Bot {
    * @param group_id 群号
    * @param no_cache 是否不使用缓存（使用缓存可能更新不及时, 但响应更快,默认:false)
    */
-  public get_group_member_list(group_id: number, no_cache: boolean = false) {
+  public get_group_member_list(group_id: number, no_cache: boolean = false): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -871,20 +871,20 @@ export class Bot {
   }
 
   /**
-   * 获取群成员列表
+   * 获取群荣誉信息
    * @param group_id 群号
    * @param type 	要获取的群荣誉类型, 可传入 talkative performer legend strong_newbie emotion 以分别获取单个类型的群荣誉数据, 或传入 all 获取所有数据
    */
   public get_group_honor_info(
     group_id: number,
     type:
-      | 'talkactive'
+      'talkactive'
       | 'performer'
       | 'legend'
       | 'strong_newbie'
       | 'emotion'
       | 'all'
-  ) {
+  ): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -909,7 +909,7 @@ export class Bot {
    * 获取群系统消息
    * 应该是没有参数，毕竟go-cq文档没写
    */
-  public get_group_system_msg() {
+  public get_group_system_msg(): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -930,7 +930,7 @@ export class Bot {
    * 获取精华消息列表
    * @param group_id 群号
    */
-  public get_essence_msg_list(group_id: number) {
+  public get_essence_msg_list(group_id: number): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -954,7 +954,7 @@ export class Bot {
    * 获取群 \@全体成员 剩余次数
    * @param group_id 群号
    */
-  public get_group_at_all_remain(group_id: number) {
+  public get_group_at_all_remain(group_id: number): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -980,7 +980,7 @@ export class Bot {
    * @param group_id 群号
    * @param group_name 新群名
    */
-  public set_group_name(group_id: number, group_name: string) {
+  public set_group_name(group_id: number, group_name: string): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -1007,7 +1007,7 @@ export class Bot {
    * @param file 图片文件名
    * @param cache 表示是否使用已缓存的文件
    */
-  public set_group_portrait(group_id: number, file: string, cache: number = 1) {
+  public set_group_portrait(group_id: number, file: string, cache: number = 1): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -1040,7 +1040,7 @@ export class Bot {
     group_id: number,
     user_id: number,
     enable: boolean = true
-  ) {
+  ): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -1069,7 +1069,7 @@ export class Bot {
    * @param user_id 要设置的 QQ 号
    * @param card 群名片内容, 不填或空字符串表示删除群名片
    */
-  public set_group_card(group_id: number, user_id: number, card: string = '') {
+  public set_group_card(group_id: number, user_id: number, card: string = ''): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -1104,7 +1104,7 @@ export class Bot {
     user_id: number,
     special_title: string = '',
     duration: number = -1
-  ) {
+  ): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -1138,7 +1138,7 @@ export class Bot {
     group_id: number,
     user_id: number,
     duration: number = 30 * 60
-  ) {
+  ): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -1166,7 +1166,7 @@ export class Bot {
    * @param group_id 群号
    * @param enable 是否禁言
    */
-  public set_group_whole_ban(group_id: number, enable: boolean = true) {
+  public set_group_whole_ban(group_id: number, enable: boolean = true): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -1202,7 +1202,7 @@ export class Bot {
     duration: number,
     anonymous?: Anonymous,
     flag?: string
-  ) {
+  ): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -1230,7 +1230,7 @@ export class Bot {
    * 该 API 没有响应数据
    * @param message_id 消息ID
    */
-  public set_essence_msg(message_id: number) {
+  public set_essence_msg(message_id: number): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -1255,7 +1255,7 @@ export class Bot {
    * 该 API 没有响应数据
    * @param message_id 消息ID
    */
-  public delete_essence_msg(message_id: number) {
+  public delete_essence_msg(message_id: number): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -1276,11 +1276,11 @@ export class Bot {
   }
 
   /**
-   * 移出精华消息
+   * 群打卡
    * 该 API 没有响应数据
    * @param group_id 群号
    */
-  public send_group_sign(group_id: number) {
+  public send_group_sign(group_id: number): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -1306,7 +1306,7 @@ export class Bot {
    * @param group_id 群号
    * @param enable 是否禁言
    */
-  public set_group_anonymous(group_id: number, enable: boolean = true) {
+  public set_group_anonymous(group_id: number, enable: boolean = true): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -1334,7 +1334,7 @@ export class Bot {
    * @param content 公告内容
    * @param image 图片路径(可选)
    */
-  public _send_group_notice(group_id: number, content: string, image?: string) {
+  public _send_group_notice(group_id: number, content: string, image?: string): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -1360,7 +1360,7 @@ export class Bot {
    * 获取群公告
    * @param group_id 群号
    */
-  public _get_group_notice(group_id: number) {
+  public _get_group_notice(group_id: number): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -1387,7 +1387,7 @@ export class Bot {
    * @param user_id 要踢的 QQ 号
    * @param reject_add_request 拒绝此人的加群请求
    */
-  public set_group_kick(group_id: number, user_id: number, reject_add_request: boolean) {
+  public set_group_kick(group_id: number, user_id: number, reject_add_request: boolean): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 
@@ -1415,7 +1415,7 @@ export class Bot {
    * @param group_id 群号
    * @param is_dismiss 是否解散, 如果登录号是群主, 则仅在此项为 true 时能够解散
    */
-  public set_group_leave(group_id: number, is_dismiss: boolean = false) {
+  public set_group_leave(group_id: number, is_dismiss: boolean = false): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();
 

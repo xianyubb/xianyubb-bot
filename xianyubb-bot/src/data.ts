@@ -3,111 +3,129 @@ export interface Data {
   time: number;
   /** 收到事件的机器人的 QQ 号 */
   self_id: number;
-  /** 表示该上报的类型, 消息, 消息发送, 请求, 通知, 或元事件 */
-  post_type: string
+  /** 表示该上报的类型 */
+  post_type: string;
 }
 
 export interface Anonymous {
-  id: number,
-  name: string,
-  flag: string
+  /** 匿名用户 ID */
+  id: number;
+  /** 匿名用户名称 */
+  name: string;
+  /** 匿名用户 flag, 在调用禁言 API 时需要传入 */
+  flag: string;
 }
 
 // message消息
 export interface MessageType {
-  type: string,
+  type: string;
   data: {
-    text?: string,
-    id?: number | string,
-    file?: string,
-    at?: number,
-    url?: string,
-    title?: string,
-    content?: string,
-    image?: string,
-    type?: "qq" | "group",
-    lat?: string | number,
-    lon?: string | number,
-    audio?: string,
-    qq?: number,
-    time?: number,
-    uin?: number,
-    seq?: MessageType
-  }
+    text?: string;
+    id?: number | string;
+    file?: string;
+    at?: number;
+    url?: string;
+    title?: string;
+    content?: string;
+    image?: string;
+    type?: 'qq' | 'group';
+    lat?: string | number;
+    lon?: string | number;
+    audio?: string;
+    qq?: number;
+    time?: number;
+    uin?: number;
+    seq?: MessageType;
+  };
 }
 export interface Sender {
-  user_id: number,
-  nickname: string,
-  sex?: string,
-  age?: number,
-  group_id?: number,
-  card?: string,
-  area?: string,
-  level?: string,
-  role?: string,
-  title?: string
+  /** 发送者 QQ 号 */
+  user_id: number;
+  /** 昵称 */
+  nickname: string;
+  /** 性别 */
+  sex?: string;
+  /** 年龄 */
+  age?: number;
+  /** 临时群消息来源群号 */
+  group_id?: number;
+  /** 群名片/备注 */
+  card?: string;
+  /** 地区 */
+  area?: string;
+  /** 成员等级 */
+  level?: string;
+  /** 角色 */
+  role?: string;
+  /** 专属头衔 */
+  title?: string;
 }
 
 export interface Message extends Data {
-  group_id: number
-  message_type: "private" | "group"
-  sub_type: string,
-  message_id: number,
-  user_id: number,
-  message: string | MessageType[],
-  raw_message: string,
-  font: number,
-  sender: Sender,
-  target_id: number,
-  anonymous: (null | Anonymous),
-  temp_source: number
+  group_id: number;
+  message_type: 'private' | 'group';
+  sub_type: string;
+  message_id: number;
+  /** QQ 号 */
+  user_id: number;
+  message: string | MessageType[];
+  raw_message: string;
+  font: number;
+  sender: Sender;
+  target_id: number;
+  anonymous: null | Anonymous;
+  temp_source: number;
 }
 
+/** 群消息 */
 export interface GroupMessage extends Data {
-  /** 消息子类型, 正常消息是 normal, 匿名消息是 anonymous, 系统提示 ( 如「管理员已禁止群内匿名聊天」 ) 是 notice */
-  sub_type: string,
+  /** 消息子类型 */
+  sub_type: string;
   /** 消息 ID */
-  message_id: number,
+  message_id: number;
   /** 发送者 QQ 号 */
-  user_id: number,
+  user_id: number;
   /** 消息内容 */
-  message: string | MessageType[],
+  message: string | MessageType[];
   /** 原始消息内容 */
-  raw_message: string,
+  raw_message: string;
   /** 字体 */
-  font: number,
+  font: number;
   /** 发送者信息 */
-  sender: Sender,
+  sender: Sender;
   /** 群号 */
-  group_id: number,
+  group_id: number;
   /** 匿名信息, 如果不是匿名消息则为 null */
-  anonymous: (null | Anonymous)
+  anonymous: null | Anonymous;
 }
-
+/** 私聊消息 */
 export interface PrivateMessage extends Data {
-  /** 消息子类型, 如果是好友则是 friend, 如果是群临时会话则是 group, 如果是在群中自身发送则是 group_self */
-  sub_type: string,
+  /** 消息子类型 */
+  sub_type: string;
   /** 消息 ID */
-  message_id: number,
+  message_id: number;
   /** 发送者 QQ 号 */
-  user_id: number,
+  user_id: number;
   /** 消息内容 */
-  message: string | MessageType[],
+  message: string | MessageType[];
   /** 原始消息内容  */
-  raw_message: string,
+  raw_message: string;
   /** 字体 */
-  font: number,
+  font: number;
   /** 发送者信息 */
-  sender: Sender,
+  sender: Sender;
   /** 接受者 QQ 号 */
-  target_id: number,
+  target_id: number;
   /** 临时会话来源 */
-  temp_source: number
+  temp_source: number;
 }
 
-const message = (data: Message, callback: (Event: string, data: any) => void) => {
+const message = (
+  data: Message,
+  callback: (Event: string, data: any) => void
+) => {
   switch (data.message_type) {
-    case "group":
+    case 'group':
       const GroupMessage: GroupMessage = {
         message_id: data.message_id,
         sub_type: data.sub_type,
@@ -120,11 +138,11 @@ const message = (data: Message, callback: (Event: string, data: any) => void) =>
         anonymous: data.anonymous,
         time: data.time,
         self_id: data.self_id,
-        post_type: data.post_type
-      }
-      callback("onReceiveGroupMessage", GroupMessage)
+        post_type: data.post_type,
+      };
+      callback('onReceiveGroupMessage', GroupMessage);
       break;
-    case "private":
+    case 'private':
       const PrivateMessage: PrivateMessage = {
         user_id: data.user_id,
         sub_type: data.sub_type,
@@ -137,154 +155,230 @@ const message = (data: Message, callback: (Event: string, data: any) => void) =>
         temp_source: data.temp_source,
         time: data.time,
         self_id: data.self_id,
-        post_type: data.post_type
-      }
-      callback("onReceivePrivateMessage", PrivateMessage)
+        post_type: data.post_type,
+      };
+      callback('onReceivePrivateMessage', PrivateMessage);
       break;
   }
-}
+};
 
 // notice消息
 export interface Notice extends Data {
-  notice_type: string,
-  user_id: number,
-  group_id: number,
-  sub_type: string,
-  operator_id: number,
-  message_id: number,
-  file: file,
-  duration: number,
-  sender_id: number,
-  target_id: number,
-  honor_type: "talkative" | "performer" | "emotion",
-  title: string
-  card_new: string,
-  card_old: string,
-  client: any,
-  online: boolean
+  notice_type: string;
+  /** QQ 号 */
+  user_id: number;
+  group_id: number;
+  sub_type: string;
+  operator_id: number;
+  message_id: number;
+  file: file;
+  duration: number;
+  sender_id: number;
+  target_id: number;
+  honor_type: 'talkative' | 'performer' | 'emotion';
+  title: string;
+  card_new: string;
+  card_old: string;
+  client: any;
+  online: boolean;
 }
 
 export interface file {
-  id: string,
-  name: string,
-  size: number,
-  url: string,
-  busi: number
+  /** 文件 ID */
+  id?: string;
+  /** 文件名 */
+  name: string;
+  /** 文件大小（字节数） */
+  size: number;
+  /** 下载链接 */
+  url?: string;
+  /** busid（目前不清楚有什么用） */
+  busid?: number;
 }
 
+/** 私聊消息撤回 */
 export interface PrivateDeleteMsg extends Data {
-  user_id: number
-  message_id: number
+  /** 好友 QQ 号 */
+  user_id: number;
+  /** 被撤回的消息 ID */
+  message_id: number;
 }
-
+/** 群消息撤回 */
 export interface GroupDeleteMsg extends Data {
-  group_id: number,
-  operator_id: number
-  user_id: number
-  message_id: number
+  /** 群号 */
+  group_id: number;
+  /** 操作者QQ号  */
+  operator_id: number;
+  /** QQ 号 */
+  user_id: number;
+  /** 被撤回的消息 ID */
+  message_id: number;
 }
 
+/** 群成员增加 */
 export interface GroupMemberAdd extends Data {
-  sub_type: string
-  user_id: number
-  group_id: number,
-  operator_id: number,
+  /** 事件子类型 */
+  sub_type: string;
+  /** 加入者 QQ 号 */
+  user_id: number;
+  /** 群号 */
+  group_id: number;
+  /** 操作者QQ号  */
+  operator_id: number;
 }
 
+/** 群成员减少 */
 export interface GroupMemberDecrease extends Data {
-  sub_type: string
-  group_id: number,
-  operator_id: number,
-  user_id: number
+  /** 事件子类型 */
+  sub_type: string;
+  /** 群号 */
+  group_id: number;
+  /** 操作者 QQ 号 */
+  operator_id: number;
+  /** 离开者 QQ 号 */
+  user_id: number;
 }
 
+/** 群管理员变动 */
 export interface GroupAdminChange extends Data {
-  sub_type: string,
-  group_id: number,
-  user_id: number
+  /** 事件子类型 */
+  sub_type: string;
+  /** 群号 */
+  group_id: number;
+  /** 管理员 QQ 号 */
+  user_id: number;
 }
 
+/** 群文件上传 */
 export interface GroupFileUpload extends Data {
-  group_id: number,
-  user_id: number,
-  file: file
+  /** 群号 */
+  group_id: number;
+  /** 发送者 QQ 号 */
+  user_id: number;
+  /** 文件信息 */
+  file: file;
 }
+
+/** 群禁言 */
 export interface GroupBan extends Data {
-  sub_type: string,
-  group_id: number,
-  operator_id: number,
-  user_id: number,
-  duration: number
+  /** 事件子类型 */
+  sub_type: string;
+  /** 群号 */
+  group_id: number;
+  /** 操作者 QQ 号 */
+  operator_id: number;
+  /** 被禁言 QQ 号 */
+  user_id: number;
+  /** 禁言时长 */
+  duration: number;
 }
 
+/** 好友添加 */
 export interface FrienAdd extends Data {
-  user_id: number
+  /** 新添加好友 QQ 号 */
+  user_id: number;
 }
 
+/** 戳一戳 */
 export interface Notify extends Data {
-  sender_id: number,
-  user_id: number,
-  target_id: number
-  group_id: number
+  /** 发送者 QQ 号 */
+  sender_id?: number;
+  /** 发送者 QQ 号 */
+  user_id: number;
+  /** 被戳者 QQ 号 */
+  target_id: number;
+  /** 群号 */
+  group_id?: number;
 }
 
+/** 群红包运气王提示 */
 export interface GroupRedbagLuckyKing extends Data {
-  group_id: number,
-  user_id: number,
-  target_id: number
+  /** 群号 */
+  group_id: number;
+  /** QQ 号 */
+  user_id: number;
+  /** 运气王 ID */
+  target_id: number;
 }
 
+/** 群成员荣誉变更提示 */
 export interface GroupMemberHonorChange extends Data {
-  group_id: number,
-  user_id: number,
-  honor_type: string
+  /** 群号 */
+  group_id: number;
+  /** 成员 ID */
+  user_id: number;
+  /** 荣誉类型 */
+  honor_type: string;
 }
 
+/** 群成员头衔变更 */
 export interface GroupMemberTitleChange extends Data {
-  group_id: number,
-  user_id: number,
-  title: string
+  /** 群号 */
+  group_id: number;
+  /** 变更头衔的用户 QQ 号 */
+  user_id: number;
+  /** 获得的新头衔 */
+  title: string;
 }
 
+/** 群成员名片更新 */
 export interface GroupCardChange extends Data {
-  group_id: number,
-  user_id: number,
-  card_new: string,
-  card_old: string,
+  /** 群号 */
+  group_id: number;
+  /** 成员 ID  */
+  user_id: number;
+  /** 新名片 */
+  card_new: string;
+  /** 旧名片 */
+  card_old: string;
 }
 
+/** 接收到离线文件 */
 export interface ReceiveOfflineFile extends Data {
-  user_id: number,
-  file: file
+  /** 发送者 ID */
+  user_id: number;
+  /** 文件数据 */
+  file: file;
 }
 
+/** 其他客户端在线状态变更 */
 export interface ClientStatusChange extends Data {
-  client: any,
-  online: boolean
+  /** 客户端信息 */
+  client: any;
+  /** 当前是否在线 */
+  online: boolean;
 }
 
+/** 精华消息变更 */
 export interface EssenceMessageChange extends Data {
-  sub_type: string,
-  group_id: number,
-  sender_id: number,
-  operator_id: number,
-  message_id: number
+  /** 事件子类型 */
+  sub_type: string;
+  /** 群号 */
+  group_id: number;
+  /** 消息发送者 ID  */
+  sender_id: number;
+  /** 操作者 ID */
+  operator_id: number;
+  /** 消息 ID */
+  message_id: number;
 }
 
-
-export const notice = (data: Notice, callback: (Events: string, msg: any) => void) => {
+export const notice = (
+  data: Notice,
+  callback: (Events: string, msg: any) => void
+) => {
   switch (data.notice_type) {
-    case "friend_recall":
+    case 'friend_recall':
       const PrivateDeleteMsg: PrivateDeleteMsg = {
         user_id: data.user_id,
         message_id: data.message_id,
         time: data.time,
         self_id: data.self_id,
-        post_type: data.post_type
-      }
-      callback("onPrivateDeleteMsg", PrivateDeleteMsg)
+        post_type: data.post_type,
+      };
+      callback('onPrivateDeleteMsg', PrivateDeleteMsg);
       break;
-    case "group_recall":
+    case 'group_recall':
       const GroupDeleteMsg: GroupDeleteMsg = {
         group_id: data.group_id,
         operator_id: data.operator_id,
@@ -292,11 +386,11 @@ export const notice = (data: Notice, callback: (Events: string, msg: any) => voi
         message_id: data.message_id,
         time: data.time,
         self_id: data.self_id,
-        post_type: data.post_type
-      }
-      callback("onGroupDeleteMsg", GroupDeleteMsg)
-      break
-    case "group_increase":
+        post_type: data.post_type,
+      };
+      callback('onGroupDeleteMsg', GroupDeleteMsg);
+      break;
+    case 'group_increase':
       const GroupMemberAdd: GroupMemberAdd = {
         sub_type: data.sub_type,
         group_id: data.group_id,
@@ -304,11 +398,11 @@ export const notice = (data: Notice, callback: (Events: string, msg: any) => voi
         operator_id: data.operator_id,
         time: data.time,
         self_id: data.self_id,
-        post_type: data.post_type
-      }
-      callback("onGroupMemberAdd", GroupMemberAdd)
-      break
-    case "group_decrease":
+        post_type: data.post_type,
+      };
+      callback('onGroupMemberAdd', GroupMemberAdd);
+      break;
+    case 'group_decrease':
       const GroupMemberDecrease: GroupMemberDecrease = {
         sub_type: data.sub_type,
         group_id: data.group_id,
@@ -316,33 +410,33 @@ export const notice = (data: Notice, callback: (Events: string, msg: any) => voi
         user_id: data.user_id,
         time: data.time,
         self_id: data.self_id,
-        post_type: data.post_type
-      }
-      callback("onGroupMemberDecrease", GroupMemberDecrease)
+        post_type: data.post_type,
+      };
+      callback('onGroupMemberDecrease', GroupMemberDecrease);
       break;
-    case "group_admin":
+    case 'group_admin':
       const GroupAdminChange: GroupAdminChange = {
         user_id: data.user_id,
         group_id: data.group_id,
         sub_type: data.sub_type,
         time: data.time,
         self_id: data.self_id,
-        post_type: data.post_type
-      }
-      callback("onGroupAdminChange", GroupAdminChange)
+        post_type: data.post_type,
+      };
+      callback('onGroupAdminChange', GroupAdminChange);
       break;
-    case "group_upload":
+    case 'group_upload':
       const GroupFileUpload: GroupFileUpload = {
         group_id: data.group_id,
         file: data.file,
         user_id: data.user_id,
         time: data.time,
         self_id: data.self_id,
-        post_type: data.post_type
-      }
-      callback("onGroupFileUpload", GroupFileUpload)
+        post_type: data.post_type,
+      };
+      callback('onGroupFileUpload', GroupFileUpload);
       break;
-    case "group_ban":
+    case 'group_ban':
       const GroupBan: GroupBan = {
         user_id: data.user_id,
         group_id: data.group_id,
@@ -351,22 +445,22 @@ export const notice = (data: Notice, callback: (Events: string, msg: any) => voi
         duration: data.duration,
         time: data.time,
         self_id: data.self_id,
-        post_type: data.post_type
-      }
-      callback("onGroupBan", GroupBan)
+        post_type: data.post_type,
+      };
+      callback('onGroupBan', GroupBan);
       break;
-    case "friend_add":
+    case 'friend_add':
       const FriendAdd: FrienAdd = {
         user_id: data.user_id,
         time: data.time,
         self_id: data.self_id,
-        post_type: data.post_type
-      }
-      callback("onFriendAdd", FriendAdd)
-      break
-    case "notify":
+        post_type: data.post_type,
+      };
+      callback('onFriendAdd', FriendAdd);
+      break;
+    case 'notify':
       switch (data.sub_type) {
-        case "poke":
+        case 'poke':
           const Notify: Notify = {
             group_id: data.group_id,
             target_id: data.target_id,
@@ -374,46 +468,46 @@ export const notice = (data: Notice, callback: (Events: string, msg: any) => voi
             sender_id: data.sender_id,
             time: data.time,
             self_id: data.self_id,
-            post_type: data.post_type
-          }
-          callback("onNotify", Notify)
+            post_type: data.post_type,
+          };
+          callback('onNotify', Notify);
           break;
-        case "lucky_king":
+        case 'lucky_king':
           const GroupRedbagLuckyKing: GroupRedbagLuckyKing = {
             group_id: data.group_id,
             user_id: data.user_id,
             target_id: data.target_id,
             time: data.time,
             self_id: data.self_id,
-            post_type: data.post_type
-          }
-          callback("onGroupRedbagLuckyKing", GroupRedbagLuckyKing)
-          break
-        case "honor":
+            post_type: data.post_type,
+          };
+          callback('onGroupRedbagLuckyKing', GroupRedbagLuckyKing);
+          break;
+        case 'honor':
           const GroupMemberHonorChange: GroupMemberHonorChange = {
             group_id: data.group_id,
             user_id: data.user_id,
             honor_type: data.honor_type,
             time: data.time,
             self_id: data.self_id,
-            post_type: data.post_type
-          }
-          callback("onGroupMemberHonorChange", GroupMemberHonorChange)
+            post_type: data.post_type,
+          };
+          callback('onGroupMemberHonorChange', GroupMemberHonorChange);
           break;
-        case "title":
+        case 'title':
           const GroupMemberTitleChange: GroupMemberTitleChange = {
             group_id: data.group_id,
             user_id: data.user_id,
             title: data.title,
             time: data.time,
             self_id: data.self_id,
-            post_type: data.post_type
-          }
-          callback("onGroupMemberTitleChange", GroupMemberTitleChange)
-          break
+            post_type: data.post_type,
+          };
+          callback('onGroupMemberTitleChange', GroupMemberTitleChange);
+          break;
       }
-      break
-    case "group_card":
+      break;
+    case 'group_card':
       const GroupCardChange: GroupCardChange = {
         group_id: data.group_id,
         user_id: data.user_id,
@@ -421,31 +515,31 @@ export const notice = (data: Notice, callback: (Events: string, msg: any) => voi
         card_old: data.card_old,
         time: data.time,
         self_id: data.self_id,
-        post_type: data.post_type
-      }
-      callback("onGroupCardChange", GroupCardChange)
+        post_type: data.post_type,
+      };
+      callback('onGroupCardChange', GroupCardChange);
       break;
-    case "offline_file":
+    case 'offline_file':
       const ReceiveOfflineFile: ReceiveOfflineFile = {
         user_id: data.user_id,
         file: data.file,
         time: data.time,
         self_id: data.self_id,
-        post_type: data.post_type
-      }
-      callback("onReceiveOfflineFile", ReceiveOfflineFile)
+        post_type: data.post_type,
+      };
+      callback('onReceiveOfflineFile', ReceiveOfflineFile);
       break;
-    case "client_status":
+    case 'client_status':
       const ClientStatusChange: ClientStatusChange = {
         client: data.client,
         online: data.online,
         time: data.time,
         self_id: data.self_id,
-        post_type: data.post_type
-      }
-      callback("onClientStatusChange", ClientStatusChange)
+        post_type: data.post_type,
+      };
+      callback('onClientStatusChange', ClientStatusChange);
       break;
-    case "essencs":
+    case 'essencs':
       const EssenceMessageChange: EssenceMessageChange = {
         sender_id: data.sender_id,
         group_id: data.group_id,
@@ -454,50 +548,64 @@ export const notice = (data: Notice, callback: (Events: string, msg: any) => voi
         message_id: data.message_id,
         time: data.time,
         self_id: data.self_id,
-        post_type: data.post_type
-      }
-      callback("onEssenceMessageChange", EssenceMessageChange)
-      break
+        post_type: data.post_type,
+      };
+      callback('onEssenceMessageChange', EssenceMessageChange);
+      break;
   }
-}
+};
 // request消息
 export interface Request extends Data {
-  request_type: string,
-  user_id: number,
-  comment: string,
-  flag: string,
-  sub_type: string,
-  group_id: number,
+  request_type: string;
+  /** QQ 号 */
+  user_id: number;
+  comment: string;
+  flag: string;
+  sub_type: string;
+  /** 群号 */ group_id: number;
 }
 
+/** 加好友请求 */
 export interface AddFriendRequest extends Data {
-  user_id: number,
-  comment: string,
-  flag: string
+  /** 发送请求的 QQ 号 */
+  user_id: number;
+  /** 验证信息 */
+  comment: string;
+  /** 请求 flag, 在调用处理请求的 API 时需要传入 */
+  flag: string;
 }
 
+/** 加群请求／邀请 */
 export interface AddGroupRequest extends Data {
-  user_id: number,
-  group_id: number,
-  comment: string,
-  sub_type: string,
-  flag: string
+  /** 发送请求的 QQ 号 */
+  user_id: number;
+  /** 群号 */
+  group_id: number;
+  /** 验证信息 */
+  comment: string;
+  /** 请求子类型 */
+  sub_type: string;
+  /** 请求 flag, 在调用处理请求的 API 时需要传入 */
+  flag: string;
 }
 
-const request = (data: Request, callback: (Events: string, msg: any) => void) => {
+const request = (
+  data: Request,
+  callback: (Events: string, msg: any) => void
+) => {
   switch (data.request_type) {
-    case "friend":
+    case 'friend':
       const AddFriendRequest: AddFriendRequest = {
         user_id: data.user_id,
         comment: data.comment,
         flag: data.flag,
         time: data.time,
         self_id: data.self_id,
-        post_type: data.post_type
-      }
-      callback("onAddFriendRequest", AddFriendRequest)
+        post_type: data.post_type,
+      };
+      callback('onAddFriendRequest', AddFriendRequest);
       break;
-    case "group":
+    case 'group':
       const AddGroupRequest: AddGroupRequest = {
         group_id: data.group_id,
         user_id: data.user_id,
@@ -506,85 +614,99 @@ const request = (data: Request, callback: (Events: string, msg: any) => void) =>
         sub_type: data.sub_type,
         time: data.time,
         self_id: data.self_id,
-        post_type: data.post_type
-      }
-      callback("onAddGroupRequest", AddGroupRequest)
-      break
+        post_type: data.post_type,
+      };
+      callback('onAddGroupRequest', AddGroupRequest);
+      break;
   }
-}
+};
 
 // meta_event
 export interface MetaEvent extends Data {
-  meta_event_type: string,
-  status: Status,
-  interval: number,
-  sub_type: string
+  meta_event_type: string;
+  status: Status;
+  interval: number;
+  sub_type: string;
 }
 
 export interface Status {
-  app_initialized: boolean,
-  app_enabled: boolean,
-  plugins_good: boolean,
-  app_good: boolean,
-  online: boolean,
-  stat: boolean
+  /** 程序是否初始化完毕 */
+  app_initialized: boolean;
+  /** 程序是否可用 */
+  app_enabled: boolean;
+  /** 插件正常(可能为 null) */
+  plugins_good: boolean;
+  /** 程序正常 */
+  app_good: boolean;
+  /** 是否在线 */
+  online: boolean;
+  /** 统计信息 */
+  stat: boolean;
 }
 
+/** 心跳包 */
 export interface HeartBeat {
-  status: Status,
-  interval: number
+  /** 应用程序状态 */
+  status: Status;
+  /** 距离上一次心跳包的时间(单位是毫秒) */
+  interval: number;
 }
 
+/** 生命周期 */
 export interface LifeCycle {
-  sub_type: string
+  /** 子类型 */
+  sub_type: string;
 }
 
-const metaevent = (data: MetaEvent, callback: (Events: string, msg: any) => void) => {
+const metaevent = (
+  data: MetaEvent,
+  callback: (Events: string, msg: any) => void
+) => {
   switch (data.meta_event_type) {
-    case "heartbeat":
+    case 'heartbeat':
       const HeartBeat: HeartBeat = {
         status: data.status,
-        interval: data.interval
-      }
-      callback("onHeartBeat", HeartBeat)
-      break
-    case "lifecycle":
+        interval: data.interval,
+      };
+      callback('onHeartBeat', HeartBeat);
+      break;
+    case 'lifecycle':
       const LifeCycle: LifeCycle = {
-        sub_type: data.sub_type
-      }
-      callback("onLifeCycle", LifeCycle)
-      break
+        sub_type: data.sub_type,
+      };
+      callback('onLifeCycle', LifeCycle);
+      break;
   }
-}
+};
 
-// echo 
+// echo
 export interface Returnecho {
-  status: string,
-  retcode: number,
-  data: any,
-  uuid: string
+  status: string;
+  retcode: number;
+  data: any;
+  uuid: string;
 }
 
 export default (msg: any, callback: (Events: string, data: any) => void) => {
   if (msg.post_type) {
     switch (msg.post_type) {
-      case "message":
-        message(msg, callback)
+      case 'message':
+        message(msg, callback);
         break;
-      case "notice":
-        notice(msg, callback)
-        break
-      case "request":
-        request(msg, callback)
+      case 'notice':
+        notice(msg, callback);
         break;
-      case "meta_event":
-        metaevent(msg, callback)
-        break
+      case 'request':
+        request(msg, callback);
+        break;
+      case 'meta_event':
+        metaevent(msg, callback);
+        break;
     }
   } else if (msg.echo) {
     callback('echo', {
       uuid: msg.echo,
-      data: msg.data
+      data: msg.data,
     });
   }
-}
+};
