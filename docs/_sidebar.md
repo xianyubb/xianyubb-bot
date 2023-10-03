@@ -24,3 +24,4 @@
 - [编写插件](function.md)
     * [编写插件](function.md#编写须知)
     * [示例插件](function.md#插件示例)
+- [更新日志](updataLog.md)
