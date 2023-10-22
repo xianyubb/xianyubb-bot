@@ -1,6 +1,8 @@
 import * as fs from "fs"
 
-
+const Package = "xianyubb-bot"
+const Version = [0, 1, 5]
+const Author = "xianyubb"
 const Path = "./config/config.json"
 
 
