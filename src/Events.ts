@@ -1,5 +1,5 @@
-import * as data from "./data"
 import { EventEmitter } from 'events';
+import * as data from "./data"
 
 export interface WebSocketEvent extends EventEmitter {
   on(event: "message", listener: (msg: data.Data) => void): any
