@@ -1,34 +1,39 @@
-import * as fs from "fs"
-import "./src/api"
-import "./src/bot"
-import "./src/Events"
-import "./src/Genshin/API"
-import "./src/PluginLoader"
+import { FileTool } from "./src/File/FileTool"
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const Package = "xianyubb-bot"
+const Project_Name = "xianyubb-bot"
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Version = [0, 1, 5]
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Author = "xianyubb"
 
-const Path = "./config/config.json"
-
-
-function mkdir() {
-  if (!fs.existsSync(Path)) {
-    fs.mkdirSync("./config")
-    fs.writeFileSync(Path, JSON.stringify({
-      address: "127.0.0.1",
-      port: 8080,
-    }))
+const conf = {
+  ws: "ws://127.0.0.1:8080",
+  bds: {
+    use: false,
+    port: 8081
   }
-  if (!fs.existsSync("./plugins")) {
-    fs.mkdirSync("./plugins")
+}
+function config() {
+  if (FileTool.isexists("./config/config.json")) {
+    require("./src/bot")
+    require("./src/api")
+    require("./src/Events")
+    require("./src/PluginLoader")
+  } else {
+    console.log("未读取到配置文件 正在尝试生成")
+    FileTool.mkdir("./config")
+    FileTool.mkdir("./plugins")
+    FileTool.writeTo("./config/config.json", JSON.stringify(conf))
+    if (FileTool.isexists("./config/config.json")) {
+      console.log("生成成功!请修改配置文件后启动BOT")
+    }
   }
 }
 
-mkdir()
+config()
+
+
 
 
 

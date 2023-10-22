@@ -3,8 +3,9 @@ import { Bot } from "./api";
 
 const data_ = JSON.parse(fs.readFileSync("./config/config.json").toString())
 
+
 // eslint-disable-next-line import/no-mutable-exports
-export let bot = new Bot(`ws://${data_.address}:${data_.port}`)
+export let bot = new Bot(data_.ws)
 
 
 bot.bot.onopen = () => {
@@ -19,7 +20,7 @@ console.log("正在连接go-cqhttp...")
 
 
 bot.bot.on("error", (error) => {
-    console.error("WebSocket连接错误:", error);
+    console.error("WebSocket 连接错误:", error);
     console.log("正在尝试重连...")
     bot = new Bot(`ws://${data_.address}:${data_.port}`)
     bot.bot.on("error", (err) => {

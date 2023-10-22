@@ -2,18 +2,18 @@ import { WebSocketServer } from "ws";
 import WebSocket = require("ws");
 
 
-export class Bds {
+export class BDS {
   bds: WebSocketServer
 
-    ws: WebSocket;
+  ws: WebSocket;
 
-  constructor(port) {
+  constructor(port: number) {
     this.bds = new WebSocketServer({
-      port
+      "port": port
     })
   }
 
-  static send(ws:WebSocket,msg:string) {
+  static send(ws: WebSocket, msg: string) {
     ws.send(msg)
   }
 
@@ -29,3 +29,4 @@ export class Bds {
     this.bds.close()
   }
 }
+

@@ -1,7 +1,4 @@
-
-import * as path from 'path';
-import * as fs from "fs"
-import { spawn } from 'child_process';
+import path = require('path');
 import { FileTool } from './File/FileTool';
 import { bot } from './bot';
 
@@ -17,7 +14,7 @@ export class PluginLoader {
   constructor() { }
 
   /** 获取插件 */
- static async getPlugin() {
+  static async getPlugin() {
     return FileTool.readdir(PluginPath)
   }
 
@@ -28,13 +25,19 @@ export class PluginLoader {
 
 
 }
+async function Load() {
+  const File = await FileTool.readdir("./plugins")
+  File.forEach((filename) => {
+    if (path.extname(`./plugins/${filename}`) === ".js") {
+      import(`../../plugins/${filename}`)
+    }
+  })
+}
 
 bot.bot.on("open", () => {
   bot.get_login_info().then((v) => {
-    console.log("成功连接 BOT: $1, QQ: $2"
-      .replace("$1", v.data.nickname)
-      .replace("$2",v.data.user_id)
-    )
+    console.log(`成功连接到 BOT: ${v.data.nickname} , QQ: ${v.data.user_id}`)
+    Load()
   })
- 
+
 })
