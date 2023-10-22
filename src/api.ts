@@ -1,13 +1,17 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 import { WebSocket } from 'ws';
-import * as events from './Events';
-import data, { Anonymous, MessageType, Returnecho } from './data';
 import { EventEmitter } from 'events';
 import * as uuid from 'uuid';
+import * as events from './Events';
+import data, { Anonymous, MessageType, Returnecho } from './data';
 
 export class Bot {
   public BotEvents!: events.BotEvent;
+
   public WebSocketEvents!: events.WebSocketEvent;
+
   public echoEvent!: EventEmitter;
+
   bot: WebSocket;
 
   constructor(ws: string) {
@@ -15,7 +19,7 @@ export class Bot {
     this.BotEvents = events.BotEvents;
     this.WebSocketEvents = events.wsevent;
     this.echoEvent = events.echo;
-    this.bot.onopen = (events) => {
+    this.bot.onopen = () => {
       this.connect();
     };
     this.bot.onmessage = (events) => {
@@ -49,11 +53,12 @@ export class Bot {
       this.bot.send(
         JSON.stringify({
           action: 'get_login_info',
-          echo: echo,
+          echo,
         })
       );
     });
   }
+
   /**
    * 设置登录号资料 (该api没有响应数据)
    * @param nickname 名称
@@ -80,13 +85,13 @@ export class Bot {
         JSON.stringify({
           action: 'set_qq_profile',
           params: {
-            nickname: nickname,
-            company: company,
-            email: email,
-            college: college,
-            personal_note: personal_note,
+            nickname,
+            company,
+            email,
+            college,
+            personal_note,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -106,7 +111,7 @@ export class Bot {
       this.bot.send(
         JSON.stringify({
           action: 'qidian_get_account_info',
-          echo: echo,
+          echo,
         })
       );
     });
@@ -128,9 +133,9 @@ export class Bot {
         JSON.stringify({
           action: '_get_model_show',
           params: {
-            model: model,
+            model,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -154,10 +159,10 @@ export class Bot {
         JSON.stringify({
           action: '_set_model_show',
           params: {
-            model: model,
-            model_show: model_show,
+            model,
+            model_show,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -179,9 +184,9 @@ export class Bot {
         JSON.stringify({
           action: 'get_online_clients',
           params: {
-            no_cache: no_cache,
+            no_cache,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -204,10 +209,10 @@ export class Bot {
         JSON.stringify({
           action: ' get_stranger_info',
           params: {
-            user_id: user_id,
-            no_cache: no_cache,
+            user_id,
+            no_cache,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -228,7 +233,7 @@ export class Bot {
       this.bot.send(
         JSON.stringify({
           action: 'get_friend_list',
-          echo: echo,
+          echo,
         })
       );
     });
@@ -249,7 +254,7 @@ export class Bot {
       this.bot.send(
         JSON.stringify({
           action: 'get_unidirectional_friend_list',
-          echo: echo,
+          echo,
         })
       );
     });
@@ -272,9 +277,9 @@ export class Bot {
         JSON.stringify({
           action: 'delete_friend',
           params: {
-            user_id: user_id,
+            user_id,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -297,9 +302,9 @@ export class Bot {
         JSON.stringify({
           action: 'delete_unidirectional_friend',
           params: {
-            user_id: user_id,
+            user_id,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -323,11 +328,11 @@ export class Bot {
         JSON.stringify({
           action: 'send_group_msg',
           params: {
-            group_id: group_id,
+            group_id,
             message: msg,
-            auto_escape: auto_escape,
+            auto_escape,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -351,11 +356,11 @@ export class Bot {
         JSON.stringify({
           action: 'send_private_msg',
           params: {
-            user_id: user_id,
+            user_id,
             message: msg,
-            auto_escape: auto_escape,
+            auto_escape,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -387,13 +392,13 @@ export class Bot {
         JSON.stringify({
           action: 'send_msg',
           params: {
-            message_type: message_type,
-            group_id: group_id,
-            user_id: user_id,
-            message: message,
-            auto_escape: auto_escape,
+            message_type,
+            group_id,
+            user_id,
+            message,
+            auto_escape,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -415,9 +420,9 @@ export class Bot {
         JSON.stringify({
           action: 'get_msg',
           params: {
-            message_id: message_id,
+            message_id,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -440,9 +445,9 @@ export class Bot {
         JSON.stringify({
           action: 'delete_msg',
           params: {
-            message_id: message_id,
+            message_id,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -465,9 +470,9 @@ export class Bot {
         JSON.stringify({
           action: 'mark_msg_as_read',
           params: {
-            message_id: message_id,
+            message_id,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -490,9 +495,9 @@ export class Bot {
         JSON.stringify({
           action: 'get_forward_msg',
           params: {
-            message_id: message_id,
+            message_id,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -515,10 +520,10 @@ export class Bot {
         JSON.stringify({
           action: 'send_group_forward_msg',
           params: {
-            group_id: group_id,
-            message: message,
+            group_id,
+            message,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -541,10 +546,10 @@ export class Bot {
         JSON.stringify({
           action: 'send_private_forward_msg',
           params: {
-            user_id: user_id,
-            message: message,
+            user_id,
+            message,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -568,10 +573,10 @@ export class Bot {
         JSON.stringify({
           action: 'get_group_msg_history',
           params: {
-            group_id: group_id,
+            group_id,
             message: message_seq,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -593,9 +598,9 @@ export class Bot {
         JSON.stringify({
           action: 'get_image',
           params: {
-            file: file,
+            file,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -616,7 +621,7 @@ export class Bot {
       this.bot.send(
         JSON.stringify({
           action: 'can_send_image',
-          echo: echo,
+          echo,
         })
       );
     });
@@ -640,9 +645,9 @@ export class Bot {
         JSON.stringify({
           action: 'ocr_image',
           params: {
-            image: image,
+            image,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -665,10 +670,10 @@ export class Bot {
         JSON.stringify({
           action: 'get_record',
           params: {
-            file: file,
-            out_format: out_format,
+            file,
+            out_format,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -689,7 +694,7 @@ export class Bot {
       this.bot.send(
         JSON.stringify({
           action: 'can_send_record',
-          echo: echo,
+          echo,
         })
       );
     });
@@ -717,11 +722,11 @@ export class Bot {
         JSON.stringify({
           action: 'set_friend_add_request',
           params: {
-            flag: flag,
-            approve: approve,
-            remark: remark,
+            flag,
+            approve,
+            remark,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -751,12 +756,12 @@ export class Bot {
         JSON.stringify({
           action: 'set_group_add_request',
           params: {
-            flag: flag,
-            sub_type: sub_type,
-            approve: approve,
-            reason: reason,
+            flag,
+            sub_type,
+            approve,
+            reason,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -779,10 +784,10 @@ export class Bot {
         JSON.stringify({
           action: 'get_group_info',
           params: {
-            group_id: group_id,
-            no_cache: no_cache,
+            group_id,
+            no_cache,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -804,9 +809,9 @@ export class Bot {
         JSON.stringify({
           action: 'get_group_list',
           params: {
-            no_cache: no_cache,
+            no_cache,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -834,11 +839,11 @@ export class Bot {
         JSON.stringify({
           action: 'get_group_member_info',
           params: {
-            group_id: group_id,
-            user_id: user_id,
-            no_cache: no_cache,
+            group_id,
+            user_id,
+            no_cache,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -861,10 +866,10 @@ export class Bot {
         JSON.stringify({
           action: 'get_group_member_list',
           params: {
-            group_id: group_id,
-            no_cache: no_cache,
+            group_id,
+            no_cache,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -896,10 +901,10 @@ export class Bot {
         JSON.stringify({
           action: 'get_group_honor_info',
           params: {
-            group_id: group_id,
-            type: type,
+            group_id,
+            type,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -920,7 +925,7 @@ export class Bot {
       this.bot.send(
         JSON.stringify({
           action: 'get_group_system_msg',
-          echo: echo,
+          echo,
         })
       );
     });
@@ -942,9 +947,9 @@ export class Bot {
         JSON.stringify({
           action: 'get_essence_msg_list',
           params: {
-            group_id: group_id,
+            group_id,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -966,9 +971,9 @@ export class Bot {
         JSON.stringify({
           action: 'get_group_at_all_remain',
           params: {
-            group_id: group_id,
+            group_id,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -992,10 +997,10 @@ export class Bot {
         JSON.stringify({
           action: 'set_group_name',
           params: {
-            group_id: group_id,
-            group_name: group_name,
+            group_id,
+            group_name,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -1019,11 +1024,11 @@ export class Bot {
         JSON.stringify({
           action: 'set_group_portrait',
           params: {
-            group_id: group_id,
-            file: file,
-            cache: cache,
+            group_id,
+            file,
+            cache,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -1052,11 +1057,11 @@ export class Bot {
         JSON.stringify({
           action: 'set_group_admin',
           params: {
-            group_id: group_id,
-            user_id: user_id,
-            enable: enable,
+            group_id,
+            user_id,
+            enable,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -1081,11 +1086,11 @@ export class Bot {
         JSON.stringify({
           action: 'set_group_card',
           params: {
-            group_id: group_id,
-            user_id: user_id,
-            card: card,
+            group_id,
+            user_id,
+            card,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -1116,12 +1121,12 @@ export class Bot {
         JSON.stringify({
           action: 'set_group_special_title',
           params: {
-            group_id: group_id,
-            user_id: user_id,
-            special_title: special_title,
-            duration: duration,
+            group_id,
+            user_id,
+            special_title,
+            duration,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -1150,11 +1155,11 @@ export class Bot {
         JSON.stringify({
           action: 'set_group_ban',
           params: {
-            group_id: group_id,
-            user_id: user_id,
-            duration: duration,
+            group_id,
+            user_id,
+            duration,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -1178,10 +1183,10 @@ export class Bot {
         JSON.stringify({
           action: 'set_group_whole_ban',
           params: {
-            group_id: group_id,
-            enable: enable,
+            group_id,
+            enable,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -1214,12 +1219,12 @@ export class Bot {
         JSON.stringify({
           action: 'set_group_anonymous_ban',
           params: {
-            group_id: group_id,
-            anonymous: anonymous,
-            flag: flag,
-            duration: duration,
+            group_id,
+            anonymous,
+            flag,
+            duration,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -1242,9 +1247,9 @@ export class Bot {
         JSON.stringify({
           action: 'set_essence_msg',
           params: {
-            message_id: message_id,
+            message_id,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -1267,9 +1272,9 @@ export class Bot {
         JSON.stringify({
           action: 'delete_essence_msg',
           params: {
-            message_id: message_id,
+            message_id,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -1294,7 +1299,7 @@ export class Bot {
           params: {
             message_id: group_id,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -1318,10 +1323,10 @@ export class Bot {
         JSON.stringify({
           action: 'set_group_anonymous',
           params: {
-            group_id: group_id,
-            enable: enable,
+            group_id,
+            enable,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -1346,11 +1351,11 @@ export class Bot {
         JSON.stringify({
           action: '_send_group_notice',
           params: {
-            group_id: group_id,
-            content: content,
-            image: image
+            group_id,
+            content,
+            image
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -1372,9 +1377,9 @@ export class Bot {
         JSON.stringify({
           action: '_get_group_notice',
           params: {
-            group_id: group_id,
+            group_id,
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -1399,11 +1404,11 @@ export class Bot {
         JSON.stringify({
           action: 'set_group_kick',
           params: {
-            group_id: group_id,
-            user_id: user_id,
-            reject_add_request: reject_add_request
+            group_id,
+            user_id,
+            reject_add_request
           },
-          echo: echo,
+          echo,
         })
       );
     });
@@ -1427,10 +1432,10 @@ export class Bot {
         JSON.stringify({
           action: 'set_group_kick',
           params: {
-            group_id: group_id,
-            is_dismiss: is_dismiss
+            group_id,
+            is_dismiss
           },
-          echo: echo,
+          echo,
         })
       );
     });

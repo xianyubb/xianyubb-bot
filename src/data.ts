@@ -125,7 +125,7 @@ const message = (
   callback: (Event: string, data: any) => void
 ) => {
   switch (data.message_type) {
-    case 'group':
+    case 'group': {
       const GroupMessage: GroupMessage = {
         message_id: data.message_id,
         sub_type: data.sub_type,
@@ -142,7 +142,8 @@ const message = (
       };
       callback('onReceiveGroupMessage', GroupMessage);
       break;
-    case 'private':
+    }
+    case 'private': {
       const PrivateMessage: PrivateMessage = {
         user_id: data.user_id,
         sub_type: data.sub_type,
@@ -159,8 +160,12 @@ const message = (
       };
       callback('onReceivePrivateMessage', PrivateMessage);
       break;
+    }
+    default:
+      break
   }
 };
+
 
 // notice消息
 export interface Notice extends Data {
@@ -368,7 +373,7 @@ export const notice = (
   callback: (Events: string, msg: any) => void
 ) => {
   switch (data.notice_type) {
-    case 'friend_recall':
+    case 'friend_recall': {
       const PrivateDeleteMsg: PrivateDeleteMsg = {
         user_id: data.user_id,
         message_id: data.message_id,
@@ -378,7 +383,8 @@ export const notice = (
       };
       callback('onPrivateDeleteMsg', PrivateDeleteMsg);
       break;
-    case 'group_recall':
+    }
+    case 'group_recall': {
       const GroupDeleteMsg: GroupDeleteMsg = {
         group_id: data.group_id,
         operator_id: data.operator_id,
@@ -390,7 +396,8 @@ export const notice = (
       };
       callback('onGroupDeleteMsg', GroupDeleteMsg);
       break;
-    case 'group_increase':
+    }
+    case 'group_increase': {
       const GroupMemberAdd: GroupMemberAdd = {
         sub_type: data.sub_type,
         group_id: data.group_id,
@@ -402,7 +409,8 @@ export const notice = (
       };
       callback('onGroupMemberAdd', GroupMemberAdd);
       break;
-    case 'group_decrease':
+    }
+    case 'group_decrease': {
       const GroupMemberDecrease: GroupMemberDecrease = {
         sub_type: data.sub_type,
         group_id: data.group_id,
@@ -414,7 +422,8 @@ export const notice = (
       };
       callback('onGroupMemberDecrease', GroupMemberDecrease);
       break;
-    case 'group_admin':
+    }
+    case 'group_admin': {
       const GroupAdminChange: GroupAdminChange = {
         user_id: data.user_id,
         group_id: data.group_id,
@@ -425,7 +434,8 @@ export const notice = (
       };
       callback('onGroupAdminChange', GroupAdminChange);
       break;
-    case 'group_upload':
+    }
+    case 'group_upload': {
       const GroupFileUpload: GroupFileUpload = {
         group_id: data.group_id,
         file: data.file,
@@ -436,7 +446,8 @@ export const notice = (
       };
       callback('onGroupFileUpload', GroupFileUpload);
       break;
-    case 'group_ban':
+    }
+    case 'group_ban': {
       const GroupBan: GroupBan = {
         user_id: data.user_id,
         group_id: data.group_id,
@@ -449,7 +460,8 @@ export const notice = (
       };
       callback('onGroupBan', GroupBan);
       break;
-    case 'friend_add':
+    }
+    case 'friend_add': {
       const FriendAdd: FrienAdd = {
         user_id: data.user_id,
         time: data.time,
@@ -458,9 +470,10 @@ export const notice = (
       };
       callback('onFriendAdd', FriendAdd);
       break;
-    case 'notify':
+    }
+    case 'notify': {
       switch (data.sub_type) {
-        case 'poke':
+        case 'poke': {
           const Notify: Notify = {
             group_id: data.group_id,
             target_id: data.target_id,
@@ -472,7 +485,8 @@ export const notice = (
           };
           callback('onNotify', Notify);
           break;
-        case 'lucky_king':
+        }
+        case 'lucky_king': {
           const GroupRedbagLuckyKing: GroupRedbagLuckyKing = {
             group_id: data.group_id,
             user_id: data.user_id,
@@ -483,7 +497,8 @@ export const notice = (
           };
           callback('onGroupRedbagLuckyKing', GroupRedbagLuckyKing);
           break;
-        case 'honor':
+        }
+        case 'honor': {
           const GroupMemberHonorChange: GroupMemberHonorChange = {
             group_id: data.group_id,
             user_id: data.user_id,
@@ -494,7 +509,8 @@ export const notice = (
           };
           callback('onGroupMemberHonorChange', GroupMemberHonorChange);
           break;
-        case 'title':
+        }
+        case 'title': {
           const GroupMemberTitleChange: GroupMemberTitleChange = {
             group_id: data.group_id,
             user_id: data.user_id,
@@ -505,9 +521,13 @@ export const notice = (
           };
           callback('onGroupMemberTitleChange', GroupMemberTitleChange);
           break;
+        }
+        default:
+          break
       }
       break;
-    case 'group_card':
+    }
+    case 'group_card': {
       const GroupCardChange: GroupCardChange = {
         group_id: data.group_id,
         user_id: data.user_id,
@@ -519,7 +539,9 @@ export const notice = (
       };
       callback('onGroupCardChange', GroupCardChange);
       break;
-    case 'offline_file':
+
+    }
+    case 'offline_file': {
       const ReceiveOfflineFile: ReceiveOfflineFile = {
         user_id: data.user_id,
         file: data.file,
@@ -529,7 +551,8 @@ export const notice = (
       };
       callback('onReceiveOfflineFile', ReceiveOfflineFile);
       break;
-    case 'client_status':
+    }
+    case 'client_status': {
       const ClientStatusChange: ClientStatusChange = {
         client: data.client,
         online: data.online,
@@ -539,7 +562,8 @@ export const notice = (
       };
       callback('onClientStatusChange', ClientStatusChange);
       break;
-    case 'essencs':
+    }
+    case 'essencs': {
       const EssenceMessageChange: EssenceMessageChange = {
         sender_id: data.sender_id,
         group_id: data.group_id,
@@ -552,6 +576,9 @@ export const notice = (
       };
       callback('onEssenceMessageChange', EssenceMessageChange);
       break;
+    }
+    default:
+      break
   }
 };
 // request消息
@@ -594,7 +621,7 @@ const request = (
   callback: (Events: string, msg: any) => void
 ) => {
   switch (data.request_type) {
-    case 'friend':
+    case 'friend': {
       const AddFriendRequest: AddFriendRequest = {
         user_id: data.user_id,
         comment: data.comment,
@@ -605,7 +632,8 @@ const request = (
       };
       callback('onAddFriendRequest', AddFriendRequest);
       break;
-    case 'group':
+    }
+    case 'group': {
       const AddGroupRequest: AddGroupRequest = {
         group_id: data.group_id,
         user_id: data.user_id,
@@ -618,6 +646,9 @@ const request = (
       };
       callback('onAddGroupRequest', AddGroupRequest);
       break;
+    }
+    default:
+      break
   }
 };
 
@@ -663,19 +694,23 @@ const metaevent = (
   callback: (Events: string, msg: any) => void
 ) => {
   switch (data.meta_event_type) {
-    case 'heartbeat':
+    case 'heartbeat': {
       const HeartBeat: HeartBeat = {
         status: data.status,
         interval: data.interval,
       };
       callback('onHeartBeat', HeartBeat);
       break;
-    case 'lifecycle':
+    }
+    case 'lifecycle': {
       const LifeCycle: LifeCycle = {
         sub_type: data.sub_type,
       };
       callback('onLifeCycle', LifeCycle);
       break;
+    }
+    default:
+      break
   }
 };
 
@@ -690,18 +725,24 @@ export interface Returnecho {
 export default (msg: any, callback: (Events: string, data: any) => void) => {
   if (msg.post_type) {
     switch (msg.post_type) {
-      case 'message':
+      case 'message': {
         message(msg, callback);
         break;
-      case 'notice':
+      }
+      case 'notice': {
         notice(msg, callback);
         break;
-      case 'request':
+      }
+      case 'request': {
         request(msg, callback);
+
         break;
-      case 'meta_event':
+      }
+      case 'meta_event': {
         metaevent(msg, callback);
         break;
+      }
+      default: break
     }
   } else if (msg.echo) {
     callback('echo', {
