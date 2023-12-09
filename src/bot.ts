@@ -8,6 +8,7 @@ const data_ = JSON.parse(fs.readFileSync("./config/config.json").toString())
 export let bot = new Bot(data_.ws)
 
 
+
 bot.bot.onopen = () => {
     console.log("连接成功")
 }
@@ -22,10 +23,10 @@ console.log("正在连接go-cqhttp...")
 bot.bot.on("error", (error) => {
     console.error("WebSocket 连接错误:", error);
     console.log("正在尝试重连...")
-    bot = new Bot(`ws://${data_.address}:${data_.port}`)
+    bot = new Bot(data_.ws)
     bot.bot.on("error", (err) => {
         console.error("WebSocket重接错误:", err.message);
-       
+
     })
 });
 // 监听连接关闭事件

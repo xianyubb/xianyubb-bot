@@ -15,12 +15,7 @@ const conf = {
   }
 }
 function config() {
-  if (FileTool.isexists("./config/config.json")) {
-    require("./src/bot")
-    require("./src/api")
-    require("./src/Events")
-    require("./src/PluginLoader")
-  } else {
+  if (!FileTool.isexists("./config/config.json")) {
     console.log("未读取到配置文件 正在尝试生成")
     FileTool.mkdir("./config")
     FileTool.mkdir("./plugins")
@@ -28,14 +23,19 @@ function config() {
     if (FileTool.isexists("./config/config.json")) {
       console.log("生成成功!请修改配置文件后启动BOT")
     }
+  } else {
+    require("./src/bot")
+    require("./src/api")
+    require("./src/Events")
+    require("./src/PluginLoader")
+    
   }
 }
 
-config()
+config();
 
 
-
-
+(global as any).bot = require('./src/bot').bot;
 
 
 

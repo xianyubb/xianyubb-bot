@@ -1,13 +1,12 @@
-import path = require('path');
+import * as path from 'path'
 import { FileTool } from './File/FileTool';
 import { bot } from './bot';
+
 
 const PluginPath = "./plugins"
 
 
 export class PluginLoader {
-  exports: any;
-
   static exports: any;
 
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
@@ -20,16 +19,22 @@ export class PluginLoader {
 
   /** 加载插件 */
   static async loadPlugin(file: string) {
-    this.exports = await import(`./plugins/${file}`)
+    this.exports = await import(`../plugins/${file}`)
   }
 
 
 }
 async function Load() {
   const File = await FileTool.readdir("./plugins")
-  File.forEach((filename) => {
+  File.forEach(async (filename) => {
     if (path.extname(`./plugins/${filename}`) === ".js") {
-      import(`../../plugins/${filename}`)
+      try {
+        await PluginLoader.loadPlugin(filename)
+        console.log(`正在加载${filename}`)
+      } catch (error) {
+        console.error(error)
+        console.log(`加载失败${filename}`)
+      }
     }
   })
 }
