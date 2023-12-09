@@ -7,14 +7,10 @@
 
 ```js
 /// <reference path="index.d.ts" />
-// const bot = require("../app").bot 
 
 bot.BotEvents.on()
 
 ```
-**特殊原因,无法直接将补全和导入同时使用**
-
-**如果要使用补全,请按以上方法.插件写完后,请取消第二行的注释**
 
 ### 注册插件
 
@@ -25,13 +21,14 @@ let Plugin = require("../src/plugins").Plugins
 
 const plugins = new Plugin("test", "test", [0, 1, 0], { author:"hhh" })
 
+// 暂时废弃
 
 ```
 
 ### 插件示例
 
 ```js
-const bot = require("../app").bot
+/// <reference path="index.d.ts" />
 
 bot.BotEvents.on("onReceiveGroupMessage", (msg) => {
    console.log(msg)
