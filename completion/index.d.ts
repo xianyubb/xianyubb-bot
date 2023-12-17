@@ -404,6 +404,7 @@ interface LifeCycle {
 interface Returnecho {
   status: string;
   retcode: number;
+  /** 根据响应数据不同可能有不同 */
   data: any;
   uuid: string;
 }
@@ -552,7 +553,7 @@ declare namespace bot {
    * @param model
    * @param model_show
    */
- function _set_model_show(model: string, model_show: string): Promise<Returnecho>
+  function _set_model_show(model: string, model_show: string): Promise<Returnecho>
   /**
    * 获取当前账号在线客户端列表
    * @param no_cache 是否无视缓存

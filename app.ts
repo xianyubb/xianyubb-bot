@@ -3,7 +3,7 @@ import { FileTool } from "./src/File/FileTool"
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Project_Name = "xianyubb-bot"
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const Version = [0, 1, 5]
+const Version = [0, 2, 0]
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Author = "xianyubb"
 
@@ -28,7 +28,7 @@ function config() {
     require("./src/api")
     require("./src/Events")
     require("./src/PluginLoader")
-    
+
   }
 }
 
