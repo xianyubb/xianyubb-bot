@@ -1,12 +1,12 @@
-# API接口
+# API 接口
 
-提供了对qq号的操作接口<br/>
+提供了对 qq 号的操作接口<br/>
 具体响应数据请看 [go-cqhttp 文档](https://docs.go-cqhttp.org)<br/>
 某些 API 没有响应数据
 
 您在编写插件的时候就能看到各参数的具体详情了
 
-### Bot帐号
+### Bot 帐号
 
 #### 获取登录号信息
 
@@ -24,7 +24,7 @@
 
 > `bot.qidian_get_account_info()`
 
-该API只有企点协议可用
+该 API 只有企点协议可用
 该 API 无需参数
 
 #### 获取在线机型
@@ -135,7 +135,7 @@
 
 > `bot.ocr_image(image)`
 
-目前图片OCR接口仅支持接受的图片
+目前图片 OCR 接口仅支持接受的图片
 
 ### 语音
 
@@ -171,7 +171,7 @@
 
 > `bot.get_group_info(group_id,no_cache)`
 
-如果机器人尚未加入群, group_create_time, group_level, max_member_count 和 member_count 将会为0
+如果机器人尚未加入群, group_create_time, group_level, max_member_count 和 member_count 将会为 0
 
 #### 获取群列表
 
@@ -221,13 +221,13 @@
 
 [1] file 参数支持以下几种格式：
 
-* 绝对路径, 例如 file:///C:\\Users\Richard\Pictures\1.png, 格式使用 file URI
-* 网络 URL, 例如 http://i1.piimg.com/567571/fdd6e7b6d93f1ef0.jpg
-* Base64 编码, 例如 base64://iVBORw0KGgoAAAANSUhEUgAAABQAAAAVCAIAAADJt1n/AAAAKElEQVQ4EWPk5+RmIBcwkasRpG9UM4mhNxpgowFGMARGEwnBIEJVAAAdBgBNAZf+QAAAAABJRU5ErkJggg==
+- 绝对路径, 例如 file:///C:\\Users\Richard\Pictures\1.png, 格式使用 file URI
+- 网络 URL, 例如 http://i1.piimg.com/567571/fdd6e7b6d93f1ef0.jpg
+- Base64 编码, 例如 base64://iVBORw0KGgoAAAANSUhEUgAAABQAAAAVCAIAAADJt1n/AAAAKElEQVQ4EWPk5+RmIBcwkasRpG9UM4mhNxpgowFGMARGEwnBIEJVAAAdBgBNAZf+QAAAAABJRU5ErkJggg==
 
-[2] cache参数: 通过网络 URL 发送时有效, 1表示使用缓存, 0关闭关闭缓存, 默认 为1
+[2] cache 参数: 通过网络 URL 发送时有效, 1 表示使用缓存, 0 关闭关闭缓存, 默认 为 1
 
-[3] 目前这个API在登录一段时间后因cookie失效而失效, 请考虑后使用
+[3] 目前这个 API 在登录一段时间后因 cookie 失效而失效, 请考虑后使用
 
 #设置群
 
