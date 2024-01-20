@@ -1,3 +1,4 @@
+
 interface Data {
   /** 事件发生的unix时间戳 */
   time: number;
@@ -954,4 +955,7 @@ declare namespace bot {
    * @param is_dismiss 是否解散, 如果登录号是群主, 则仅在此项为 true 时能够解散
    */
   function set_group_leave(group_id: number, is_dismiss: boolean): Promise<Returnecho>
+}
+declare namespace OtherApi {
+
 }

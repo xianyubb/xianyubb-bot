@@ -1,5 +1,7 @@
 import { FileTool } from "./src/File/FileTool"
 
+require("./src/otherApi/otherApi");
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Project_Name = "xianyubb-bot"
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

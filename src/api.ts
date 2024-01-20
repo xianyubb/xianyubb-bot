@@ -1440,4 +1440,33 @@ export class Bot {
       );
     });
   }
+
+  // GOCQ 相关操作
+
+  /**
+   * 快速操作
+   * @param content 事件数据对象, 可做精简, 如去掉 message 等无用字段
+   * @param operation 快速操作对象, 例如 {"ban": true, "reply": "请不要说脏话"}
+   * @returns 
+   */
+  public handle_quick_operation(content: object, operation: object) {
+    return new Promise((resolve) => {
+      const echo = uuid.v4();
+
+      this.echoEvent.once(echo, (data) => {
+        resolve(data);
+      });
+
+      this.bot.send(
+        JSON.stringify({
+          action: '.handle_quick_operation',
+          params: {
+            content,
+            operation
+          },
+          echo,
+        })
+      );
+    });
+  }
 }

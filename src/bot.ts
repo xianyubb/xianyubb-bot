@@ -1,5 +1,5 @@
 import * as fs from "fs"
-import { spawn } from "child_process";
+import { ChildProcess, spawn } from "child_process";
 import { Bot } from "./api";
 
 const data_ = JSON.parse(fs.readFileSync("./config/config.json").toString())
@@ -8,7 +8,7 @@ const data_ = JSON.parse(fs.readFileSync("./config/config.json").toString())
 // eslint-disable-next-line import/no-mutable-exports, prefer-const
 export let bot = new Bot(data_.ws)
 
-let child;
+let child: ChildProcess;
 
 function restartApp() {
     console.log('Restarting the Node.js application...');
@@ -62,10 +62,8 @@ bot.bot.onopen = () => {
 
 
 
-console.log("正在启动xianyubb-bot")
-console.log("正在连接go-cqhttp...")
-// eslint-disable-next-line @typescript-eslint/no-use-before-define
-
+console.log("正在启动xianyubb-bot");
+console.log("正在连接go-cqhttp...");
 function delay(ms: number) {
     return new Promise(resolve => { setTimeout(resolve, ms) });
 }

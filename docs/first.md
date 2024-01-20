@@ -35,9 +35,6 @@ npm -v
 
 登录完成你就可以挂着了
 
-### QQ官方机器人支持
-
-> [QQ_Bot](QQ_Bot.md)
 
 ### 下载 **xianyubb-bot**
 
@@ -66,8 +63,8 @@ npm install
 
 ```json
 {
-  "ws": "ws://您的IP:端口",
-  "bds": { "use": false, "port": 8081 }
+"IP":"127.0.0.1",
+"Port":8080
 }
 ```
 在里面填入你的go-cq的 IP 和 端口 (默认是127.0.0.1 8080)
