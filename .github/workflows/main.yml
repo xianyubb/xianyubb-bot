@@ -1,0 +1,30 @@
+name: Build
+
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+        with:
+          submodules: true
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - name: build
+        run: |
+          npm install -g pnpm
+          pnpm install
+          pnpm run build
+          cp package.json dist/
+      - name: pack plugin
+        run: |
+          cd dist && 7z a -tzip -r xianyubb-bot.zip .
+      - name: upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: BetterFakePlayer
+          path: dist/xianyubb-bot.zip
