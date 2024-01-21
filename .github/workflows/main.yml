@@ -18,7 +18,7 @@ jobs:
         run: |
           npm install -g pnpm
           pnpm install
-          pnpm run build
+          tsc build
           cp package.json dist/
       - name: pack plugin
         run: |
