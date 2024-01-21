@@ -22,7 +22,7 @@ jobs:
           cp package.json dist/
       - name: pack plugin
         run: |
-          cd dist && 7z a -tzip -r xianyubb-bot.zip .
+          cd dist && 7z a -tzip -r dist/xianyubb-bot.zip *
       - name: upload
         uses: actions/upload-artifact@v4
         with:
