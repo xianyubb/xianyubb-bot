@@ -10,9 +10,10 @@
     "build": "tsc && .\\scripts\\copy-package-json.cmd",
     "clean": "rmdir /s /q dist && del xianyubb-bot.zip",
     "package": ".\\scripts\\package.cmd",
-    "watch" : "tsc --watch"
+    "watch": "tsc --watch"
   },
   "devDependencies": {
+    "@types/express": "^4.17.21",
     "@types/node": "^14.18.63",
     "@types/uuid": "^9.0.2",
     "@types/ws": "^8.5.5",
@@ -26,8 +27,7 @@
     "eslint-plugin-n": "^16.0.1",
     "eslint-plugin-promise": "^6.1.1",
     "graphql-ws": "^5.14.0",
-    "typescript": "^4.9.5",
-    "ws": "^8.13.0"
+    "typescript": "^4.9.5"
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
@@ -40,8 +40,10 @@
     ]
   },
   "dependencies": {
-    "enka-network-api": "^4.1.1",
+    "express": "^4.18.2",
     "keypress": "^0.2.1",
-    "uuid": "^9.0.0"
+    "qq-guild-bot": "^2.9.5",
+    "uuid": "^9.0.0",
+    "ws": "^8.13.0"
   }
 }

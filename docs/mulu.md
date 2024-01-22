@@ -1,6 +1,6 @@
 ```filetree
 xianyubb-bot/
-|-app.js 
+|-app.js
 |-plugins/ // 插件文件夹
 |         example.js // 示例插件
 |-config/ // 配置文件夹
@@ -18,4 +18,3 @@ xianyubb-bot/
 |
 |
 ```
-

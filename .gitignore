@@ -3,3 +3,4 @@ dist
 *.zip
 config
 plugins
+.VSCodeCounter

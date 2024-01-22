@@ -1,4 +1,3 @@
-
 interface Data {
   /** 事件发生的unix时间戳 */
   time: number;
@@ -29,7 +28,7 @@ interface MessageType {
     title?: string;
     content?: string;
     image?: string;
-    type?: 'qq' | 'group';
+    type?: "qq" | "group";
     lat?: string | number;
     lon?: string | number;
     audio?: string;
@@ -64,7 +63,7 @@ interface Sender {
 
 interface Message extends Data {
   group_id: number;
-  message_type: 'private' | 'group';
+  message_type: "private" | "group";
   sub_type: string;
   message_id: number;
   /** QQ 号 */
@@ -121,8 +120,6 @@ interface PrivateMessage extends Data {
   temp_source: number;
 }
 
-
-
 // notice消息
 interface Notice extends Data {
   notice_type: string;
@@ -136,7 +133,7 @@ interface Notice extends Data {
   duration: number;
   sender_id: number;
   target_id: number;
-  honor_type: 'talkative' | 'performer' | 'emotion';
+  honor_type: "talkative" | "performer" | "emotion";
   title: string;
   card_new: string;
   card_old: string;
@@ -324,7 +321,6 @@ interface EssenceMessageChange extends Data {
   message_id: number;
 }
 
-
 // request消息
 interface Request extends Data {
   request_type: string;
@@ -359,8 +355,6 @@ interface AddGroupRequest extends Data {
   /** 请求 flag, 在调用处理请求的 API 时需要传入 */
   flag: string;
 }
-
-
 
 // meta_event
 interface MetaEvent extends Data {
@@ -399,18 +393,108 @@ interface LifeCycle {
   sub_type: string;
 }
 
-
-
 // echo
 interface Returnecho {
   status: string;
   retcode: number;
-  /** 根据响应数据不同可能有不同 */
-  data: any;
   uuid: string;
 }
 
+// Bot 账号
 
+interface Device {
+  /** 客户端ID */
+  app_id: number;
+  /** 设备名称 */
+  device_name: string;
+  /** 设备类型 */
+  device_kind: string;
+}
+
+interface get_login_infoEcho extends Returnecho {
+  /** 响应数据 */
+  data: {
+    /** QQ 号 */
+    user_id: number;
+    /** QQ昵称 */
+    nickname: string;
+  };
+}
+
+interface set_qq_profileEcho extends Returnecho {}
+
+interface qidian_get_account_infoEcho extends Returnecho {
+  /** 响应数据 */
+  data: {
+    /** QQ 号 */
+    user_id: number;
+    /** QQ昵称 */
+    nickname: string;
+  };
+}
+
+interface _get_model_showEcho extends Returnecho {
+  /** 响应数据 */
+  data: {
+    variants: [model_show: string, need_pay: boolean];
+  };
+}
+
+interface _set_model_showEcho extends Returnecho {}
+
+interface get_online_clientsEcho extends Returnecho {
+  /** 响应数据 */
+  data: {
+    /** 在线客户端列表 */
+    clients: Device[];
+  };
+}
+
+// 好友信息
+
+interface get_stranger_infoEcho extends Returnecho {
+  /** 响应数据 */
+  data: {
+    /** QQ号 */
+    user_id: number;
+    /** 昵称 */
+    nickname: string;
+    /** 性别, male 或 female 或 unknown */
+    sex: string;
+    /** 年龄 */
+    age: number;
+    /** qid ID身份卡 */
+    qid: string;
+    /** 等级 */
+    level: number;
+    /** 官网写的等级，我认为是注册天数 */
+    login_days: number;
+  };
+}
+
+interface get_friend_listEcho extends Returnecho {
+  /** 响应数据 */
+  data: {
+    /** QQ号 */
+    user_id: number;
+    /** 昵称 */
+    nickname: string;
+    /** 备注名 */
+    remark: string;
+  };
+}
+
+interface get_unidirectional_friend_listEcho extends Returnecho {
+  /** 响应数据 */
+  data: {
+    /** QQ号 */
+    user_id: number;
+    /** 昵称 */
+    nickname: string;
+    /** 来源 */
+    source: string;
+  };
+}
 
 declare namespace bot {
   namespace BotEvents {
@@ -520,7 +604,7 @@ declare namespace bot {
   }
 
   /** 获取登录号信息 */
-  function get_login_info(): Promise<Returnecho>
+  function get_login_info(): Promise<get_login_infoEcho>;
   /**
    * 设置登录号资料 (该api没有响应数据)
    * @param nickname 名称
@@ -535,64 +619,72 @@ declare namespace bot {
     email: string,
     college: string,
     personal_note: string
-  ): Promise<Returnecho>
+  ): Promise<Returnecho>;
 
   /**
-  * 获取企点账号信息 (该API只有企点协议可用)
-  */
-  function qidian_get_account_info(): Promise<Returnecho>
+   * 获取企点账号信息 (该API只有企点协议可用)
+   */
+  function qidian_get_account_info(): Promise<qidian_get_account_infoEcho>;
 
   /**
-  * 获取在线机型 (有关例子可从 https://github.com/Mrs4s/go-cqhttp/pull/872#issuecomment-831180149 找到)
-  * @param model
-  */
-  function _get_model_show(model: string): Promise<Returnecho>
+   * 获取在线机型 (有关例子可从 https://github.com/Mrs4s/go-cqhttp/pull/872#issuecomment-831180149 找到)
+   * @param model 机型名称
+   */
+  function _get_model_show(model: string): Promise<_get_model_showEcho>;
 
   /**
    * 设置在线机型 (有关例子可从 https://github.com/Mrs4s/go-cqhttp/pull/872#issuecomment-831180149 找到)
    * 该 API 没有响应数据
-   * @param model
+   * @param model 机型名称
    * @param model_show
    */
-  function _set_model_show(model: string, model_show: string): Promise<Returnecho>
+  function _set_model_show(
+    model: string,
+    model_show: string
+  ): Promise<_set_model_showEcho>;
   /**
    * 获取当前账号在线客户端列表
    * @param no_cache 是否无视缓存
    */
-  function get_online_clients(no_cache: boolean): Promise<Returnecho>
+  function get_online_clients(
+    no_cache: boolean
+  ): Promise<get_online_clientsEcho>;
 
   /**
    * 获取陌生人信息
    * @param user_id QQ 号
    * @param no_cache 默认值:false 是否不使用缓存（使用缓存可能更新不及时, 但响应更快）
    */
-  function get_stranger_info(user_id: number, no_cache: boolean): Promise<Returnecho>
+  function get_stranger_info(
+    user_id: number,
+    no_cache: boolean
+  ): Promise<get_stranger_infoEcho>;
 
   /**
    * 获取好友列表
    * 该 API 无需参数
    */
-  function get_friend_list(): Promise<Returnecho>
+  function get_friend_list(): Promise<get_friend_listEcho>;
 
   /**
    * 获取单向好友列表
    * 该 API 无需参数
    */
-  function get_unidirectional_friend_list(): Promise<Returnecho>
+  function get_unidirectional_friend_list(): Promise<get_unidirectional_friend_listEcho>;
 
   /**
    * 删除好友
    * 该 API 无响应数据
    * @param user_id 好友 QQ 号
    */
-  function delete_friend(user_id: number): Promise<Returnecho>
+  function delete_friend(user_id: number): Promise<Returnecho>;
 
   /**
    * 删除单向好友
    * 该 API 无响应数据
    * @param user_id 好友 QQ 号
    */
-  function delete_unidirectional_friend(user_id: number): Promise<Returnecho>
+  function delete_unidirectional_friend(user_id: number): Promise<Returnecho>;
 
   /**
    * 发送群消息
@@ -600,7 +692,11 @@ declare namespace bot {
    * @param msg 发送的信息
    * @param auto_escape 消息内容是否作为纯文本发送 ( 即不解析 CQ 码 ) , 只在 message 字段是字符串时有效
    */
-  function send_group_msg(group_id: number, msg: string, auto_escape: boolean): Promise<Returnecho>
+  function send_group_msg(
+    group_id: number,
+    msg: string,
+    auto_escape: boolean
+  ): Promise<Returnecho>;
 
   /**
    * 发送私聊消息
@@ -608,7 +704,11 @@ declare namespace bot {
    * @param msg 发送的信息
    * @param auto_escape 消息内容是否作为纯文本发送 ( 即不解析 CQ 码 ) , 只在 message 字段是字符串时有效
    */
-  function send_private_msg(user_id: number, msg: string, auto_escape: boolean): Promise<Returnecho>
+  function send_private_msg(
+    user_id: number,
+    msg: string,
+    auto_escape: boolean
+  ): Promise<Returnecho>;
 
   /**
    * 发送消息
@@ -623,49 +723,55 @@ declare namespace bot {
     auto_escape: boolean,
     message_type?: string,
     user_id?: number,
-    group_id?: number,
-  ): Promise<Returnecho>
+    group_id?: number
+  ): Promise<Returnecho>;
 
   /**
    * 获取消息
    * @param message_id 消息id
    */
-  function get_msg(message_id: number): Promise<Returnecho>
+  function get_msg(message_id: number): Promise<Returnecho>;
 
   /**
    * 撤回消息
    * 该 API 无响应数据
    * @param message_id 消息id
    */
-  function delete_msg(message_id: number): Promise<Returnecho>
+  function delete_msg(message_id: number): Promise<Returnecho>;
 
   /**
    * 标记消息已读
    * 该 API 无响应数据
    * @param message_id 消息id
    */
-  function nark_msg_as_resd(message_id: number): Promise<Returnecho>
+  function nark_msg_as_resd(message_id: number): Promise<Returnecho>;
 
   /**
    * 获取合并转发内容
    * 字段 message_id 对应合并转发中的 id 字段
    * @param message_id 消息id
    */
-  function get_forward_msg(message_id: number): Promise<Returnecho>
+  function get_forward_msg(message_id: number): Promise<Returnecho>;
 
   /**
    * 发送合并转发 ( 群聊 )
    * @param group_id 群号
    * @param message 自定义转发消息, 具体看 https://docs.go-cqhttp.org/cqcode
    */
-  function send_group_forward_msg(group_id: number, message: MessageType): Promise<Returnecho>
+  function send_group_forward_msg(
+    group_id: number,
+    message: MessageType
+  ): Promise<Returnecho>;
 
   /**
    * 发送合并转发 ( 好友 )
    * @param user_id 好友QQ号
    * @param message 自定义转发消息, 具体看 https://docs.go-cqhttp.org/cqcode
    */
-  function send_private_forward_msg(user_id: number, message: MessageType): Promise<Returnecho>
+  function send_private_forward_msg(
+    user_id: number,
+    message: MessageType
+  ): Promise<Returnecho>;
 
   /**
    * 获取群消息历史记录
@@ -673,19 +779,22 @@ declare namespace bot {
    * @param group_id 群号
    * @param message_seq 起始消息序号, 可通过 get_msg 获得
    */
-  function get_group_msg_history(group_id: number, message_seq?: number): Promise<Returnecho>
+  function get_group_msg_history(
+    group_id: number,
+    message_seq?: number
+  ): Promise<Returnecho>;
 
   /**
    * 获取图片信息
    * @param file 图片缓存文件名
    */
-  function get_image(file: string): Promise<Returnecho>
+  function get_image(file: string): Promise<Returnecho>;
 
   /**
    * 检查是否可以发送图片
    * 该 API 无需参数
    */
-  function can_send_image(): Promise<Returnecho>
+  function can_send_image(): Promise<Returnecho>;
 
   /**
    * 图片 OCR
@@ -693,7 +802,7 @@ declare namespace bot {
    * ocr_image API移除了实验模式, 目前版本 .ocr_image 和 ocr_image 均能访问, 后期将只保留后者.
    * @param image 图片id
    */
-  function ocr_image(image: string): Promise<Returnecho>
+  function ocr_image(image: string): Promise<Returnecho>;
 
   /**
    * 获取语音
@@ -701,13 +810,13 @@ declare namespace bot {
    * @param file 收到的语音文件名（消息段的 file 参数）, 如 0B38145AA44505000B38145AA4450500.silk
    * @param out_format 要转换到的格式, 目前支持 mp3、amr、wma、m4a、spx、ogg、wav、flac
    */
-  function get_record(file: string, out_format: string): Promise<Returnecho>
+  function get_record(file: string, out_format: string): Promise<Returnecho>;
 
   /**
    * 检查是否可以发送语音
    * 该 API 无需参数
    */
-  function can_send_record(): Promise<Returnecho>
+  function can_send_record(): Promise<Returnecho>;
 
   /**
    * 处理加好友请求
@@ -719,7 +828,7 @@ declare namespace bot {
     flag: string,
     approve: boolean,
     remark: string
-  ): Promise<Returnecho>
+  ): Promise<Returnecho>;
 
   /**
    * 处理加群请求／邀请
@@ -730,24 +839,26 @@ declare namespace bot {
    */
   function set_group_add_request(
     flag: string,
-    sub_type: 'add' | 'invite',
+    sub_type: "add" | "invite",
     approve: boolean,
     reason: string
-  ): Promise<Returnecho>
+  ): Promise<Returnecho>;
 
   /**
    * 获取群信息
    * @param group_id 群号
    * @param no_cache 是否不使用缓存（使用缓存可能更新不及时, 但响应更快,默认:false)
    */
-  function get_group_info(group_id: number, no_cache: boolean): Promise<Returnecho>
-
+  function get_group_info(
+    group_id: number,
+    no_cache: boolean
+  ): Promise<Returnecho>;
 
   /**
    * 获取群列表
    * @param no_cache 是否不使用缓存（使用缓存可能更新不及时, 但响应更快,默认:false)
    */
-  function get_group_list(no_cache: boolean): Promise<Returnecho>
+  function get_group_list(no_cache: boolean): Promise<Returnecho>;
 
   /**
    * 获取群成员信息
@@ -759,14 +870,17 @@ declare namespace bot {
     group_id: number,
     user_id: number,
     no_cache: boolean
-  ): Promise<Returnecho>
+  ): Promise<Returnecho>;
 
   /**
    * 获取群成员列表
    * @param group_id 群号
    * @param no_cache 是否不使用缓存（使用缓存可能更新不及时, 但响应更快,默认:false)
    */
-  function get_group_member_list(group_id: number, no_cache: boolean): Promise<Returnecho>
+  function get_group_member_list(
+    group_id: number,
+    no_cache: boolean
+  ): Promise<Returnecho>;
 
   /**
    * 获取群荣誉信息
@@ -776,32 +890,31 @@ declare namespace bot {
   function get_group_honor_info(
     group_id: number,
     type:
-      'talkactive'
-      | 'performer'
-      | 'legend'
-      | 'strong_newbie'
-      | 'emotion'
-      | 'all'
-  ): Promise<Returnecho>
+      | "talkactive"
+      | "performer"
+      | "legend"
+      | "strong_newbie"
+      | "emotion"
+      | "all"
+  ): Promise<Returnecho>;
 
   /**
    * 获取群系统消息
    * 应该是没有参数，毕竟go-cq文档没写
    */
-  function get_group_system_msg(): Promise<Returnecho>
+  function get_group_system_msg(): Promise<Returnecho>;
 
   /**
    * 获取精华消息列表
    * @param group_id 群号
    */
-  function get_essence_msg_list(group_id: number): Promise<Returnecho>
-
+  function get_essence_msg_list(group_id: number): Promise<Returnecho>;
 
   /**
    * 获取群 \@全体成员 剩余次数
    * @param group_id 群号
    */
-  function get_group_at_all_remain(group_id: number): Promise<Returnecho>
+  function get_group_at_all_remain(group_id: number): Promise<Returnecho>;
 
   /**
    * 设置群名
@@ -809,7 +922,10 @@ declare namespace bot {
    * @param group_id 群号
    * @param group_name 新群名
    */
-  function set_group_name(group_id: number, group_name: string): Promise<Returnecho>
+  function set_group_name(
+    group_id: number,
+    group_name: string
+  ): Promise<Returnecho>;
 
   /**
    * 设置群头像
@@ -817,8 +933,11 @@ declare namespace bot {
    * @param file 图片文件名
    * @param cache 表示是否使用已缓存的文件
    */
-  function set_group_portrait(group_id: number, file: string, cache: number): Promise<Returnecho>
-
+  function set_group_portrait(
+    group_id: number,
+    file: string,
+    cache: number
+  ): Promise<Returnecho>;
 
   /**
    * 设置群管理员
@@ -831,7 +950,7 @@ declare namespace bot {
     group_id: number,
     user_id: number,
     enable: boolean
-  ): Promise<Returnecho>
+  ): Promise<Returnecho>;
 
   /**
    * 设置群名片 ( 群备注 )
@@ -840,7 +959,11 @@ declare namespace bot {
    * @param user_id 要设置的 QQ 号
    * @param card 群名片内容, 不填或空字符串表示删除群名片
    */
-  function set_group_card(group_id: number, user_id: number, card: string): Promise<Returnecho>
+  function set_group_card(
+    group_id: number,
+    user_id: number,
+    card: string
+  ): Promise<Returnecho>;
 
   /**
    * 设置群组专属头衔
@@ -855,7 +978,7 @@ declare namespace bot {
     user_id: number,
     special_title: string,
     duration: number
-  ): Promise<Returnecho>
+  ): Promise<Returnecho>;
 
   /**
    * 群单人禁言
@@ -868,7 +991,7 @@ declare namespace bot {
     group_id: number,
     user_id: number,
     duration: number
-  ): Promise<Returnecho>
+  ): Promise<Returnecho>;
 
   /**
    * 群全员禁言
@@ -876,7 +999,10 @@ declare namespace bot {
    * @param group_id 群号
    * @param enable 是否禁言
    */
-  function set_group_whole_ban(group_id: number, enable: boolean): Promise<Returnecho>
+  function set_group_whole_ban(
+    group_id: number,
+    enable: boolean
+  ): Promise<Returnecho>;
 
   /**
    * 群匿名用户禁言
@@ -893,28 +1019,28 @@ declare namespace bot {
     duration: number,
     anonymous?: Anonymous,
     flag?: string
-  ): Promise<Returnecho>
+  ): Promise<Returnecho>;
 
   /**
    * 设置精华消息
    * 该 API 没有响应数据
    * @param message_id 消息ID
    */
-  function set_essence_msg(message_id: number): Promise<Returnecho>
+  function set_essence_msg(message_id: number): Promise<Returnecho>;
 
   /**
    * 移出精华消息
    * 该 API 没有响应数据
    * @param message_id 消息ID
    */
-  function delete_essence_msg(message_id: number): Promise<Returnecho>
+  function delete_essence_msg(message_id: number): Promise<Returnecho>;
 
   /**
    * 群打卡
    * 该 API 没有响应数据
    * @param group_id 群号
    */
-  function send_group_sign(group_id: number): Promise<Returnecho>
+  function send_group_sign(group_id: number): Promise<Returnecho>;
 
   /**
    * 群设置匿名
@@ -922,7 +1048,10 @@ declare namespace bot {
    * @param group_id 群号
    * @param enable 是否禁言
    */
-  function set_group_anonymous(group_id: number, enable: boolean): Promise<Returnecho>
+  function set_group_anonymous(
+    group_id: number,
+    enable: boolean
+  ): Promise<Returnecho>;
 
   /**
    * 发送群公告
@@ -931,13 +1060,17 @@ declare namespace bot {
    * @param content 公告内容
    * @param image 图片路径(可选)
    */
-  function _send_group_notice(group_id: number, content: string, image?: string): Promise<Returnecho>
+  function _send_group_notice(
+    group_id: number,
+    content: string,
+    image?: string
+  ): Promise<Returnecho>;
 
   /**
    * 获取群公告
    * @param group_id 群号
    */
-  function _get_group_notice(group_id: number): Promise<Returnecho>
+  function _get_group_notice(group_id: number): Promise<Returnecho>;
 
   /**
    * 群组踢人
@@ -946,7 +1079,11 @@ declare namespace bot {
    * @param user_id 要踢的 QQ 号
    * @param reject_add_request 拒绝此人的加群请求
    */
-  function set_group_kick(group_id: number, user_id: number, reject_add_request: boolean): Promise<Returnecho>
+  function set_group_kick(
+    group_id: number,
+    user_id: number,
+    reject_add_request: boolean
+  ): Promise<Returnecho>;
 
   /**
    * 退出群组
@@ -954,8 +1091,8 @@ declare namespace bot {
    * @param group_id 群号
    * @param is_dismiss 是否解散, 如果登录号是群主, 则仅在此项为 true 时能够解散
    */
-  function set_group_leave(group_id: number, is_dismiss: boolean): Promise<Returnecho>
-}
-declare namespace OtherApi {
-
+  function set_group_leave(
+    group_id: number,
+    is_dismiss: boolean
+  ): Promise<Returnecho>;
 }

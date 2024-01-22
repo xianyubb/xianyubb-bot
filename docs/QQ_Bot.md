@@ -25,8 +25,8 @@
 }
 ```
 
-可用api请参考Gensokyo文档
+可用 api 请参考 Gensokyo 文档
 
-### xianyubb-bot支持大部分Gensokyo的api
-### 频道同样支持，原来gocq的q群or私人api在频道同样适用
+### xianyubb-bot 支持大部分 Gensokyo 的 api
 
+### 频道同样支持，原来 gocq 的 q 群 or 私人 api 在频道同样适用
