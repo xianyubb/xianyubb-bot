@@ -3,7 +3,7 @@ interface CQCode {
   data: object;
 }
 
-export class OtherApi {
+export class OtherAPI {
   /**
    * [CQ:face]
    * @param id QQ 表情 ID
