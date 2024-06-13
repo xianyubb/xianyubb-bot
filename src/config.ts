@@ -1,3 +1,4 @@
+import { logger } from "../app";
 import { FileTool } from "./File/FileTool";
 
 const conf = {
@@ -6,17 +7,17 @@ const conf = {
 };
 function config() {
   if (!FileTool.isexists("./config/config.json")) {
-    console.log("未读取到配置文件 正在尝试生成");
+    logger.log("未读取到配置文件 正在尝试生成");
     try {
       FileTool.mkdir("./config");
       FileTool.mkdir("./plugins");
       FileTool.writeTo("./config/config.json", JSON.stringify(conf));
     } catch (error) {
-      console.log(error);
+      logger.log(error);
     }
 
     if (FileTool.isexists("./config/config.json")) {
-      console.log("生成成功!请修改配置文件后启动BOT");
+      logger.log("生成成功!请修改配置文件后启动BOT");
     }
   } else {
     require("./bot");
