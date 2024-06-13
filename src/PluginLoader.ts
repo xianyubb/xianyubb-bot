@@ -1,6 +1,7 @@
 import * as path from "path";
 import { FileTool } from "./File/FileTool";
-import { bot } from "./bot";
+// import { bot } from "./bot";
+import { logger } from "../app";
 
 const PluginPath = "./plugins";
 
@@ -8,7 +9,7 @@ export class PluginLoader {
   static exports: any;
 
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
-  constructor() {}
+  constructor() { }
 
   /** 获取插件 */
   static async getPlugin() {
@@ -20,24 +21,25 @@ export class PluginLoader {
     this.exports = await import(`../plugins/${file}`);
   }
 }
-async function Load() {
+export async function Load() {
   const File = await FileTool.readdir("./plugins");
   File.forEach(async (filename) => {
     if (path.extname(`./plugins/${filename}`) === ".js") {
+      logger.log(`正在尝试加载插件: ${filename}`);
       try {
         await PluginLoader.loadPlugin(filename);
-        console.log(`正在加载${filename}`);
+        logger.log(`加载插件 ${filename} 成功`);
       } catch (error) {
-        console.error(error);
-        console.log(`加载失败${filename}`);
+        logger.error(error);
+        logger.error(`加载插件 ${filename} 失败`);
       }
     }
   });
 }
 
-bot.bot.on("open", () => {
-  bot.get_login_info().then((v) => {
-    console.log(`成功连接到 BOT: ${v.data.nickname} , QQ: ${v.data.user_id}`);
-    Load();
-  });
-});
+// bot.bot.on("open", () => {
+//   bot.get_login_info().then((v) => {
+//     logger.log(`成功连接到 BOT: ${v.data.nickname} , QQ: ${v.data.user_id}`);
+//     Load();
+//   });
+// });
