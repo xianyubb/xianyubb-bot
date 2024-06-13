@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     tags:
-      - 'v*.*.*' 
+     # - 'v*.*.*' 
 
 jobs:
   build:
@@ -31,6 +31,7 @@ jobs:
           tsc
           cp package.json dist/
           mkdir out
+          cd dist
           7z a -tzip -r ../out/xianyubb-bot .
         # git config --local user.email "2149656630@qq.com"
         # git config --local user.name "xianyubb"
@@ -42,11 +43,11 @@ jobs:
       #     github_token: ${{ secrets.GITHUB_TOKEN }}
       #     repository: xianyubb/org_out
       #     force: true
-      # - name: upload
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: Organization
-      #     path: org_out/
+      - name: upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: xianyubb
+          path: dist/
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
