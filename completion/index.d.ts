@@ -421,7 +421,7 @@ interface get_login_infoEcho extends Returnecho {
   };
 }
 
-interface set_qq_profileEcho extends Returnecho {}
+interface set_qq_profileEcho extends Returnecho { }
 
 interface qidian_get_account_infoEcho extends Returnecho {
   /** 响应数据 */
@@ -440,7 +440,7 @@ interface _get_model_showEcho extends Returnecho {
   };
 }
 
-interface _set_model_showEcho extends Returnecho {}
+interface _set_model_showEcho extends Returnecho { }
 
 interface get_online_clientsEcho extends Returnecho {
   /** 响应数据 */
@@ -498,6 +498,9 @@ interface get_unidirectional_friend_listEcho extends Returnecho {
 
 declare namespace bot {
   namespace BotEvents {
+
+    function removeListener(event: string | symbol, listener: (...args: any[]) => void);
+
     /** 收到群聊消息 */
     function on(
       event: "onReceiveGroupMessage",
@@ -694,7 +697,7 @@ declare namespace bot {
    */
   function send_group_msg(
     group_id: number,
-    msg: string,
+    msg: string | CQCode[],
     auto_escape: boolean
   ): Promise<Returnecho>;
 
@@ -706,7 +709,7 @@ declare namespace bot {
    */
   function send_private_msg(
     user_id: number,
-    msg: string,
+    msg: string | CQCode[],
     auto_escape: boolean
   ): Promise<Returnecho>;
 
@@ -719,7 +722,7 @@ declare namespace bot {
    * @param auto_escape 消息内容是否作为纯文本发送 ( 即不解析 CQ 码 ) , 只在 message 字段是字符串时有效
    */
   function send_msg(
-    message: string,
+    message: string | CQCode[],
     auto_escape: boolean,
     message_type?: string,
     user_id?: number,
@@ -1095,4 +1098,57 @@ declare namespace bot {
     group_id: number,
     is_dismiss: boolean
   ): Promise<Returnecho>;
+}
+
+interface CQCode {
+  type: string;
+  data: object;
+}
+
+declare class OtherAPI {
+  /**
+   * [CQ:face]
+   * @param id QQ 表情 ID
+   * @returns
+   */
+  static face(id: number, otherCode?: CQCode[]): CQCode[];
+
+  static record(file: string, url?: string, magic?: number, cache?: number, proxy?: number): CQCode[];
+
+  /**
+   * [CQ:at]
+   * @param qq at人的QQ号
+   * @param otherCode 其他的CQCode，数组形式
+   * @returns CQ码，直接在message参数一栏填写即可，不需要转成字符串
+   */
+  static at(qq: string, otherCode?: CQCode[]): CQCode[];
+  /**
+   * [CQ:reply]
+   * @param id 回复时所引用的消息id, 必须为本群消息
+   * @param otherCode 其他的CQCode，数组形式
+   * @returns CQ码，直接在message参数一栏填写即可，不需要转成字符串
+   */
+  static reply(id: number, otherCode: CQCode[]): CQCode[];
+
+}
+
+declare enum LoggerLevels {
+  Error = "error",
+  Warn = "warn",
+  Info = "info",
+  Debug = "debug",
+}
+
+declare class Logger {
+  constructor(logLevel?: LoggerLevels,
+    useColors?: boolean,);
+
+  log(message: string): void;
+
+  error(message: string): void;
+
+  warn(message: string): void;
+
+  debug(message: string): void;
+
 }

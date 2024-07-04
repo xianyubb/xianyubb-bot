@@ -22,7 +22,7 @@ const Author = "xianyubb";
 require(`./src/config`);
 require("./src/Api/otherApi");
 
-require("./src/Api/QQ_Bot");
+// require("./src/Api/QQ_Bot");
 
 
 
@@ -34,5 +34,5 @@ process.on('unhandledRejection', (reason, promise) => {
 
 
 (global as any).bot = require('./src/bot').bot;
-(global as any).OtherAPI = require('./src/API/otherApi').OtherAPI
-
+(global as any).OtherAPI = require('./src/API/otherApi').OtherAPI;
+(global as any).Logger = require('./src/Logger').Logger;

@@ -19,24 +19,24 @@ export class Logger {
   }
 
   log(message: string): void {
-      const timestamp = new Date().toLocaleString();
-      const logMessage = this.formatMessage(timestamp, LoggerLevels.Info, message);
-      console.log(logMessage);
+    const timestamp = new Date().toLocaleString();
+    const logMessage = this.formatMessage(timestamp, LoggerLevels.Info, message);
+    console.log(logMessage);
   }
 
-  error(message: string) {
+  error(message: string): void {
     const timestamp = new Date().toLocaleString();
     const logMessage = this.formatMessage(timestamp, LoggerLevels.Error, message);
     console.log(logMessage);
   }
 
-  warn(message: string) {
+  warn(message: string): void {
     const timestamp = new Date().toLocaleString();
     const logMessage = this.formatMessage(timestamp, LoggerLevels.Warn, message);
     console.log(logMessage);
   }
 
-  debug(message: string) {
+  debug(message: string): void {
     const timestamp = new Date().toLocaleString();
     const logMessage = this.formatMessage(timestamp, LoggerLevels.Debug, message);
     console.log(logMessage);

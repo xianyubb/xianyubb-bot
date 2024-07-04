@@ -11,6 +11,7 @@ function config() {
     try {
       FileTool.mkdir("./config");
       FileTool.mkdir("./plugins");
+      FileTool.mkdir("./plugins_ts")
       FileTool.writeTo("./config/config.json", JSON.stringify(conf));
     } catch (error) {
       logger.log(error);

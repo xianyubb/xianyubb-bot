@@ -1,10 +1,14 @@
 # API 接口
 
-提供了对 qq 号的操作接口<br/>
-具体响应数据请看 [go-cqhttp 文档](https://docs.go-cqhttp.org)<br/>
+提供了对 qq 号的操作接口
+
+具体响应数据请看 [go-cqhttp 文档](https://docs.go-cqhttp.org)
+
 某些 API 没有响应数据
 
 您在编写插件的时候就能看到各参数的具体详情了
+
+## API
 
 ### Bot 帐号
 
@@ -179,7 +183,7 @@
 
 响应内容为 json 数组, 每个元素和上面的 get_group_info 接口相同。
 
-#获取
+# 获取
 
 #### 获取群成员信息
 
@@ -222,14 +226,14 @@
 [1] file 参数支持以下几种格式：
 
 - 绝对路径, 例如 file:///C:\\Users\Richard\Pictures\1.png, 格式使用 file URI
-- 网络 URL, 例如 http://i1.piimg.com/567571/fdd6e7b6d93f1ef0.jpg
+- 网络 URL, 例如 <http://i1.piimg.com/567571/fdd6e7b6d93f1ef0.jpg>
 - Base64 编码, 例如 base64://iVBORw0KGgoAAAANSUhEUgAAABQAAAAVCAIAAADJt1n/AAAAKElEQVQ4EWPk5+RmIBcwkasRpG9UM4mhNxpgowFGMARGEwnBIEJVAAAdBgBNAZf+QAAAAABJRU5ErkJggg==
 
 [2] cache 参数: 通过网络 URL 发送时有效, 1 表示使用缓存, 0 关闭关闭缓存, 默认 为 1
 
 [3] 目前这个 API 在登录一段时间后因 cookie 失效而失效, 请考虑后使用
 
-#设置群
+# 设置群
 
 #### 设置群管理员
 

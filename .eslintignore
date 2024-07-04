@@ -1,2 +1,5 @@
 plugins
 completion
+plugins_ts
+docs
+dist

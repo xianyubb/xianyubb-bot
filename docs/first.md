@@ -1,3 +1,7 @@
+# 安装指南
+
+## 第一步
+
 ### 安装 **nodejs** 环境
 
 > [nodejs 官网](https://nodejs.org)
@@ -10,13 +14,15 @@
 
 安装完成过后，打开命令提示符输入以下命令
 
-```
+```bash
 node -v
 
 npm -v
 ```
 
 如果没有显示未知命令，则代表安装成功
+
+## 第二步
 
 ### 下载并配置 **go-cqhttp**
 
@@ -34,7 +40,7 @@ npm -v
 
 登录完成你就可以挂着了
 
-### QQ 官方机器人支持
+### ~~QQ 官方机器人支持~~
 
 > [QQ_Bot](QQ_Bot.md)
 
@@ -46,11 +52,13 @@ npm -v
 
 然后执行以下命令
 
-```
+```bash
 cd xianyubb-bot
 
 npm install
 ```
+
+## 第三步
 
 ### 运行 **xianyubb-bot**
 
@@ -64,8 +72,7 @@ npm install
 
 ```json
 {
-  "ws": "ws://您的IP:端口",
-  "bds": { "use": false, "port": 8081 }
+  "WebSocketAddress": "ws://127.0.0.1:9876", "token": "",
 }
 ```
 
@@ -85,6 +92,6 @@ npm install
 
 连接 go-cq 失败会报错，按任意键即可退出程序
 
-###### Tip:
+#### Tip
 
 打不开网站的请自备魔法

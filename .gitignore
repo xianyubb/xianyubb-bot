@@ -4,3 +4,6 @@ dist
 config
 plugins
 .VSCodeCounter
+plugins_ts
+package-lock.json
+pnpm-lock.yaml

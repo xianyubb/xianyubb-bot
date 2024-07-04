@@ -1,7 +1,9 @@
+<h1 align=center> 导航 </h1>
+
 - [先行条件](first.md)
   - [了解目录](/mulu.md)
-  - [ 安装 **nodejs** 环境 ](first.md#安装-nodejs-环境)
-  - [下载并配置 **go-cqhttp** ](first.md#下载并配置-go-cqhttp)
+  - [安装 **nodejs** 环境](first.md#安装-nodejs-环境)
+  - [下载并配置 **go-cqhttp**](first.md#下载并配置-go-cqhttp)
   - [下载 **xianyubb-bot**](first.md#下载-xianyubb-bot)
   - [运行 **xianyubb-bot**](first.md#运行-xianyubb-bot)
 - [插件接口](interface.md)
@@ -12,7 +14,7 @@
     - [元事件上报](Events.md#元事件上报)
   - [频道事件](GuideEvents.md)
   - [API](API.md)
-    - [Bot 帐号](API.md#bot帐号)
+    - [Bot 帐号](API.md#bot-帐号)
     - [好友消息](API.md#好友信息)
     - [好友操作](API.md#好友操作)
     - [消息](API.md#消息)

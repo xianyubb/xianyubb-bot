@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import { Bot } from "./API/api";
 import { logger } from "../app";
-import { Load } from "./PluginLoader";
+import { Load, Loadts } from "./PluginLoader";
 
 const data_ = JSON.parse(fs.readFileSync("./config/config.json").toString());
 
@@ -62,7 +62,12 @@ try {
 
 bot.bot.onopen = () => {
   logger.log("连接成功");
+  bot.get_login_info().then((v) => {
+    logger.log(`登录账号: ${v.data.nickname}`);
+  })
+  logger.log("正在加载插件...");
   Load();
+  Loadts();
 };
 
 logger.log("启动xianyubb-bot...");
@@ -87,8 +92,12 @@ function reConnect() {
       };
       bot.bot.onopen = () => {
         logger.log("重新连接成功");
+        logger.log("正在加载插件...");
+        bot.get_login_info().then((v) => {
+          logger.log(`登录账号: ${v.data.nickname}`);
+        });
         Load();
-        
+        Loadts();
       };
     }
     else {
@@ -101,7 +110,7 @@ function reConnect() {
 // 监听连接关闭事件
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 bot.bot.on("close", (code, reason) => {
-  logger.warn(`WebSocket已关闭,状态码:${  code}`);
+  logger.warn(`WebSocket已关闭,状态码:${code}`);
   reConnect();
 });
 
