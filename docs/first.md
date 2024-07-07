@@ -55,7 +55,7 @@ npm -v
 ```bash
 cd xianyubb-bot
 
-npm install
+npm install --production
 ```
 
 ## 第三步
