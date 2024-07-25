@@ -20,25 +20,41 @@ export class Logger {
 
   log(message: string): void {
     const timestamp = new Date().toLocaleString();
-    const logMessage = this.formatMessage(timestamp, LoggerLevels.Info, message);
+    const logMessage = this.formatMessage(
+      timestamp,
+      LoggerLevels.Info,
+      message
+    );
     console.log(logMessage);
   }
 
   error(message: string): void {
     const timestamp = new Date().toLocaleString();
-    const logMessage = this.formatMessage(timestamp, LoggerLevels.Error, message);
+    const logMessage = this.formatMessage(
+      timestamp,
+      LoggerLevels.Error,
+      message
+    );
     console.log(logMessage);
   }
 
   warn(message: string): void {
     const timestamp = new Date().toLocaleString();
-    const logMessage = this.formatMessage(timestamp, LoggerLevels.Warn, message);
+    const logMessage = this.formatMessage(
+      timestamp,
+      LoggerLevels.Warn,
+      message
+    );
     console.log(logMessage);
   }
 
   debug(message: string): void {
     const timestamp = new Date().toLocaleString();
-    const logMessage = this.formatMessage(timestamp, LoggerLevels.Debug, message);
+    const logMessage = this.formatMessage(
+      timestamp,
+      LoggerLevels.Debug,
+      message
+    );
     console.log(logMessage);
   }
 

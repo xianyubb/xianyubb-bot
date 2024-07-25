@@ -8,7 +8,7 @@ const data_ = JSON.parse(fs.readFileSync("./config/config.json").toString());
 // eslint-disable-next-line import/no-mutable-exports, prefer-const
 export let bot: Bot;
 try {
-  bot = new Bot(data_.WebSocketAddress);
+  bot = new Bot(data_.onebot.WebSocketAddress);
   bot.bot.onerror = () => {
     logger.warn("WebSocket 连接错误");
     // reConnect();
@@ -17,54 +17,11 @@ try {
   logger.error(e.message);
 }
 
-
-// let child: ChildProcess;
-// 
-// function restartApp() {
-//   logger.log("Restarting the Node.js application...");
-// 
-//   // 如果子进程存在，则杀死它
-//   if (child) {
-//     child.kill();
-//   }
-// 
-//   // 启动新的子进程
-//   // eslint-disable-next-line @typescript-eslint/no-use-before-define
-//   startApp();
-// }
-// 
-// function startApp() {
-//   logger.log("Starting the Node.js application...");
-// 
-//   // 使用 spawn 方法启动子进程
-//   child = spawn("node", ["app.js"], { stdio: "inherit" });
-// 
-//   // 监听子进程的关闭事件
-//   child.on("close", (code) => {
-//     if (code !== 0) {
-//       console.error(`Child process exited with code ${code}`);
-//       // 可以选择在这里处理错误，例如重新启动子进程
-//       restartApp();
-//     } else {
-//       logger.log("Child process exited successfully");
-//     }
-//   });
-// 
-//   // 监听子进程的错误事件
-//   child.on("error", (err) => {
-//     console.error(`Child process error: ${err}`);
-//     // 可以选择在这里处理错误，例如重新启动子进程
-//     restartApp();
-//   });
-// }
-
-// 启动应用程序
-
 bot.bot.onopen = () => {
   logger.log("连接成功");
   bot.get_login_info().then((v) => {
     logger.log(`登录账号: ${v.data.nickname}`);
-  })
+  });
   logger.log("正在加载插件...");
   Load();
   Loadts();
@@ -73,10 +30,7 @@ bot.bot.onopen = () => {
 logger.log("启动xianyubb-bot...");
 logger.log("连接服务端...");
 
-
 function reConnect() {
-
-
   logger.log("是否尝试进行重连? (yes/no)");
   process.stdin.on("data", (data) => {
     const res = data.toString();
@@ -99,8 +53,7 @@ function reConnect() {
         Load();
         Loadts();
       };
-    }
-    else {
+    } else {
       process.stdin.pause();
       process.exit(0);
     }
@@ -114,9 +67,21 @@ bot.bot.on("close", (code, reason) => {
   reConnect();
 });
 
-
-
 // bot.bot.on("error", () => {
 //   logger.log("WebSocket 连接错误");
 //   reConnect();
 // });
+
+bot.BotEvents.on("onReceiveGroupMessage", (msg) => {
+  if (msg.raw_message.trim() === "ping") {
+    bot.send_group_msg(msg.group_id, "pong", false);
+    logger.log(`[Group][${msg.group_id}] ${msg.sender.nickname} 发送了: ping`);
+  }
+});
+
+bot.BotEvents.on("onReceivePrivateMessage", (msg) => {
+  if (msg.raw_message.trim() === "ping") {
+    bot.send_private_msg(msg.user_id, "pong", false);
+    logger.log(`[Private][${msg.user_id}] ${msg.sender.nickname} 发送了: ping`);
+  }
+});

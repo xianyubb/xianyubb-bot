@@ -314,4 +314,3 @@ export interface BotEvent extends EventEmitter {
 export const BotEvents: BotEvent = new EventEmitter();
 export const wsevent: WebSocketEvent = new EventEmitter();
 export const echo: EventEmitter = new EventEmitter();
-

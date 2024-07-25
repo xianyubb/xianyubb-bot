@@ -35,7 +35,13 @@ export class OtherAPI {
    * @param otherCode 其他的CQCode，数组形式
    * @returns CQ码，直接在message参数一栏填写即可，不需要转成字符串
    */
-  static record(file: string, magic = 0, cache = 1, proxy = 1, otherCode?: CQCode[]) {
+  static record(
+    file: string,
+    magic = 0,
+    cache = 1,
+    proxy = 1,
+    otherCode?: CQCode[]
+  ) {
     const atObject: CQCode = {
       type: "record",
       data: {
@@ -104,7 +110,13 @@ export class OtherAPI {
    * @param otherCode 其他的CQCode，数组形式
    * @returns CQ码，直接在message参数一栏填写即可，不需要转成字符串
    */
-  static image(file: string, cache = 1, proxy = 1, type?: string, otherCode?: CQCode[]) {
+  static image(
+    file: string,
+    cache = 1,
+    proxy = 1,
+    type?: string,
+    otherCode?: CQCode[]
+  ) {
     const atObject: CQCode = {
       type: "image",
       data: {

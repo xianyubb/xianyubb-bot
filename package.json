@@ -10,7 +10,8 @@
     "build": "tsc && .\\scripts\\copy-package-json.cmd",
     "clean": "rmdir /s /q dist && del xianyubb-bot.zip",
     "package": ".\\scripts\\package.cmd",
-    "watch": "tsc --watch"
+    "watch": "tsc --watch",
+    "dev": "ts-node app.ts"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",

@@ -1,3 +1,6 @@
+/// <reference types="node" />
+
+
 interface Data {
   /** 事件发生的unix时间戳 */
   time: number;
@@ -498,8 +501,10 @@ interface get_unidirectional_friend_listEcho extends Returnecho {
 
 declare namespace bot {
   namespace BotEvents {
-
-    function removeListener(event: string | symbol, listener: (...args: any[]) => void);
+    function removeListener(
+      event: string | symbol,
+      listener: (...args: any[]) => void
+    );
 
     /** 收到群聊消息 */
     function on(
@@ -698,7 +703,7 @@ declare namespace bot {
   function send_group_msg(
     group_id: number,
     msg: string | CQCode[],
-    auto_escape: boolean
+    auto_escape?: boolean
   ): Promise<Returnecho>;
 
   /**
@@ -710,7 +715,7 @@ declare namespace bot {
   function send_private_msg(
     user_id: number,
     msg: string | CQCode[],
-    auto_escape: boolean
+    auto_escape?: boolean
   ): Promise<Returnecho>;
 
   /**
@@ -1113,7 +1118,13 @@ declare class OtherAPI {
    */
   static face(id: number, otherCode?: CQCode[]): CQCode[];
 
-  static record(file: string, url?: string, magic?: number, cache?: number, proxy?: number): CQCode[];
+  static record(
+    file: string,
+    url?: string,
+    magic?: number,
+    cache?: number,
+    proxy?: number
+  ): CQCode[];
 
   /**
    * [CQ:at]
@@ -1129,7 +1140,6 @@ declare class OtherAPI {
    * @returns CQ码，直接在message参数一栏填写即可，不需要转成字符串
    */
   static reply(id: number, otherCode: CQCode[]): CQCode[];
-
 }
 
 declare enum LoggerLevels {
@@ -1140,8 +1150,7 @@ declare enum LoggerLevels {
 }
 
 declare class Logger {
-  constructor(logLevel?: LoggerLevels,
-    useColors?: boolean,);
+  constructor(logLevel?: LoggerLevels, useColors?: boolean);
 
   log(message: string): void;
 
@@ -1150,5 +1159,31 @@ declare class Logger {
   warn(message: string): void;
 
   debug(message: string): void;
+}
 
+/** BDS 连接信息 */
+interface ConnectMessage {
+  /** 客户端 uuid */
+  uuid: string;
+  /** 客户端连接序号 (从 1 开始 断联后不会进位) */
+  connectNum: number;
+  /** 客户端 ws */
+  WebSocket: NodeJS.EventEmitter;
+}
+
+declare namespace bds {
+  /**
+   * 向所有 BDS 发送数据
+   * @param data 数据
+   */
+  function sendData(data: string): void;
+
+  /** 关闭 WS 服务端 */
+  function close(): void;
+
+  /** 所有的 BDS 客户端 */
+  function getClients(): Array<ConnectMessage>;
+
+  /** 服务端自身 实际类型为 WebSocketServer */
+  function getServer(): NodeJS.EventEmitter;
 }

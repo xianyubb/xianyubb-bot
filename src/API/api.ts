@@ -331,7 +331,7 @@ export class Bot {
   public send_group_msg(
     group_id: number,
     msg: string,
-    auto_escape: boolean
+    auto_escape: boolean = false
   ): Promise<Returnecho> {
     return new Promise((reslove) => {
       const echo = uuid.v4();
@@ -363,7 +363,7 @@ export class Bot {
   public send_private_msg(
     user_id: number,
     msg: string,
-    auto_escape: boolean
+    auto_escape: boolean = false
   ): Promise<Returnecho> {
     return new Promise((resolve) => {
       const echo = uuid.v4();

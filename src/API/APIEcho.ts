@@ -95,4 +95,3 @@ export interface get_unidirectional_friend_listEcho extends Returnecho {
     source: string;
   };
 }
-
