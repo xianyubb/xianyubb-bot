@@ -16,7 +16,7 @@ logger.log(entryDir);
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Project_Name = "xianyubb-bot";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const Version = [0, 6, 0];
+const Version = [0, 7, 0];
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Author = "xianyubb";
 
