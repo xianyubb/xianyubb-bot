@@ -44,6 +44,10 @@ npm -v
 
 > [QQ_Bot](QQ_Bot.md)
 
+### LLOnebot 支持
+
+> 这里不多展示
+
 ### 下载 **xianyubb-bot**
 
 > [xianyubb-bot](https://github.com/xianyubb/xianyubb-bot/releases)
@@ -72,11 +76,15 @@ npm install --production
 
 ```json
 {
-  "WebSocketAddress": "ws://127.0.0.1:9876", "token": "",
+    "WebSocketAddress": "ws://127.0.0.1:8080",
+    "token": "",
+    "BDS": { "Enable": false, "port": 8081 }
 }
 ```
 
 在里面填入你的 go-cq 的 IP 和 端口 (默认是 127.0.0.1 8080)
+
+> LLOB 也一样
 
 然后再次输入命令启动 bot，显示连接成功即可用
 
