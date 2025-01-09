@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import { logger } from "../app";
+import { Logger } from "./Logger";
 import { FileTool } from "./File/FileTool";
 
 const conf = {
@@ -12,9 +12,10 @@ const conf = {
   }
 };
 
-const data_ = JSON.parse(fs.readFileSync("./config/config.json").toString());
+const logger = new Logger();
 
-function config() {
+
+export function config() {
   if (!FileTool.isexists("./config/config.json")) {
     logger.log("未读取到配置文件 正在尝试生成");
     try {
@@ -34,6 +35,7 @@ function config() {
     require("./API/api");
     require("./Events");
     require("./PluginLoader");
+    const data_ = JSON.parse(fs.readFileSync("./config/config.json").toString());
     if (data_.BDS.Enable) {
       require("./BDS/index");
     }

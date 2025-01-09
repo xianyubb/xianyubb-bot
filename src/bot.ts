@@ -1,9 +1,11 @@
 import * as fs from "fs";
 import { Bot } from "./API/api";
-import { logger } from "../app";
+import { Logger } from "./Logger";
 import { Load, Loadts } from "./PluginLoader";
 
 const data_ = JSON.parse(fs.readFileSync("./config/config.json").toString());
+
+const logger = new Logger();
 
 // eslint-disable-next-line import/no-mutable-exports, prefer-const
 export let bot: Bot;
@@ -32,17 +34,15 @@ logger.log("连接服务端...");
 
 function reConnect() {
   logger.log("是否尝试进行重连? (yes/no)");
-  process.stdin.on("data", (data) => {
+  process.stdin.once("data", (data) => {
     const res = data.toString();
-    // logger.log(res.trim().length.toString());
     if (res.trim() === "y" || res.trim() === "yes") {
-      // logger.log("尝试重连中...");
-      bot = new Bot(data_.WebSocketAddress);
+      logger.log("尝试重连中...");
+      bot = new Bot(data_.onebot.WebSocketAddress);
       bot.bot.onerror = (error) => {
         logger.error(error.message);
         logger.error("WebSocket 连接错误");
         reConnect();
-        // return;
       };
       bot.bot.onopen = () => {
         logger.log("重新连接成功");

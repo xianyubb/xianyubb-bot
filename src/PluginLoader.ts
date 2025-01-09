@@ -2,11 +2,15 @@ import * as path from "path";
 import * as chokidar from "chokidar";
 import * as fs from "fs";
 import * as tsnode from "ts-node";
-import { logger, rootDir } from "../app";
+import { Logger } from "./Logger";
+import { rootDir } from "../app";
 import { FileTool } from "./File/FileTool";
 
 const PluginPath = `${rootDir}\\plugins`;
 const PluginTsPath = `${rootDir}\\plugins_ts`;
+
+const logger = new Logger();
+
 
 let _exports: any;
 // 加载插件
