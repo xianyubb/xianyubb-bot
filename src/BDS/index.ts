@@ -1,10 +1,11 @@
 import * as fs from "fs";
 import { WebSocket, WebSocketServer } from "ws";
-import { logger } from "../../app";
-import { Load } from "../PluginLoader";
+import { Logger } from "../Logger";
+import { Load, } from "../PluginLoader";
 
 const data_ = JSON.parse(fs.readFileSync("./config/config.json").toString());
 
+const logger = new Logger();
 
 interface ConnectMessage {
     // 客户端 uuid 唯一标识符 可通过这个来访问对应 BDS
